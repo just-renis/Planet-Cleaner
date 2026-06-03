@@ -195,7 +195,7 @@
       "__version": 2,
       "Flags": 0,
       "Name": "Spawn",
-      "Position": "0,0,100",
+      "Position": "0,0,200",
       "Rotation": "0,0,0,1",
       "Scale": "1,1,1",
       "Tags": "",
