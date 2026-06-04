@@ -1,7 +1,7 @@
 {
   "Title": "Planet Cleaner",
   "Type": "game",
-  "Org": "local",
+  "Org": "justgames9000",
   "Ident": "planet_cleaner",
   "Schema": 1,
   "IncludeSourceFiles": false,
