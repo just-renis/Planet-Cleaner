@@ -195,7 +195,7 @@
       "__version": 2,
       "Flags": 0,
       "Name": "Spawn",
-      "Position": "0,0,2000",
+      "Position": "0,0,2100",
       "Rotation": "0,0,0,1",
       "Scale": "1,1,1",
       "Tags": "",
@@ -321,7 +321,7 @@
                 "_type": "gameobject",
                 "prefab": "prefabs/testtrash.prefab"
               },
-              "MaxAmountActive": 5,
+              "MaxAmountActive": 300,
               "InactiveObjects": [],
               "ActiveObjects": [],
               "ActiveCount": 0
@@ -352,14 +352,14 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.Clutter.ClutterGridSystem": {
-        "Storage": {
-          "$blob": "6d9c5db6-9a59-4654-b962-00e365472ce3"
-        }
-      },
       "Sandbox.SelectionSetsSystem": {
         "Data": {
           "SelectionSets": []
+        }
+      },
+      "Sandbox.Clutter.ClutterGridSystem": {
+        "Storage": {
+          "$blob": "6d9c5db6-9a59-4654-b962-00e365472ce3"
         }
       }
     }
