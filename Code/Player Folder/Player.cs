@@ -3,18 +3,20 @@ using Sandbox.Interfaces;
 
 public sealed class Player : Component
 {
-	[Property] private float DefaultCollectTimeRate { get; set; } = 0.5f;
 	[Property] private float DefaultCollectRadius { get; set; } = 30f;
 	[Property] private float Sensitivity { get; set; } = 0.2f;
 	[Property] private float CameraDistance { get; set; } = 200f;
 	[Property] private float CameraHeight { get; set; } = 50f;
 	[Property] private float DefaultMovementSpeed { get; set; } = 2500f;
 	[Property] private float JumpStrength { get; set; } = 350f;
+	[Property] private float DefaultCollectCooldown { get; set; } = 1f;
+	[Property] private int DefaultCollectAmount { get; set; } = 1;
 	[Property] private Rigidbody PlayerRigidbody { get; set; }
 	[Property] private CitizenAnimationHelper AnimationHelper { get; set; }
 	private bool IsGrounded;
-	private float NextCollectTime;
 	private float MovementSpeed;
+	private float CollectCooldownTimer;
+	private int CurrentCollectAmount;
 	private Angles CurrentCameraRotation;
 	private CameraComponent Camera;
 	
@@ -22,9 +24,9 @@ public sealed class Player : Component
 	{
 		if (IsProxy) return;
 		ProcessInput();
-		if (Time.Now < NextCollectTime) return;
-		NextCollectTime = Time.Now + DefaultCollectTimeRate;
-		//ScanAndCollect();
+		if (Time.Now < CollectCooldownTimer) return;
+		CollectCooldownTimer = Time.Now + DefaultCollectCooldown;
+		ScanAndCollect();
 	}
 	protected override void OnStart()
 	{
@@ -92,9 +94,12 @@ public sealed class Player : Component
 		IEnumerable<GameObject> Targets = Scene.FindInPhysics(new Sphere(WorldPosition, DefaultCollectRadius));
 		foreach (GameObject Target in Targets)
 		{
-			GameObject TargetObj = Target;
-			if (!TargetObj.Tags.Has("collectible")) continue;
-			if (TargetObj.Components.TryGet(out ICollectable Collectable)) Collectable.Collect(); 
+			if (!Target.Tags.Has("collectible")) continue;
+			if (!Target.Components.TryGet(out ICollectable Collectable)) continue;
+			Collectable.Collect();
+			if (++CurrentCollectAmount < DefaultCollectAmount) continue;
+			CurrentCollectAmount = 0;
+			break;
 		}
 	}
 	private void ApplyUpgradesOnJoin()
