@@ -1,12 +1,146 @@
+@using Sandbox;
+@using Sandbox.Managers
 @inherits PanelComponent
 
 <root>
+	@if (PlayerRef != null)
+	{
+		<div class="crosshair-container">
+			<div class="corner top-left"></div>
+			<div class="corner top-right"></div>
+			<div class="corner bottom-left"></div>
+			<div class="corner bottom-right"></div>
+		</div>
+		@*<div class="quests-container">
+			@{
+				int DisplayedCount = 0; 
+				PlayerData SaveData = PlayerRef.GetSaveData();
+			}
+			@foreach (KeyValuePair<EQuest, QuestData> Quest in GlobalData.Instance.AllQuestsData)
+			{
+				if (DisplayedCount >= 3) break;
+				if (!SaveData.IsQuestCompleted(Quest.Key))
+				{
+					int CurrentProgress = SaveData.GetQuestProgress(Quest.Key);
+					<div class="quest-item">
+						<div class="quest-meta">
+							<span class="quest-title">@Quest.Value.QuestText</span>
+							<span class="quest-counter">@CurrentProgress / @Quest.Value.RequiredProgress</span>
+						</div>
+						<div class="quest-progress-bg">
+							<div class="quest-progress-fill" style="width: @((float)CurrentProgress / @Quest.Value.RequiredProgress * 100f)%;"></div>
+						</div>
+					</div>
+					DisplayedCount++;
+				}
+			}
+		</div>*@
+		<div class="autosave-popup @(IsAutoSaveActive ? "visible" : "")">
+			<div class="save-icon-wrapper">
+				<i class="save-icon">sync</i>
+			</div>
+			<div class="save-content">
+				<span class="save-title">AUTO SAVE</span>
+				<span class="save-desc">Progress saved successfully</span>
+			</div>
+		</div>
+		@if (IsConnectionBad)
+		{
+			<div class="WifiWarning">
+				<div class="IconWrapper">
+					<label class="WifiIcon">wifi</label>
+					<div class="RedSlash"></div>
+				</div>
+			</div>
+		}
+		<div class="Money">
+			<div class="amount-container">
+				<span class="value">$@PlayerRef.GetMoney().ToString("N0")</span>
+			</div>
+		</div>
+		@if (PurchasableAmountUpgrades > 0)
+		{
+			<div class="upgrade-indicator">
+				<div class="glow-dot animate-pulse"></div>
+				<span class="upgrade-text">UPGRADE AVAILABLE: @PurchasableAmountUpgrades</span>
+			</div>
+		}
+		<div class="TrashCounter">
+			<div class="trash-icon-wrapper">
+				<i class="trash-icon">delete</i>
+			</div>
+			<div class="counter-content">
+				<span class="counter-title">TRASH COLLECTED</span>
+				<div class="counter-value-container">
+					<span class="counter-value">@PlayerRef.GetTrashCollected()</span>
+					<span class="counter-max">/ @PlayerRef.GetTrashCapacity()</span>
+				</div>
+			</div>
+		</div>
+	}
 </root>
 
 @code
 {
+	private bool IsAutoSaveActive;
+	private bool IsConnectionBad;
+	private const int HighPingThreshold = 180;
+	private int RequestPlayerRefHandle;
+	private int CheckLatencyHandle;
+	private int AutoSavePopupHideHandle;
+	private int PurchasableAmountUpgrades;
+	private int QuestStateVersion;
+	private Player PlayerRef;
+	
 	protected override int BuildHash()
 	{
-		return System.HashCode.Combine(1);
+		if (PlayerRef == null) return -1;
+		System.HashCode Hc = new();
+		Hc.Add(PlayerRef.GetMoney());
+		Hc.Add(IsConnectionBad);
+		Hc.Add(PurchasableAmountUpgrades);
+		Hc.Add(QuestStateVersion);
+		Hc.Add(IsAutoSaveActive);
+		Hc.Add(PlayerRef.GetTrashCollected());
+		Hc.Add(PlayerRef.GetTrashCapacity());
+		return Hc.ToHashCode();
+	}
+	
+	protected override void OnStart()
+	{
+		EventManager.OnUpgradesAvailableToBePurchased += SetPurchasableUpgradesAvailable;
+		//EventManager.OnQuestProgressed += OnQuestUiRefreshRequested;
+		EventManager.OnAutoSaveFinished += TriggerAutoSavePopup;
+		RequestPlayerRefHandle = TimerManager.AddTimer(RequestPlayerRefHandle, 1f / 60f, true, TryToGetPlayerRef);
+		CheckLatencyHandle = TimerManager.AddTimer(CheckLatencyHandle, 1f, true, CheckLatency);
+	}
+	protected override void OnDestroy()
+	{
+		EventManager.OnUpgradesAvailableToBePurchased -= SetPurchasableUpgradesAvailable;
+		//EventManager.OnQuestProgressed -= OnQuestUiRefreshRequested;
+		EventManager.OnAutoSaveFinished -= TriggerAutoSavePopup;
+		TimerManager.ClearTimer(RequestPlayerRefHandle);
+		TimerManager.ClearTimer(CheckLatencyHandle);
+		TimerManager.ClearTimer(AutoSavePopupHideHandle);
+	}
+
+	private void SetPurchasableUpgradesAvailable(int InAmount) { PurchasableAmountUpgrades = InAmount; }
+	private void OnQuestUiRefreshRequested() { QuestStateVersion++; }
+	private void CheckLatency()
+	{
+		if (Connection.Local == null) return;
+		IsConnectionBad = Connection.Local.Ping > HighPingThreshold;
+	}
+	private void AutoSaveHidePopup() { IsAutoSaveActive = false; }
+	private void TryToGetPlayerRef()
+	{
+		PlayerRef = EventManager.TriggerGetPlayerRef();
+		if (PlayerRef == null) return;
+		TimerManager.ClearTimer(RequestPlayerRefHandle);
+	}
+	private void TriggerAutoSavePopup()
+	{
+		AutoSavePopupHideHandle = TimerManager.AddTimer(AutoSavePopupHideHandle, 2f, false, AutoSaveHidePopup);
+		IsAutoSaveActive = true;
 	}
 }

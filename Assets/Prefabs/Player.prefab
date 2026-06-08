@@ -26,7 +26,7 @@
           "go": "4ee26e52-67f7-41fc-891f-c8b4fb461a17",
           "component_type": "CitizenAnimationHelper"
         },
-        "CameraDistance": 200,
+        "CameraDistance": 100,
         "CameraHeight": 50,
         "DefaultCollectAmount": 1,
         "DefaultCollectCooldown": 1,
@@ -286,7 +286,7 @@
         ],
         "Children": [
           {
-            "__guid": "d0c82836-110f-46c9-a798-8e65008a7a55",
+            "__guid": "866da523-e8ed-474e-9de8-f1b81cc4afca",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - boxing_gloves",
@@ -303,7 +303,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "293e464f-10ca-4407-854d-0ef6f85502ec",
+                "__guid": "800e67cb-c850-432e-ae43-67312bf954cf",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -355,7 +355,7 @@
             "Children": []
           },
           {
-            "__guid": "6914477b-06d9-4f11-9d42-93976ecbf527",
+            "__guid": "bf7de1c5-fb23-4914-87d4-495343ec4eaa",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - baseball_cap_black",
@@ -372,7 +372,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "a7d97e75-7d69-4845-99a5-cca3a851c7ff",
+                "__guid": "ee850599-bf18-4d30-b7f8-8e9c930cb1a5",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -424,7 +424,7 @@
             "Children": []
           },
           {
-            "__guid": "e2daa8ca-1fe4-4afa-b48e-ea7c6524e90e",
+            "__guid": "4d7feb64-1a4b-44d4-ba1d-2f54496f0c7f",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - black_boots",
@@ -441,7 +441,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "4db88eec-00d8-417b-ad60-0ff24e1fdec3",
+                "__guid": "d4bc0d8e-d799-471d-8271-b79a499b8610",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,

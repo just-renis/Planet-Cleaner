@@ -1,0 +1,108 @@
+SettingsUi
+{
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  font-family: Poppins;
+  > .menu-box
+  {
+    width: 50%;
+    height: 75%;
+    background-color: #1a1a1a;
+    border: 2px solid #facc15;
+    border-radius: 8px;
+    flex-direction: column;
+    padding: 60px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    position: relative;
+    .x-close
+    {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: color 0.1s;
+      &:hover { color: #facc15; }
+    }
+    .header
+    {
+      font-size: 42px;
+      font-weight: 900;
+      color: #facc15;
+      margin-bottom: 50px;
+      justify-content: center;
+      text-transform: uppercase;
+    }
+    .content
+    {
+      flex-grow: 1;
+      flex-direction: column;
+    }
+    .footer
+    {
+      width: 100%;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 35px;
+      margin-top: 30px;
+      button.btn-default-sbox-settings
+      {
+        width: 60%;
+        padding: 20px;
+        font-size: 28px;
+        font-weight: 900;
+        border-radius: 8px;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        background-color: #3558e1;
+        color: white;
+        &:hover { transform: scale(1.02); background-color: #44a2ff; }
+        &:active { transform: scale(0.98); }
+      }
+    }
+    button.btn-small-exit
+    {
+      position: absolute;
+      left: 40px;
+      bottom: 40px;
+      padding: 12px 20px;
+      font-size: 18px;
+      font-weight: 800;
+      background-color: #e53e3e;
+      color: rgb(255, 255, 255);
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.1s ease-out;
+      &:hover
+      {
+        background-color: #ff4444;
+        border-color: #e53e3e;
+        color: white;
+      }
+      &:active { transform: scale(0.95); }
+    }
+  }
+  &.hidden
+  {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(0px);
+    background-color: transparent;
+  }
+}

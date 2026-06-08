@@ -6,15 +6,21 @@ namespace Sandbox.Managers;
 public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 {
 	public static event Action OnAutoSaveFinished;
+	public static event Action OnTrashSold;
 	public static event Action<int> OnUpgradesAvailableToBePurchased;
 	public static event Action<double> OnMoneyChanged;
 	public static event Action<EUpgradeName> OnUpgradePurchased;
 	public static event Action<EUi, bool> OnUiStateChanged;
 	public static event Func<PlayerData> OnPlayerDataRequired;
+	public static event Func<Player> OnRequestPlayerRef;
 	
 	public static void TriggerAutoSaveFinished()
 	{
 		OnAutoSaveFinished?.Invoke();
+	}
+	public static void TriggerTrashSold()
+	{
+		OnTrashSold?.Invoke();
 	}
 	public static void TriggerUpgradesAvailableToBePurchased(int InAmount)
 	{
@@ -35,5 +41,21 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	public static PlayerData TriggerGetPlayerData()
 	{
 		return OnPlayerDataRequired?.Invoke();
+	}
+	public static Player TriggerGetPlayerRef()
+	{
+		return OnRequestPlayerRef?.Invoke();
+	}
+	public override void Dispose()
+	{
+		OnAutoSaveFinished = null;
+		OnTrashSold = null;
+		OnUpgradesAvailableToBePurchased = null;
+		OnMoneyChanged = null;
+		OnUpgradePurchased = null;
+		OnUiStateChanged = null;
+		OnPlayerDataRequired = null;
+		OnRequestPlayerRef = null;
+		base.Dispose();
 	}
 }

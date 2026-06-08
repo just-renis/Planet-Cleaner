@@ -1,0 +1,434 @@
+/* --- Core Layout --- */
+
+UpgradesUi
+{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: 'Courier New', monospace;
+  color: #f8fafc;
+  flex-direction: column;
+  z-index: 100;
+}
+
+UpgradesUi .wrapper
+{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+}
+
+UpgradesUi i
+{
+  font-family: 'Material Icons';
+  font-style: normal;
+}
+
+/* --- Header Section --- */
+
+UpgradesUi header
+{
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  background-color: #161c24;
+  border-bottom: 2px solid #ff6b00;
+  z-index: 50;
+}
+
+UpgradesUi .header-left
+{
+  flex-direction: row;
+  align-items: center;
+}
+
+UpgradesUi h1
+{
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+UpgradesUi header p
+{
+  font-size: 24px;
+  color: #64748b;
+  font-family: monospace;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+UpgradesUi .header-right
+{
+  flex-direction: row;
+  align-items: center;
+}
+
+UpgradesUi .money-info
+{
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 32px;
+}
+
+UpgradesUi .money-info span
+{
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c9c21;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
+UpgradesUi .money-amount
+{
+  flex-direction: row;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+UpgradesUi .money-amount i
+{
+  font-size: 24px;
+  margin-right: 8px;
+  color: #ff6b00;
+}
+
+UpgradesUi .close-btn
+{
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  cursor: pointer;
+}
+
+UpgradesUi .close-btn i
+{
+  font-family: 'Material Icons';
+  font-size: 40px;
+  color: #64748b;
+}
+
+UpgradesUi .close-btn:hover i
+{
+  color: #ffffff;
+}
+
+/* --- Canvas Area --- */
+
+UpgradesUi .canvas-container
+{
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #464a4e;
+}
+
+UpgradesUi .canvas-bg
+{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+
+UpgradesUi .canvas
+{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  z-index: 0;
+}
+
+/* --- Lines --- */
+
+UpgradesUi .lines
+{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+UpgradesUi .line
+{
+  position: absolute;
+  transform-origin: 0 50%;
+  border-top: 1px solid rgba(0, 104, 255, 1);
+}
+
+UpgradesUi .line.owned
+{
+  border-top: 2px dashed #ff6b00;
+}
+
+UpgradesUi .line.unowned
+{
+  border-top: 1px solid rgba(0, 104, 255, 1);
+}
+
+/* --- Nodes --- */
+
+UpgradesUi .nodes
+{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+UpgradesUi .node-wrapper
+{
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+UpgradesUi .node-wrapper.selected { z-index: 20; }
+
+UpgradesUi .node-wrapper.selected .node
+{
+  border: 2px solid #ff6b00;
+  background-color: rgba(255, 107, 0, 0.1);
+}
+
+UpgradesUi .node
+{
+  width: 52px;
+  height: 52px;
+  border-radius: 0px; // Sharp squares instead of rounded boxes
+  border: 1px solid #64748b;
+  justify-content: center;
+  align-items: center;
+  background-color: #161c24;
+  position: relative;
+}
+
+UpgradesUi .node i
+{
+  font-size: 24px;
+  color: #ffffff;
+}
+
+UpgradesUi .node.locked
+{
+  border: 1px dashed rgba(100, 116, 139, 0.4);
+  background-color: transparent;
+}
+
+UpgradesUi .node.locked i { opacity: 0.15; }
+
+UpgradesUi .node.available:not(.owned)
+{
+  border: 1px solid #ffffff;
+}
+
+UpgradesUi .node.owned
+{
+  border: 1px solid #ff6b00;
+}
+UpgradesUi .node.owned i { color: #ff6b00; }
+
+UpgradesUi .node .check
+{
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ff6b00;
+  border-radius: 0;
+  padding: 1px;
+}
+
+UpgradesUi .node .check i
+{
+  font-size: 10px;
+  color: #ffffff;
+  font-weight: 900;
+}
+
+UpgradesUi .level-badge
+{
+  position: absolute;
+  font-size: 32px;
+  font-weight: bold;
+  transform: scale(0.4);
+  transform-origin: bottom right;
+  padding: 2px 6px;
+  bottom: -2px;
+  right: 2px;
+  font-family: monospace;
+  color: #0b1927;
+}
+
+/* --- Docked Right Sidebar Panel --- */
+
+UpgradesUi .sidebar
+{
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 420px;
+  background-color: #161c24;
+  border-left: 2px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0;
+  padding: 40px 32px;
+  flex-direction: column;
+  z-index: 40;
+  box-shadow: -10px 0px 40px rgba(0, 0, 0, 0.5);
+}
+
+UpgradesUi .close-sidebar
+{
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px;
+  cursor: pointer;
+  color: #64748b;
+}
+UpgradesUi .close-sidebar:hover { color: #ffffff; }
+
+UpgradesUi .sidebar-icon
+{
+  width: 48px;
+  height: 48px;
+  border-radius: 0px;
+  margin-bottom: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+UpgradesUi .sidebar h2
+{
+  font-size: 26px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  letter-spacing: 1px;
+}
+
+UpgradesUi .badges
+{
+  flex-direction: row;
+  margin-bottom: 24px;
+}
+
+UpgradesUi .badge
+{
+  padding: 2px 6px;
+  border-radius: 0;
+  font-size: 9px;
+  font-family: monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+
+UpgradesUi .badge.combat { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
+UpgradesUi .badge.owned { background-color: rgba(255, 107, 0, 0.15); color: #ff6b00; }
+
+UpgradesUi .desc
+{
+  color: #94a3b8;
+  font-size: 24px;
+  line-height: 1.5;
+  margin-bottom: 40px;
+}
+
+UpgradesUi .stat-row
+{
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  font-family: monospace;
+  color: #64748b;
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(100, 116, 139, 0.15);
+}
+
+UpgradesUi .text-yellow { color: #ff6b00; }
+UpgradesUi .text-red    { color: #f43f5e; }
+UpgradesUi .text-green  { color: #10b981; }
+
+.hidden
+{
+  display: none;
+  opacity: 0;
+}
+
+/* --- Tactical Button Action --- */
+
+UpgradesUi .buy-btn
+{
+  width: 100%;
+  padding: 16px 0;
+  border-radius: 0;
+  font-family: monospace;
+  font-weight: 900;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: center;
+  justify-content: center;
+  background-color: #ff6b00;
+  color: #ffffff;
+  cursor: pointer;
+}
+UpgradesUi .buy-btn:hover { background-color: #ff8533; }
+
+UpgradesUi .buy-btn.disabled
+{
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #64748b;
+  cursor: default;
+}
+
+/* --- Control Blocks --- */
+
+UpgradesUi .zoom-controls
+{
+  position: absolute;
+  left: 32px;
+  bottom: 32px;
+  flex-direction: column;
+  z-index: 60;
+}
+
+UpgradesUi .zoom-controls .btn
+{
+  width: 50px;
+  height: 50px;
+  background-color: #161c24;
+  border: 1px solid #64748b;
+  border-radius: 0;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+UpgradesUi .zoom-controls .btn i { color: #ffffff; font-size: 18px; }
+
+UpgradesUi .zoom-scale
+{
+  font-size: 15px;
+  font-family: monospace;
+  color: #ffffff;
+  text-align: center;
+}

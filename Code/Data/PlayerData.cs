@@ -8,6 +8,7 @@ using System.Text;
 public sealed class PlayerData
 {
 	public int CurrentVersion { get; set; }
+	public int CurrentTrashAmount { get; set; }
 	public double Money { get; set; }
 	public double TotalMoneyEarned { get; set; }
 	public string Checksum { get; set; }
@@ -24,6 +25,7 @@ public sealed class PlayerData
     }
 
     public bool GetIsPendingForSave() { return IsPendingForSave; }
+    public int GetCurrentTrashAmount() { return CurrentTrashAmount; }
     public double GetMoney() { return Money; }
     public double GetTotalMoneyEarned() { return TotalMoneyEarned; }
     public int GetUpgradeAmount(EUpgradeName InUpgradeName) { return OwnedUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
@@ -41,6 +43,16 @@ public sealed class PlayerData
 		Money -= InAmount;
 		Save(this);
 		EventManager.TriggerMoneyChange(Money);
+    }
+    public void AddTrash(int InAmount)
+    {
+	    CurrentTrashAmount += InAmount;
+	    Save(this);
+    }
+    public void ResetTrash()
+    {
+	    CurrentTrashAmount = 0;
+	    Save(this);
     }
     public void BuyUpgrade(EUpgradeName InUpgradeName)
     {

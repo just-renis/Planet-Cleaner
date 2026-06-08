@@ -1,5 +1,8 @@
 using Sandbox.Citizen;
+using Sandbox.Data;
+using Sandbox.Enums;
 using Sandbox.Interfaces;
+using Sandbox.Managers;
 
 public sealed class Player : Component
 {
@@ -10,15 +13,24 @@ public sealed class Player : Component
 	[Property] private float DefaultMovementSpeed { get; set; } = 2500f;
 	[Property] private float JumpStrength { get; set; } = 350f;
 	[Property] private float DefaultCollectCooldown { get; set; } = 1f;
+	[Property] private float DefaultMoneyMultiplier { get; set; } = 1f;
 	[Property] private int DefaultCollectAmount { get; set; } = 1;
+	[Property] private int DefaultTrashCapacity { get; set; } = 10;
 	[Property] private Rigidbody PlayerRigidbody { get; set; }
 	[Property] private CitizenAnimationHelper AnimationHelper { get; set; }
 	private bool IsGrounded;
 	private float MovementSpeed;
 	private float CollectCooldownTimer;
+	private float MoneyMultiplier;
 	private int CurrentCollectAmount;
+	private int TrashCapacity;
 	private Angles CurrentCameraRotation;
 	private CameraComponent Camera;
+	private PlayerData Data;
+	
+	public int GetTrashCollected() { return Data.GetCurrentTrashAmount(); }
+	public int GetTrashCapacity() { return TrashCapacity; }
+	public double GetMoney() { return Data.GetMoney(); }
 	
 	protected override void OnUpdate()
 	{
@@ -31,10 +43,31 @@ public sealed class Player : Component
 	protected override void OnStart()
 	{
 		if (IsProxy) return;
+		LoadSaveData();
 		Camera = Scene.GetComponentInChildren<CameraComponent>();
+		EventManager.OnPlayerDataRequired += GetPlayerData;
+		EventManager.OnRequestPlayerRef += GetThisRef;
+		EventManager.OnTrashSold += SellTrash;
 		ApplyUpgradesOnJoin();
 	}
+	protected override void OnDestroy()
+	{
+		if (Data != null && Data.GetIsPendingForSave()) PlayerData.ApplySave(Data);
+		if (IsProxy) return;
+		EventManager.OnPlayerDataRequired -= GetPlayerData;
+		EventManager.OnRequestPlayerRef -= GetThisRef;
+		EventManager.OnTrashSold -= SellTrash;
+	}
 
+	private PlayerData GetPlayerData() { return Data; }
+	private Player GetThisRef() { return this; }
+
+	private void SellTrash()
+	{
+		if (Data.GetCurrentTrashAmount() <= 0) return;
+		Data.AddMoney(MoneyMultiplier * Data.GetCurrentTrashAmount());
+		Data.ResetTrash();
+	}
 	private void ProcessInput()
 	{
 		ProcessMouseInput();
@@ -42,16 +75,17 @@ public sealed class Player : Component
 	}
 	private void ProcessMouseInput()
 	{
-		//if (UiManager.IsAnyUiOpen()) return;
+		if (UiManager.IsAnyUiOpen()) return;
 	//	ProcessMouseRightClickInput();
 	//	ProcessMouseLeftClickInput();
 	}
 	private void ProcessKeyboardInput()
 	{
+		if (Input.Pressed("Score")) UiManager.ChangeUiState(EUi.UpgradesMenu);
 		if (Input.EscapePressed) ProcessEscape();
+		if (UiManager.IsAnyUiOpen()) return;
 		ProcessMovementInput();
 		ProcessCameraLook();
-	//	if (UiManager.IsAnyUiOpen()) return;
 	//	if (Input.Pressed("Dash") && Data?.GetUpgradeAmount(EUpgradeName.UnlockDashAbility) == 1) Dash();
 	//	if (Input.Pressed("Interact")) EventManager.TriggerPlayerInteractClicked();
 	}
@@ -85,11 +119,12 @@ public sealed class Player : Component
 	}
 	private void ProcessEscape()
 	{
-	//	Input.EscapePressed = false;
+	// Input.EscapePressed = false;
 	//	UiManager.ChangeUiState(EUi.SettingsMenu);
 	}
 	private void ScanAndCollect()
 	{
+		if (Data.GetCurrentTrashAmount() >= TrashCapacity) return;
 		DebugOverlay.Sphere(new Sphere(WorldPosition, DefaultCollectRadius), Color.Red, 5);
 		IEnumerable<GameObject> Targets = Scene.FindInPhysics(new Sphere(WorldPosition, DefaultCollectRadius));
 		foreach (GameObject Target in Targets)
@@ -97,6 +132,7 @@ public sealed class Player : Component
 			if (!Target.Tags.Has("collectible")) continue;
 			if (!Target.Components.TryGet(out ICollectable Collectable)) continue;
 			Collectable.Collect();
+			Data.AddTrash(1);
 			if (++CurrentCollectAmount < DefaultCollectAmount) continue;
 			CurrentCollectAmount = 0;
 			break;
@@ -105,5 +141,12 @@ public sealed class Player : Component
 	private void ApplyUpgradesOnJoin()
 	{
 		MovementSpeed = DefaultMovementSpeed;
+		TrashCapacity = DefaultTrashCapacity;
+		MoneyMultiplier = DefaultMoneyMultiplier;
+	}
+	private void LoadSaveData()
+	{
+		Data = PlayerData.Load();
+		EventManager.TriggerMoneyChange(Data.GetMoney());
 	}
 }

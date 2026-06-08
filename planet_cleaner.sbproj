@@ -5,7 +5,7 @@
   "Ident": "planet_cleaner",
   "Schema": 1,
   "IncludeSourceFiles": false,
-  "Resources": null,
+  "Resources": "UI/*",
   "PackageReferences": [],
   "EditorReferences": null,
   "Mounts": null,

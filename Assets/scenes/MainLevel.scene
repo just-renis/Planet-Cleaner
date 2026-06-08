@@ -284,6 +284,27 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "Sounds": {}
+        },
+        {
+          "__type": "Sandbox.Data.GlobalData",
+          "__guid": "0c6f3046-e56e-46ce-8f17-1c3bc2ce127d",
+          "__enabled": true,
+          "Flags": 0,
+          "DefaultAttributes": {},
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "UpgradesMaxAmounts": {
+            "CollectRange1": 3,
+            "CollectSpeed1": 3
+          },
+          "UpgradesValues": {
+            "CollectRange1": 50,
+            "CollectSpeed1": 50
+          }
         }
       ],
       "Children": []
@@ -370,13 +391,117 @@
           "__guid": "19b7b464-96f1-4c09-b327-5db2d3315767",
           "__enabled": true,
           "Flags": 0,
-          "MyStringValue": "Hello World!",
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        },
+        {
+          "__type": "Sandbox.UI.SettingsUi",
+          "__guid": "f2a5c1d3-1b0d-4b76-be9d-6048c3d70b51",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "Sandbox.UI.UpgradesUi",
+          "__guid": "b1d9049c-db8b-40d3-aebb-3cbec4c1bcac",
+          "__enabled": true,
+          "Flags": 0,
+          "DebugMoneyAmount": 1000,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "QuestionMarkIcon": "ui/questionmark.png",
+          "Upgrades": [
+            {
+              "UpgradeName": "CollectRange1",
+              "UpgradeValue": "CollectRange",
+              "DefaultAttribute": "None",
+              "MaxAmount": 3,
+              "Name": "Collection Range",
+              "Description": "Trash collection range increase by {0}%.",
+              "Costs": [
+                20,
+                50,
+                120
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 0,
+              "Y": 0
+            },
+            {
+              "UpgradeName": "CollectSpeed1",
+              "UpgradeValue": "CollectSpeed",
+              "DefaultAttribute": "None",
+              "MaxAmount": 3,
+              "Name": "Collect speed",
+              "Description": "Trash collecting speed increased by {0}%.",
+              "Costs": [
+                20,
+                40,
+                100
+              ],
+              "ParentsUpgradeNames": [
+                "CollectRange1"
+              ],
+              "Icon": null,
+              "X": 0,
+              "Y": -100
+            }
+          ]
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "f594d243-2021-42fd-a645-c9afd8521ff2",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "SellZone",
+      "Position": "0,1000,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "SellZone",
+          "__guid": "63c9ec3e-bc81-4595-9d2d-ee0fdcab8ae4",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
         }
       ],
       "Children": []
