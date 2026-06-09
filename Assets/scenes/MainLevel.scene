@@ -283,7 +283,11 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Sounds": {}
+          "Sounds": {
+            "UpgradeNodeClick": "audio/upgradenodeclick.sound",
+            "BuyUpgrade": "audio/buyupgrade.sound",
+            "OpenCloseUi": "audio/opencloseui.sound"
+          }
         },
         {
           "__type": "Sandbox.Data.GlobalData",

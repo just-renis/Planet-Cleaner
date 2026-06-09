@@ -166,17 +166,16 @@ UpgradesUi .line
 {
   position: absolute;
   transform-origin: 0 50%;
-  border-top: 1px solid rgba(0, 104, 255, 1);
 }
 
 UpgradesUi .line.owned
 {
-  border-top: 2px dashed #ff6b00;
+  box-shadow: 0 0 10px rgb(44, 250, 21);
 }
 
 UpgradesUi .line.unowned
 {
-  border-top: 1px solid rgba(0, 104, 255, 1);
+  box-shadow: 0 0 10px rgb(250, 21, 55);
 }
 
 /* --- Nodes --- */
@@ -207,9 +206,9 @@ UpgradesUi .node-wrapper.selected .node
 
 UpgradesUi .node
 {
-  width: 52px;
-  height: 52px;
-  border-radius: 0px; // Sharp squares instead of rounded boxes
+  width: 64px;
+  height: 64px;
+  border-radius: 0;
   border: 1px solid #64748b;
   justify-content: center;
   align-items: center;
