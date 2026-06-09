@@ -4,19 +4,14 @@ Layer0
 {
 	shader "shaders/complex.shader"
 
-	//---- PBR ----
-	F_METALNESS_TEXTURE 1
-	F_SPECULAR 1
-
 	//---- Ambient Occlusion ----
 	g_flAmbientOcclusionDirectDiffuse "0.000"
-	g_flAmbientOcclusionDirectSpecular "0.000"
 	TextureAmbientOcclusion "materials/default/default_ao.tga"
 
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "materials/trash/tin can_color.jpg"
+	TextureColor "materials/trash/paper/newspaper.jpg"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
@@ -25,14 +20,14 @@ Layer0
 	g_bFogEnabled "1"
 
 	//---- Metalness ----
-	TextureMetalness "materials/trash/tin can_metallic.jpg"
+	g_flMetalness "0.000"
 
 	//---- Normal ----
-	TextureNormal "materials/trash/tin can_normal.jpg"
+	TextureNormal "materials/default/default_normal.tga"
 
 	//---- Roughness ----
 	g_flRoughnessScaleFactor "1.000"
-	TextureRoughness "materials/trash/tin can_roughness.jpg"
+	TextureRoughness "materials/default/default_rough.tga"
 
 	//---- Texture Coordinates ----
 	g_vTexCoordOffset "[0.000 0.000]"

@@ -42,7 +42,7 @@
             "AfterUILayer": false
           },
           "RenderType": "Off",
-          "Tint": "1,1,1,1"
+          "Tint": "0.20465,0.20465,0.20465,1"
         },
         {
           "__type": "Sandbox.BoxCollider",
@@ -283,11 +283,7 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Sounds": {
-            "UpgradeNodeClick": "audio/upgradenodeclick.sound",
-            "BuyUpgrade": "audio/buyupgrade.sound",
-            "OpenCloseUi": "audio/opencloseui.sound"
-          }
+          "Sounds": {}
         },
         {
           "__type": "Sandbox.Data.GlobalData",
@@ -531,14 +527,14 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.Clutter.ClutterGridSystem": {
-        "Storage": {
-          "$blob": "6d9c5db6-9a59-4654-b962-00e365472ce3"
-        }
-      },
       "Sandbox.SelectionSetsSystem": {
         "Data": {
           "SelectionSets": []
+        }
+      },
+      "Sandbox.Clutter.ClutterGridSystem": {
+        "Storage": {
+          "$blob": "6d9c5db6-9a59-4654-b962-00e365472ce3"
         }
       }
     }
