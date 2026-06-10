@@ -15,7 +15,7 @@
 						[
 							{
 								from = "tin can.vmat"
-								to = "materials/trash/tin can.vmat"
+								to = "materials/trash/tincan/tin can.vmat"
 							},
 						]
 						use_global_default = false
