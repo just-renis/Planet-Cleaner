@@ -13,7 +13,7 @@
 			<header>
 				<div class="header-left">
 					<div class="title-info">
-						<h1>UPGRADES</h1>
+						<h1>PRESTIGE UPGRADES</h1>
 					</div>
 				</div>
 				<div class="header-right">
@@ -295,10 +295,10 @@
 		SoundManager.Instance?.Play2D(ESound.BuyUpgrade);
 		CalculatePurchasableUpgrades();
 	}
-	private void CloseMenu() { UiManager.ChangeUiState(EUi.UpgradesMenu); }
+	private void CloseMenu() { UiManager.ChangeUiState(EUi.PrestigeUpgrades); }
 	private void UiStateChanged(EUi InUi, bool RenderState)
 	{
-		if (InUi != EUi.UpgradesMenu) return;
+		if (InUi != EUi.PrestigeUpgrades) return;
 		IsOpen = RenderState;
 		Panel?.Style.PointerEvents = IsOpen ? PointerEvents.All : PointerEvents.None;
 	}

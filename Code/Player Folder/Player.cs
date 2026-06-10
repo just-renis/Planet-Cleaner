@@ -81,7 +81,7 @@ public sealed class Player : Component
 	}
 	private void ProcessKeyboardInput()
 	{
-		if (Input.Pressed("Score")) UiManager.ChangeUiState(EUi.UpgradesMenu);
+		if (Input.Pressed("Score")) UiManager.ChangeUiState(EUi.PrestigeUpgrades);
 		if (Input.EscapePressed) ProcessEscape();
 		if (UiManager.IsAnyUiOpen()) return;
 		ProcessMovementInput();

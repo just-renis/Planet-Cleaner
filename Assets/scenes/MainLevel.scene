@@ -195,7 +195,7 @@
       "__version": 2,
       "Flags": 0,
       "Name": "Spawn",
-      "Position": "0,0,2100",
+      "Position": "-392.593445,781.572083,2100",
       "Rotation": "0,0,0,1",
       "Scale": "1,1,1",
       "Tags": "",
@@ -301,6 +301,43 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
+          "ToolsInformation": {
+            "Grabber": {
+              "BaseUnlockPrice": 40,
+              "ToolName": "Grabber",
+              "Description": "Grabber Description",
+              "IconName": null,
+              "Upgrades": {
+                "Power": {
+                  "MaxLevel": 3,
+                  "DisplayName": "Power",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Range": {
+                  "MaxLevel": 1,
+                  "DisplayName": "wsd",
+                  "Icon": null,
+                  "Prices": [
+                    2
+                  ]
+                },
+                "Speed": {
+                  "MaxLevel": 2,
+                  "DisplayName": "21",
+                  "Icon": null,
+                  "Prices": [
+                    2,
+                    22
+                  ]
+                }
+              }
+            }
+          },
           "UpgradesMaxAmounts": {
             "CollectRange1": 3,
             "CollectSpeed1": 3
@@ -415,8 +452,8 @@
           "OnComponentUpdate": null
         },
         {
-          "__type": "Sandbox.UI.UpgradesUi",
-          "__guid": "b1d9049c-db8b-40d3-aebb-3cbec4c1bcac",
+          "__type": "Sandbox.UI.PrestigeUpgradesUi",
+          "__guid": "a2926400-9b4c-41c9-b5ff-ad4a834ca8fb",
           "__enabled": true,
           "Flags": 0,
           "DebugMoneyAmount": 1000,
@@ -434,11 +471,11 @@
               "DefaultAttribute": "None",
               "MaxAmount": 3,
               "Name": "Collection Range",
-              "Description": "Trash collection range increase by {0}%.",
+              "Description": "Collection Range increase {0}%.",
               "Costs": [
+                10,
                 20,
-                50,
-                120
+                30
               ],
               "ParentsUpgradeNames": [],
               "Icon": null,
@@ -450,21 +487,31 @@
               "UpgradeValue": "CollectSpeed",
               "DefaultAttribute": "None",
               "MaxAmount": 3,
-              "Name": "Collect speed",
-              "Description": "Trash collecting speed increased by {0}%.",
+              "Name": "Collect Speed",
+              "Description": "Collectspeed increase {0}%.",
               "Costs": [
-                20,
-                40,
-                100
+                1,
+                2,
+                3
               ],
-              "ParentsUpgradeNames": [
-                "CollectRange1"
-              ],
+              "ParentsUpgradeNames": [],
               "Icon": null,
               "X": 0,
               "Y": -100
             }
           ]
+        },
+        {
+          "__type": "Sandbox.UI.ToolsUpgradesUi",
+          "__guid": "5f1278bd-3932-4132-88cf-ef22e014eebb",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ],
       "Children": []
@@ -488,6 +535,47 @@
         {
           "__type": "SellZone",
           "__guid": "63c9ec3e-bc81-4595-9d2d-ee0fdcab8ae4",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "d083f9ee-6b04-42b3-84bc-cbf366b5d96d",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "ToolUpgradeZone",
+      "Position": "-308.501343,1000,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "ToolUpgradeZone",
+          "__guid": "cda69b8b-99f0-477b-8c55-28a890d2b114",
           "__enabled": true,
           "Flags": 0,
           "CapsuleHeight": 100,

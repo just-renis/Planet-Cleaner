@@ -7,12 +7,14 @@ using System.Text;
 
 public sealed class PlayerData
 {
+	
 	public int CurrentVersion { get; set; }
 	public int CurrentTrashAmount { get; set; }
 	public double Money { get; set; }
 	public double TotalMoneyEarned { get; set; }
 	public string Checksum { get; set; }
 	public Dictionary<EUpgradeName, int> OwnedUpgrades { get; set; }
+	public Dictionary<ETool, ToolUpgradesData> ToolUpgrades { get; set; }
 
 	private bool IsPendingForSave;
 	private const int LiveVersion = 1;
@@ -22,6 +24,7 @@ public sealed class PlayerData
     {
 	    CurrentVersion = LiveVersion;
 	    OwnedUpgrades = new Dictionary<EUpgradeName, int>();
+	    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>();
     }
 
     public bool GetIsPendingForSave() { return IsPendingForSave; }

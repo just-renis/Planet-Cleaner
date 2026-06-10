@@ -45,11 +45,11 @@
 	
 	private void UiStateChanged(EUi InUi, bool RenderState)
 	{
-		if (InUi != EUi.SettingsMenu) return;
+		if (InUi != EUi.Settings) return;
 		IsOpen = RenderState;
 		Panel?.Style.PointerEvents = IsOpen ? PointerEvents.All : PointerEvents.None;
 	}
-	private void CloseMenu() { UiManager.ChangeUiState(EUi.SettingsMenu); }
+	private void CloseMenu() { UiManager.ChangeUiState(EUi.Settings); }
 	private void ExitGame() { Game.Close(); }
 	private void OpenDefaultSboxSettings() { Game.Overlay.ShowPauseMenu(); }
 }

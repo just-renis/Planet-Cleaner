@@ -2,6 +2,7 @@ namespace Sandbox.Enums;
 
 public enum EUi
 {
-	UpgradesMenu,
-	SettingsMenu
+	PrestigeUpgrades,
+	Settings,
+	ToolUpgrades
 }

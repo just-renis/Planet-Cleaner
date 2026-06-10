@@ -1,6 +1,6 @@
 /* --- Core Layout --- */
 
-UpgradesUi
+PrestigeUpgradesUi
 {
   position: absolute;
   width: 100%;
@@ -11,7 +11,7 @@ UpgradesUi
   z-index: 100;
 }
 
-UpgradesUi .wrapper
+PrestigeUpgradesUi .wrapper
 {
   position: absolute;
   top: 0;
@@ -21,7 +21,7 @@ UpgradesUi .wrapper
   flex-direction: column;
 }
 
-UpgradesUi i
+PrestigeUpgradesUi i
 {
   font-family: 'Material Icons';
   font-style: normal;
@@ -29,7 +29,7 @@ UpgradesUi i
 
 /* --- Header Section --- */
 
-UpgradesUi header
+PrestigeUpgradesUi header
 {
   flex-direction: row;
   justify-content: space-between;
@@ -40,13 +40,13 @@ UpgradesUi header
   z-index: 50;
 }
 
-UpgradesUi .header-left
+PrestigeUpgradesUi .header-left
 {
   flex-direction: row;
   align-items: center;
 }
 
-UpgradesUi h1
+PrestigeUpgradesUi h1
 {
   font-size: 24px;
   font-weight: 900;
@@ -55,7 +55,7 @@ UpgradesUi h1
   color: #ffffff;
 }
 
-UpgradesUi header p
+PrestigeUpgradesUi header p
 {
   font-size: 24px;
   color: #64748b;
@@ -64,20 +64,20 @@ UpgradesUi header p
   text-transform: uppercase;
 }
 
-UpgradesUi .header-right
+PrestigeUpgradesUi .header-right
 {
   flex-direction: row;
   align-items: center;
 }
 
-UpgradesUi .money-info
+PrestigeUpgradesUi .money-info
 {
   flex-direction: column;
   align-items: flex-end;
   margin-right: 32px;
 }
 
-UpgradesUi .money-info span
+PrestigeUpgradesUi .money-info span
 {
   font-size: 28px;
   font-weight: 700;
@@ -86,7 +86,7 @@ UpgradesUi .money-info span
   letter-spacing: 5px;
 }
 
-UpgradesUi .money-amount
+PrestigeUpgradesUi .money-amount
 {
   flex-direction: row;
   align-items: center;
@@ -94,14 +94,14 @@ UpgradesUi .money-amount
   font-weight: 900;
 }
 
-UpgradesUi .money-amount i
+PrestigeUpgradesUi .money-amount i
 {
   font-size: 24px;
   margin-right: 8px;
   color: #ff6b00;
 }
 
-UpgradesUi .close-btn
+PrestigeUpgradesUi .close-btn
 {
   flex-direction: row;
   justify-content: center;
@@ -110,21 +110,21 @@ UpgradesUi .close-btn
   cursor: pointer;
 }
 
-UpgradesUi .close-btn i
+PrestigeUpgradesUi .close-btn i
 {
   font-family: 'Material Icons';
   font-size: 40px;
   color: #64748b;
 }
 
-UpgradesUi .close-btn:hover i
+PrestigeUpgradesUi .close-btn:hover i
 {
   color: #ffffff;
 }
 
 /* --- Canvas Area --- */
 
-UpgradesUi .canvas-container
+PrestigeUpgradesUi .canvas-container
 {
   flex: 1;
   position: relative;
@@ -132,7 +132,7 @@ UpgradesUi .canvas-container
   background-color: #464a4e;
 }
 
-UpgradesUi .canvas-bg
+PrestigeUpgradesUi .canvas-bg
 {
   position: absolute;
   top: 0;
@@ -142,7 +142,7 @@ UpgradesUi .canvas-bg
   z-index: 0;
 }
 
-UpgradesUi .canvas
+PrestigeUpgradesUi .canvas
 {
   position: absolute;
   left: 50%;
@@ -154,7 +154,7 @@ UpgradesUi .canvas
 
 /* --- Lines --- */
 
-UpgradesUi .lines
+PrestigeUpgradesUi .lines
 {
   position: absolute;
   left: 0;
@@ -162,25 +162,25 @@ UpgradesUi .lines
   z-index: 1;
 }
 
-UpgradesUi .line
+PrestigeUpgradesUi .line
 {
   position: absolute;
   transform-origin: 0 50%;
 }
 
-UpgradesUi .line.owned
+PrestigeUpgradesUi .line.owned
 {
   box-shadow: 0 0 10px rgb(44, 250, 21);
 }
 
-UpgradesUi .line.unowned
+PrestigeUpgradesUi .line.unowned
 {
   box-shadow: 0 0 10px rgb(250, 21, 55);
 }
 
 /* --- Nodes --- */
 
-UpgradesUi .nodes
+PrestigeUpgradesUi .nodes
 {
   position: absolute;
   left: 0;
@@ -188,7 +188,7 @@ UpgradesUi .nodes
   z-index: 2;
 }
 
-UpgradesUi .node-wrapper
+PrestigeUpgradesUi .node-wrapper
 {
   position: absolute;
   flex-direction: column;
@@ -196,15 +196,15 @@ UpgradesUi .node-wrapper
   cursor: pointer;
 }
 
-UpgradesUi .node-wrapper.selected { z-index: 20; }
+PrestigeUpgradesUi .node-wrapper.selected { z-index: 20; }
 
-UpgradesUi .node-wrapper.selected .node
+PrestigeUpgradesUi .node-wrapper.selected .node
 {
   border: 2px solid #ff6b00;
   background-color: rgba(255, 107, 0, 0.1);
 }
 
-UpgradesUi .node
+PrestigeUpgradesUi .node
 {
   width: 64px;
   height: 64px;
@@ -216,32 +216,32 @@ UpgradesUi .node
   position: relative;
 }
 
-UpgradesUi .node i
+PrestigeUpgradesUi .node i
 {
   font-size: 24px;
   color: #ffffff;
 }
 
-UpgradesUi .node.locked
+PrestigeUpgradesUi .node.locked
 {
   border: 1px dashed rgba(100, 116, 139, 0.4);
   background-color: transparent;
 }
 
-UpgradesUi .node.locked i { opacity: 0.15; }
+PrestigeUpgradesUi .node.locked i { opacity: 0.15; }
 
-UpgradesUi .node.available:not(.owned)
+PrestigeUpgradesUi .node.available:not(.owned)
 {
   border: 1px solid #ffffff;
 }
 
-UpgradesUi .node.owned
+PrestigeUpgradesUi .node.owned
 {
   border: 1px solid #ff6b00;
 }
-UpgradesUi .node.owned i { color: #ff6b00; }
+PrestigeUpgradesUi .node.owned i { color: #ff6b00; }
 
-UpgradesUi .node .check
+PrestigeUpgradesUi .node .check
 {
   position: absolute;
   top: -4px;
@@ -251,14 +251,14 @@ UpgradesUi .node .check
   padding: 1px;
 }
 
-UpgradesUi .node .check i
+PrestigeUpgradesUi .node .check i
 {
   font-size: 10px;
   color: #ffffff;
   font-weight: 900;
 }
 
-UpgradesUi .level-badge
+PrestigeUpgradesUi .level-badge
 {
   position: absolute;
   font-size: 32px;
@@ -274,7 +274,7 @@ UpgradesUi .level-badge
 
 /* --- Docked Right Sidebar Panel --- */
 
-UpgradesUi .sidebar
+PrestigeUpgradesUi .sidebar
 {
   position: absolute;
   right: 0;
@@ -290,7 +290,7 @@ UpgradesUi .sidebar
   box-shadow: -10px 0px 40px rgba(0, 0, 0, 0.5);
 }
 
-UpgradesUi .close-sidebar
+PrestigeUpgradesUi .close-sidebar
 {
   position: absolute;
   top: 16px;
@@ -299,9 +299,9 @@ UpgradesUi .close-sidebar
   cursor: pointer;
   color: #64748b;
 }
-UpgradesUi .close-sidebar:hover { color: #ffffff; }
+PrestigeUpgradesUi .close-sidebar:hover { color: #ffffff; }
 
-UpgradesUi .sidebar-icon
+PrestigeUpgradesUi .sidebar-icon
 {
   width: 48px;
   height: 48px;
@@ -313,7 +313,7 @@ UpgradesUi .sidebar-icon
   background-color: rgba(255, 255, 255, 0.02);
 }
 
-UpgradesUi .sidebar h2
+PrestigeUpgradesUi .sidebar h2
 {
   font-size: 26px;
   font-weight: 900;
@@ -322,13 +322,13 @@ UpgradesUi .sidebar h2
   letter-spacing: 1px;
 }
 
-UpgradesUi .badges
+PrestigeUpgradesUi .badges
 {
   flex-direction: row;
   margin-bottom: 24px;
 }
 
-UpgradesUi .badge
+PrestigeUpgradesUi .badge
 {
   padding: 2px 6px;
   border-radius: 0;
@@ -339,10 +339,10 @@ UpgradesUi .badge
   margin-right: 8px;
 }
 
-UpgradesUi .badge.combat { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
-UpgradesUi .badge.owned { background-color: rgba(255, 107, 0, 0.15); color: #ff6b00; }
+PrestigeUpgradesUi .badge.combat { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
+PrestigeUpgradesUi .badge.owned { background-color: rgba(255, 107, 0, 0.15); color: #ff6b00; }
 
-UpgradesUi .desc
+PrestigeUpgradesUi .desc
 {
   color: #94a3b8;
   font-size: 24px;
@@ -350,7 +350,7 @@ UpgradesUi .desc
   margin-bottom: 40px;
 }
 
-UpgradesUi .stat-row
+PrestigeUpgradesUi .stat-row
 {
   flex-direction: row;
   justify-content: space-between;
@@ -363,9 +363,9 @@ UpgradesUi .stat-row
   border-bottom: 1px dashed rgba(100, 116, 139, 0.15);
 }
 
-UpgradesUi .text-yellow { color: #ff6b00; }
-UpgradesUi .text-red    { color: #f43f5e; }
-UpgradesUi .text-green  { color: #10b981; }
+PrestigeUpgradesUi .text-yellow { color: #ff6b00; }
+PrestigeUpgradesUi .text-red    { color: #f43f5e; }
+PrestigeUpgradesUi .text-green  { color: #10b981; }
 
 .hidden
 {
@@ -375,7 +375,7 @@ UpgradesUi .text-green  { color: #10b981; }
 
 /* --- Tactical Button Action --- */
 
-UpgradesUi .buy-btn
+PrestigeUpgradesUi .buy-btn
 {
   width: 100%;
   padding: 16px 0;
@@ -390,9 +390,9 @@ UpgradesUi .buy-btn
   color: #ffffff;
   cursor: pointer;
 }
-UpgradesUi .buy-btn:hover { background-color: #ff8533; }
+PrestigeUpgradesUi .buy-btn:hover { background-color: #ff8533; }
 
-UpgradesUi .buy-btn.disabled
+PrestigeUpgradesUi .buy-btn.disabled
 {
   background-color: rgba(255, 255, 255, 0.05);
   color: #64748b;
@@ -401,7 +401,7 @@ UpgradesUi .buy-btn.disabled
 
 /* --- Control Blocks --- */
 
-UpgradesUi .zoom-controls
+PrestigeUpgradesUi .zoom-controls
 {
   position: absolute;
   left: 32px;
@@ -410,7 +410,7 @@ UpgradesUi .zoom-controls
   z-index: 60;
 }
 
-UpgradesUi .zoom-controls .btn
+PrestigeUpgradesUi .zoom-controls .btn
 {
   width: 50px;
   height: 50px;
@@ -422,9 +422,9 @@ UpgradesUi .zoom-controls .btn
   cursor: pointer;
   margin-bottom: 6px;
 }
-UpgradesUi .zoom-controls .btn i { color: #ffffff; font-size: 18px; }
+PrestigeUpgradesUi .zoom-controls .btn i { color: #ffffff; font-size: 18px; }
 
-UpgradesUi .zoom-scale
+PrestigeUpgradesUi .zoom-scale
 {
   font-size: 15px;
   font-family: monospace;
