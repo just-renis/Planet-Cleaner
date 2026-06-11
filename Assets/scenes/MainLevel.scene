@@ -128,6 +128,7 @@
           "__guid": "87040b87-1cd3-4464-b68b-faf40d1c1f52",
           "__enabled": true,
           "Flags": 0,
+          "Contribution": "Diffuse, Specular, Transmissive",
           "FogMode": "Enabled",
           "FogStrength": 1,
           "LightColor": "1,0.76471,0.32941,1",
@@ -283,7 +284,11 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "Sounds": {}
+          "Sounds": {
+            "UpgradeNodeClick": "audio/upgradenodeclick.sound",
+            "BuyUpgrade": "audio/buyupgrade.sound",
+            "OpenCloseUi": "audio/opencloseui.sound"
+          }
         },
         {
           "__type": "Sandbox.Data.GlobalData",
@@ -299,14 +304,15 @@
           "OnComponentUpdate": null,
           "ToolsInformation": {
             "Grabber": {
-              "BaseUnlockPrice": 40,
+              "UnlockPrice": 0,
               "ToolName": "Grabber",
               "Description": "Grabber Description",
-              "IconName": null,
+              "Icon": null,
               "Upgrades": {
                 "Power": {
                   "MaxLevel": 3,
                   "DisplayName": "Power",
+                  "Description": "Collect {0} trash at once.",
                   "Icon": null,
                   "Prices": [
                     1,
@@ -316,7 +322,8 @@
                 },
                 "Range": {
                   "MaxLevel": 1,
-                  "DisplayName": "wsd",
+                  "DisplayName": "Range",
+                  "Description": "{0}% increased range.",
                   "Icon": null,
                   "Prices": [
                     2
@@ -324,7 +331,8 @@
                 },
                 "Speed": {
                   "MaxLevel": 2,
-                  "DisplayName": "21",
+                  "DisplayName": "Speed",
+                  "Description": "{0}% increased collecting speed.",
                   "Icon": null,
                   "Prices": [
                     2,
@@ -490,7 +498,9 @@
                 2,
                 3
               ],
-              "ParentsUpgradeNames": [],
+              "ParentsUpgradeNames": [
+                "CollectRange1"
+              ],
               "Icon": null,
               "X": 0,
               "Y": -100
@@ -615,14 +625,14 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.SelectionSetsSystem": {
-        "Data": {
-          "SelectionSets": []
-        }
-      },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
           "$blob": "6d9c5db6-9a59-4654-b962-00e365472ce3"
+        }
+      },
+      "Sandbox.SelectionSetsSystem": {
+        "Data": {
+          "SelectionSets": []
         }
       }
     }

@@ -24,16 +24,48 @@ public sealed class PlayerData
     {
 	    CurrentVersion = LiveVersion;
 	    OwnedUpgrades = new Dictionary<EUpgradeName, int>();
-	    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>();
+	    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>
+	    {
+		    {
+			    ETool.Grabber, new ToolUpgradesData 
+			    {
+				    IsOwned = true,
+				    Levels = new Dictionary<EToolStat, int>() 
+			    }
+		    }
+	    };
     }
 
+    public bool IsToolUnlocked(ETool InToolName)
+    {
+	    return ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData) && ToolData.IsOwned;
+    }
     public bool GetIsPendingForSave() { return IsPendingForSave; }
     public int GetCurrentTrashAmount() { return CurrentTrashAmount; }
+    public int GetToolStatLevel(ETool InToolName, EToolStat InToolStat)
+    {
+	    if (!ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData)) return 0;
+	    return ToolData.Levels?.GetValueOrDefault(InToolStat, 0) ?? 0;
+    }
     public double GetMoney() { return Money; }
     public double GetTotalMoneyEarned() { return TotalMoneyEarned; }
     public int GetUpgradeAmount(EUpgradeName InUpgradeName) { return OwnedUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
     public Dictionary<EUpgradeName, int> GetOwnedUpgrades() { return OwnedUpgrades; }
-    
+
+    public void IncrementToolStatLevel(ETool InToolName, EToolStat InToolStat)
+    {
+	    if (!ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData)) return;
+	    if (ToolData.Levels == null) return;
+	    ToolData.Levels.TryGetValue(InToolStat, out int CurrentLevel);
+	    ToolData.Levels[InToolStat] = CurrentLevel + 1;
+	    Save(this);
+    }
+    public void UnlockTool(ETool InToolType)
+    {
+	    if (!ToolUpgrades.TryGetValue(InToolType, out ToolUpgradesData ToolData)) return;
+	    ToolData.IsOwned = true;
+	    Save(this);
+    }
     public void AddMoney(double InAmount)
     {
 	    Money += InAmount;

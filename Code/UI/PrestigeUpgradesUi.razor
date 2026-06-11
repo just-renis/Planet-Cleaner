@@ -46,8 +46,7 @@
 								float Length = MathF.Sqrt(Dx * Dx + Dy * Dy);
 								float Angle = MathF.Atan2(Dy, Dx) * 180f / MathF.PI;
 								bool IsOwnedPath = IsUpgradeOwned && GetIsOwned(Parent.UpgradeName);
-								<div class="line @(IsOwnedPath ? "owned" : "unowned")"
-								     style="left: @(Parent.X + 32)px; top: @(Parent.Y + 32)px; width: @(Length)px; transform: rotate(@(Angle)deg);"></div>
+								<div class="line @(IsOwnedPath ? "owned" : "unowned")" style="left: @(Parent.X + 32)px; top: @(Parent.Y + 32)px; width: @(Length)px; transform: rotate(@(Angle)deg);"></div>
 							}
 						}
 					</div>

@@ -7,98 +7,84 @@
 <root class="@(IsOpen ? "" : "hidden")">
     @if (IsOpen && Data != null && ToolsData != null)
     {
-        <div class="shop-container">
-            <div class="shop-header">
-                <span class="shop-title">TOOLS</span>
-                <span class="shop-subtitle">Buy equipment and unlock upgrades</span>
-            </div>
-            <div class="shop-body">
-                <div class="left-panel">
-                    <div class="wallet-card">
-                        <span class="wallet-label">Wallet</span>
-                        <span class="wallet-amount">$@Data.Money.ToString("N0")</span>
-                    </div>
-                    <div class="tools-list">
-                        @foreach (KeyValuePair<ETool, ToolData> Tool in ToolsData)
-                        {
-                            bool IsSelected = SelectedToolType == Tool.Key;
-                            bool IsUnlocked = false;//Data.IsToolUnlocked(tool.Key);
-                            int CurrentLevel = 0; //Data.GetToolLevel(tool.Key);
-                            <div class="tool-item @(IsSelected ? "selected" : "")" onclick="@(() => SelectTool(Tool.Key))">
-                            <img class="tool-icon" alt="" src="@Tool.Value.IconName"/>
-                            <div class="tool-meta">
-                                    <span class="tool-name">@(IsUnlocked ? Tool.Value.ToolName : "???")</span>
-                                    <span class="tool-status-text">
-                                        @(IsUnlocked ? $"LVL {CurrentLevel}" : IsSelected ? $"Buy: ${Tool.Value.BaseUnlockPrice}" : "Locked")
-                                    </span>
-                                </div>
-                                @if (!IsUnlocked)
-                                {
-                                    <i class="lock-icon">lock</i>
-                                }
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="right-panel">
-                    @if (ToolsData.TryGetValue(SelectedToolType, out ToolData CurrentTool))
-                    {
-	                    bool IsToolUnlocked = false; // Data.IsToolUnlocked(SelectedToolType);
-                        <div class="tool-showcase-header">
-                            <i class="showcase-icon">@CurrentTool.IconName</i>
-                            <div class="showcase-meta">
-                                <span class="showcase-name">@CurrentTool.ToolName</span>
-                                <span class="showcase-desc">@CurrentTool.Description</span>
-                            </div>
-                        </div>
-                        <div class="upgrades-list @(IsToolUnlocked ? "" : "blurred-lock")">
-                            @foreach (KeyValuePair<EToolStat, ToolData.ToolUpgrade> Upgrade in CurrentTool.Upgrades)
-                            {
-	                            int CurrentStatLevel = 0; //Data.GetStatLevel(SelectedToolType, upgrade.StatType);
-                                bool IsMaxed = CurrentStatLevel >= Upgrade.Value.MaxLevel;
-                                int Price = Upgrade.Value.Prices[CurrentStatLevel];
-                                <div class="upgrade-row">
-                                    <div class="upgrade-info">
-                                        <div class="upgrade-row-header">
-                                            <i class="stat-icon">@Upgrade.Value.Icon</i>
-                                            <span class="stat-name">@Upgrade.Value.DisplayName</span>
-                                        </div>
-                                        <span class="stat-desc">DESCRIPTION</span>
-                                    </div>
-                                    <div class="pips-wrapper">
-                                        @for (int i = 0; i < Upgrade.Value.MaxLevel; i++)
-                                        {
-                                            <div class="pip @(i < CurrentStatLevel ? "filled" : "")"></div>
-                                        }
-                                    </div>
-                                    @if (IsMaxed)
-                                    {
-                                        <button class="buy-btn maxed" disabled>MAX</button>
-                                    }
-                                    else
-                                    {
-                                        <button class="buy-btn @(Data.Money >= Price ? "" : "cant-afford")" 
-                                                onclick="@(() => PurchaseUpgrade(Upgrade.Key, Price))">
-                                            $@Price.ToString("N0")
-                                        </button>
-                                    }
-                                </div>
-                            }
-                        </div>
-                        @if (!IsToolUnlocked)
-                        {
-                            <div class="unlock-overlay">
-                                <button class="unlock-main-btn @(Data.Money >= CurrentTool.BaseUnlockPrice ? "" : "cant-afford")"
-                                        onclick="@(() => BuyMainTool(SelectedToolType, CurrentTool.BaseUnlockPrice))">
-                                    UNLOCK ($@CurrentTool.BaseUnlockPrice.ToString("N0"))
-                                </button>
-                            </div>
-                        }
-                    }
-                </div>
-
-            </div>
-        </div>
+	    <div class="shop-container">
+		    <div class="shop-header">
+			    <span class="shop-title">TOOLS</span>
+		    </div>
+		    <div class="shop-body">
+			    <div class="left-panel">
+				    <div class="money-card">
+					    <span class="money-label">Money Amount</span>
+					    <span class="money-amount">$@Data.Money.ToString("N0")</span>
+				    </div>
+				    <div class="tools-list">
+					    @foreach (KeyValuePair<ETool, ToolData> Tool in ToolsData)
+					    {
+						    bool IsSelected = SelectedToolType == Tool.Key;
+						    bool IsUnlocked = Data.IsToolUnlocked(Tool.Key);
+						    <div class="tool-item @(IsSelected ? "selected" : "")" onclick="@(() => SelectTool(Tool.Key))">
+							    <img class="tool-icon" alt="" src="@Tool.Value.Icon"/>
+							    <div class="tool-meta">
+								    <span class="tool-name">@(IsUnlocked ? Tool.Value.ToolName : "???")</span>
+							    </div>
+							    @if (!IsUnlocked)
+							    {
+								    <i class="lock-icon">lock</i>
+							    }
+						    </div>
+					    }
+				    </div>
+			    </div>
+			    <div class="right-panel">
+				    <div class="close-btn" @onclick=@CloseMenu>X</div>
+				    @if (ToolsData.TryGetValue(SelectedToolType, out ToolData CurrentTool))
+				    {
+					    bool IsToolUnlocked = Data.IsToolUnlocked(SelectedToolType);
+					    <div class="tool-showcase-header">
+						    <img class="showcase-icon" alt="" src="@CurrentTool.Icon"/>
+						    <span class="showcase-name">@CurrentTool.ToolName</span>
+					    </div>
+					    <div class="upgrades-list @(IsToolUnlocked ? "" : "blurred-lock")">
+						    @foreach (KeyValuePair<EToolStat, ToolData.ToolUpgrade> Upgrade in CurrentTool.Upgrades)
+						    {
+							    int CurrentStatLevel = Data.GetToolStatLevel(SelectedToolType, Upgrade.Key);
+							    bool IsMaxed = CurrentStatLevel >= Upgrade.Value.MaxLevel;
+							    <div class="upgrade-row">
+								    <div class="upgrade-info">
+									    <div class="upgrade-row-header">
+										    <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
+										    <span class="stat-name">@Upgrade.Value.DisplayName</span>
+										    <span class="stat-desc">@Upgrade.Value.Description</span>
+									    </div>
+								    </div>
+								    <div class="pips-wrapper">
+									    @for (int Index = 0; Index < Upgrade.Value.MaxLevel; Index++)
+									    {
+										    <div class="pip @(Index < CurrentStatLevel ? "filled" : "")"></div>
+									    }
+								    </div>
+								    @if (IsMaxed)
+								    {
+									    <div class="buy-btn maxed" disabled>MAX</div>
+								    }
+								    else
+								    {
+									    int Price = Upgrade.Value.Prices[CurrentStatLevel];
+									    <div class="buy-btn @(Data.Money >= Price ? "" : "cant-afford")" onclick="@(() => PurchaseUpgrade(Upgrade.Key, Price))">$@Price.ToString("N0")</div>
+								    }
+							    </div>
+						    }
+					    </div>
+					    @if (!IsToolUnlocked)
+					    {
+						    <div class="unlock-overlay">
+							    <div class="unlock-btn @(Data.Money >= CurrentTool.UnlockPrice ? "" : "cant-afford")" @onclick=@(() => BuyMainTool(SelectedToolType, CurrentTool.UnlockPrice))>UNLOCK @CurrentTool.UnlockPrice.ToString("N0")$</div>
+						    </div>
+					    }
+				    }
+			    </div>
+		    </div>
+	    </div>
     }
 </root>
 
@@ -140,15 +126,15 @@
     }
     private void BuyMainTool(ETool InToolType, int InPrice)
     {
-        if (Data.Money < InPrice) return;
-        Data.Money -= InPrice;
-      //  Data.UnlockTool(toolType);
+        if (Data.GetMoney() < InPrice) return;
+        Data.SubtractMoney(InPrice);
+		Data.UnlockTool(InToolType);
     }
     private void PurchaseUpgrade(EToolStat InStat, int InPrice)
     {
-        if (Data.Money < InPrice) return;
-        Data.Money -= InPrice;
-        //Data.IncrementStatLevel(SelectedToolType, stat);
+        if (Data.GetMoney() < InPrice) return;
+        Data.SubtractMoney(InPrice);
+		Data.IncrementToolStatLevel(SelectedToolType, InStat);
     }
     private void CloseMenu() { UiManager.ChangeUiState(EUi.ToolUpgrades); }
     private void UiStateChanged(EUi InUi, bool RenderState)

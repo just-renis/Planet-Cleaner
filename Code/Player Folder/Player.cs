@@ -48,6 +48,7 @@ public sealed class Player : Component
 		EventManager.OnPlayerDataRequired += GetPlayerData;
 		EventManager.OnRequestPlayerRef += GetThisRef;
 		EventManager.OnTrashSold += SellTrash;
+		EventManager.OnUiStateChanged += UiStateChanged;
 		ApplyUpgradesOnJoin();
 	}
 	protected override void OnDestroy()
@@ -57,11 +58,18 @@ public sealed class Player : Component
 		EventManager.OnPlayerDataRequired -= GetPlayerData;
 		EventManager.OnRequestPlayerRef -= GetThisRef;
 		EventManager.OnTrashSold -= SellTrash;
+		EventManager.OnUiStateChanged -= UiStateChanged;
 	}
 
 	private PlayerData GetPlayerData() { return Data; }
 	private Player GetThisRef() { return this; }
 
+	private void UiStateChanged(EUi InUi, bool InState)
+	{
+		if (!InState) return;
+		PlayerRigidbody.Velocity = new Vector3(0, 0, PlayerRigidbody.Velocity.z);
+		AnimationHelper.WithVelocity(Vector3.Zero);
+	}
 	private void SellTrash()
 	{
 		if (Data.GetCurrentTrashAmount() <= 0) return;
