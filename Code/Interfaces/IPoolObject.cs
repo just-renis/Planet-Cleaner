@@ -1,6 +1,6 @@
 namespace Sandbox.Interfaces;
 
-public interface IPoolObject
+public interface IPoolObject<T> where T : class
 {
-	public void Init();
+	public void Init(T Args = null);
 }

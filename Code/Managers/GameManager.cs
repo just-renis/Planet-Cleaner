@@ -4,11 +4,11 @@ namespace Sandbox.Managers;
 
 public sealed class GameManager : Component
 {
-	private bool IsHostLogicInitiated;
-	private const float SaveInterval = 20f;
-	private int AutoSavingHandle;
-	//[Property] private List<GameObject> PlayerSpawners { get; set; }
 	[Property] private Dictionary<ESound, SoundEvent> Sounds = new();
+	private bool IsHostLogicInitiated;
+	private int AutoSavingHandle;
+	private const float SaveInterval = 20f;
+	//[Property] private List<GameObject> PlayerSpawners { get; set; }
 
 	private SpawnerManager SpawnerManager;
 	

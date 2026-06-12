@@ -43,6 +43,7 @@ public sealed class Player : Component
 	protected override void OnStart()
 	{
 		if (IsProxy) return;
+		SoundManager.Instance.Play2D(ESound.MainSoundtrack);
 		LoadSaveData();
 		Camera = Scene.GetComponentInChildren<CameraComponent>();
 		EventManager.OnPlayerDataRequired += GetPlayerData;

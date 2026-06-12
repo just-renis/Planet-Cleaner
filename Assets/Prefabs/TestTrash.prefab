@@ -6,7 +6,7 @@
     "Name": "testtrash",
     "Position": "0,0,0",
     "Rotation": "0,0,0,1",
-    "Scale": "0.100000001,0.100000001,0.100000001",
+    "Scale": "1,1,1",
     "Tags": "collectible",
     "Enabled": true,
     "NetworkMode": 1,
@@ -40,45 +40,31 @@
           "AfterUILayer": false
         },
         "RenderType": "Off",
-        "Tint": "0,0,0,1"
+        "Tint": "1,1,1,1"
       },
       {
         "__type": "Sandbox.Objects.Trash",
         "__guid": "56fc59c9-53f1-48c6-a2e8-86458d318edf",
         "__enabled": true,
         "Flags": 0,
-        "OnComponentDestroy": null,
-        "OnComponentDisabled": null,
-        "OnComponentEnabled": null,
-        "OnComponentFixedUpdate": null,
-        "OnComponentStart": null,
-        "OnComponentUpdate": null
-      },
-      {
-        "__type": "Sandbox.BoxCollider",
-        "__guid": "611dc8c3-f19f-4c40-86b3-abaa80c60ff0",
-        "__enabled": true,
-        "Flags": 0,
-        "Center": "0,0,0",
-        "ColliderFlags": 0,
-        "Elasticity": null,
-        "Friction": null,
-        "IsTrigger": false,
+        "ModelCollider": {
+          "_type": "component",
+          "component_id": "6388bb91-de6a-4438-a599-1200da32e1b5",
+          "go": "d8e5160d-85bb-44c0-9656-8a64056cb48c",
+          "component_type": "ModelCollider"
+        },
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "OnObjectTriggerEnter": null,
-        "OnObjectTriggerExit": null,
-        "OnTriggerEnter": null,
-        "OnTriggerExit": null,
-        "RollingResistance": null,
-        "Scale": "50,50,50",
-        "Static": false,
-        "Surface": null,
-        "SurfaceVelocity": "0,0,0"
+        "Renderer": {
+          "_type": "component",
+          "component_id": "8f9d202e-3b95-4f17-93d6-de055d77183f",
+          "go": "d8e5160d-85bb-44c0-9656-8a64056cb48c",
+          "component_type": "ModelRenderer"
+        }
       },
       {
         "__type": "Sandbox.Rigidbody",
@@ -114,6 +100,31 @@
         "RigidbodyFlags": 0,
         "SleepThreshold": 2,
         "StartAsleep": false
+      },
+      {
+        "__type": "Sandbox.ModelCollider",
+        "__guid": "6388bb91-de6a-4438-a599-1200da32e1b5",
+        "__enabled": true,
+        "Flags": 0,
+        "ColliderFlags": "IgnoreMass",
+        "Elasticity": null,
+        "Friction": null,
+        "IsTrigger": false,
+        "Model": "models/dev/box.vmdl",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectTriggerEnter": null,
+        "OnObjectTriggerExit": null,
+        "OnTriggerEnter": null,
+        "OnTriggerExit": null,
+        "RollingResistance": null,
+        "Static": false,
+        "Surface": null,
+        "SurfaceVelocity": "0,0,0"
       }
     ],
     "Children": [],

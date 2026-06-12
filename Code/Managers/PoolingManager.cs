@@ -2,6 +2,8 @@ using Sandbox.Data;
 using Sandbox.Enums;
 using Sandbox.Interfaces;
 using Sandbox.Objects;
+using Sandbox.Special_Data;
+
 namespace Sandbox.Managers;
 
 public sealed class PoolingManager : Component
@@ -31,7 +33,6 @@ public sealed class PoolingManager : Component
 		PoolObject.WorldPosition = InLocation;
 		PoolObject.WorldRotation = InRotation;
 		PoolObject.Enabled = true;
-		PoolObject.GetComponent<IPoolObject>().Init();
 		PoolData.ActiveCount++;
 		return PoolObject;
 	}

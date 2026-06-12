@@ -287,7 +287,8 @@
           "Sounds": {
             "UpgradeNodeClick": "audio/upgradenodeclick.sound",
             "BuyUpgrade": "audio/buyupgrade.sound",
-            "OpenCloseUi": "audio/opencloseui.sound"
+            "OpenCloseUi": "audio/opencloseui.sound",
+            "MainSoundtrack": "audio/mainsoundtrack.sound"
           }
         },
         {
@@ -340,6 +341,28 @@
                   ]
                 }
               }
+            }
+          },
+          "TrashTypes": {
+            "EarthStartingArea": {
+              "Models": [
+                "materials/trash/bottle.vmdl",
+                "materials/trash/can.vmdl",
+                "materials/trash/eggcarton.vmdl",
+                "materials/trash/foodcan1.vmdl",
+                "materials/trash/foodcan2.vmdl",
+                "materials/trash/opencardboardbox.vmdl",
+                "materials/trash/paper1.vmdl",
+                "materials/trash/paper2.vmdl",
+                "materials/trash/paper3.vmdl",
+                "materials/trash/paper4.vmdl",
+                "materials/trash/paper5.vmdl",
+                "materials/trash/paper6.vmdl",
+                "materials/trash/papertrash.vmdl",
+                "materials/trash/plasticbottle.vmdl",
+                "materials/trash/toiletpaper.vmdl",
+                "materials/trash/trashbag.vmdl"
+              ]
             }
           },
           "UpgradesMaxAmounts": {

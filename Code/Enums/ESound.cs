@@ -4,5 +4,6 @@ public enum ESound
 {
 	UpgradeNodeClick,
 	BuyUpgrade,
-	OpenCloseUi
+	OpenCloseUi,
+	MainSoundtrack
 }
