@@ -20,9 +20,9 @@
 				    <div class="tools-list">
 					    @foreach (KeyValuePair<ETool, ToolData> Tool in ToolsData)
 					    {
-						    bool IsSelected = SelectedToolType == Tool.Key;
+						    bool IsSelected = SelectedTool == Tool.Key;
 						    bool IsUnlocked = Data.IsToolUnlocked(Tool.Key);
-						    <div class="tool-item @(IsSelected ? "selected" : "")" onclick="@(() => SelectTool(Tool.Key))">
+						    <div class="tool-item @(IsSelected ? "selected" : "")" onclick="@(() => SelectTool(Tool.Key, IsUnlocked))">
 							    <img class="tool-icon" alt="" src="@Tool.Value.Icon"/>
 							    <div class="tool-meta">
 								    <span class="tool-name">@(IsUnlocked ? Tool.Value.ToolName : "???")</span>
@@ -37,24 +37,29 @@
 			    </div>
 			    <div class="right-panel">
 				    <div class="close-btn" @onclick=@CloseMenu>X</div>
-				    @if (ToolsData.TryGetValue(SelectedToolType, out ToolData CurrentTool))
+				    @if (ToolsData.TryGetValue(SelectedTool, out ToolData CurrentTool))
 				    {
-					    bool IsToolUnlocked = Data.IsToolUnlocked(SelectedToolType);
+					    bool IsToolUnlocked = Data.IsToolUnlocked(SelectedTool);
 					    <div class="tool-showcase-header">
 						    <img class="showcase-icon" alt="" src="@CurrentTool.Icon"/>
 						    <span class="showcase-name">@CurrentTool.ToolName</span>
 					    </div>
 					    <div class="upgrades-list @(IsToolUnlocked ? "" : "blurred-lock")">
-						    @foreach (KeyValuePair<EToolStat, ToolData.ToolUpgrade> Upgrade in CurrentTool.Upgrades)
+						    @foreach (KeyValuePair<EToolStat, ToolUpgradeData> Upgrade in CurrentTool.Upgrades)
 						    {
-							    int CurrentStatLevel = Data.GetToolStatLevel(SelectedToolType, Upgrade.Key);
+							    int CurrentStatLevel = Data.GetToolStatLevel(SelectedTool, Upgrade.Key);
 							    bool IsMaxed = CurrentStatLevel >= Upgrade.Value.MaxLevel;
 							    <div class="upgrade-row">
 								    <div class="upgrade-info">
 									    <div class="upgrade-row-header">
 										    <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
 										    <span class="stat-name">@Upgrade.Value.DisplayName</span>
-										    <span class="stat-desc">@Upgrade.Value.Description</span>
+										    <span class="stat-desc-previous">@GetCurrentDescription(Upgrade.Key, Upgrade.Value)</span>
+										    @if (Data.GetToolStatLevel(SelectedTool, Upgrade.Key) < Upgrade.Value.MaxLevel)
+										    {
+											    <span>-></span>
+											    <span class="stat-desc-next">@GetNextDescription(Upgrade.Key, Upgrade.Value)</span>
+										    }
 									    </div>
 								    </div>
 								    <div class="pips-wrapper">
@@ -78,7 +83,7 @@
 					    @if (!IsToolUnlocked)
 					    {
 						    <div class="unlock-overlay">
-							    <div class="unlock-btn @(Data.Money >= CurrentTool.UnlockPrice ? "" : "cant-afford")" @onclick=@(() => BuyMainTool(SelectedToolType, CurrentTool.UnlockPrice))>UNLOCK @CurrentTool.UnlockPrice.ToString("N0")$</div>
+							    <div class="unlock-btn @(Data.Money >= CurrentTool.UnlockPrice ? "" : "cant-afford")" @onclick=@(() => UnlockTool(SelectedTool, CurrentTool.UnlockPrice))>UNLOCK @CurrentTool.UnlockPrice.ToString("N0")$</div>
 						    </div>
 					    }
 				    }
@@ -92,18 +97,19 @@
 {
     private bool IsOpen;
     private PlayerData Data;
-    private ETool SelectedToolType = ETool.Grabber;
+    private ETool SelectedTool = ETool.Hands;
     private Dictionary<ETool, ToolData> ToolsData;
 
     protected override int BuildHash()
     {
 	    if (GetPlayerData() == null) return -1;
-        return HashCode.Combine(IsOpen, Data.Money, SelectedToolType);
+        return HashCode.Combine(IsOpen, Data.Money, SelectedTool);
     }
     
     protected override void OnAwake()
     {
         EventManager.OnUiStateChanged += UiStateChanged;
+        EventManager.OnPlayerDataLoaded += PlayerDataLoaded;
     }
     protected override void OnStart()
     {
@@ -112,29 +118,53 @@
     protected override void OnDestroy()
     {
         EventManager.OnUiStateChanged -= UiStateChanged;
+        EventManager.OnPlayerDataLoaded -= PlayerDataLoaded;
     }
 
+    private string GetCurrentDescription(EToolStat InToolStat, ToolUpgradeData InToolUpgrade)
+    {
+	    if (InToolUpgrade == null) return "";
+	    int CurrentLevel = Data.GetToolStatLevel(SelectedTool, InToolStat);
+	    if (CurrentLevel == 0) return "None"; 
+	    float CurrentValue = InToolUpgrade.Value * CurrentLevel;
+	    return InToolUpgrade.Description.Replace("{0}", CurrentValue.ToString("G"));
+    }
+    private string GetNextDescription(EToolStat InToolStat, ToolUpgradeData InToolUpgrade)
+    {
+	    if (InToolUpgrade == null) return "";
+	    int CurrentLevel = Data.GetToolStatLevel(SelectedTool, InToolStat);
+	    bool IsMaxed = CurrentLevel >= InToolUpgrade.MaxLevel;
+	    if (IsMaxed) return "";
+	    float NextValue = InToolUpgrade.Value * (CurrentLevel + 1);
+	    return InToolUpgrade.Description.Replace("{0}", NextValue.ToString("G"));
+    }
     private PlayerData GetPlayerData()
     {
         Data ??= EventManager.TriggerGetPlayerData();
         return Data;
     }
-    
-    private void SelectTool(ETool InTargetTool)
+
+    private void PlayerDataLoaded()
     {
-        SelectedToolType = InTargetTool;
+	    SelectedTool = GetPlayerData().GetEquippedTool();
     }
-    private void BuyMainTool(ETool InToolType, int InPrice)
+    private void SelectTool(ETool InTool, bool IsUnlocked)
+    {
+	    SelectedTool = InTool;
+	    if (IsUnlocked) Data.EquipTool(InTool);
+    }
+    private void UnlockTool(ETool InTool, int InPrice)
     {
         if (Data.GetMoney() < InPrice) return;
         Data.SubtractMoney(InPrice);
-		Data.UnlockTool(InToolType);
+		Data.UnlockTool(InTool);
+		Data.EquipTool(InTool);
     }
     private void PurchaseUpgrade(EToolStat InStat, int InPrice)
     {
         if (Data.GetMoney() < InPrice) return;
         Data.SubtractMoney(InPrice);
-		Data.IncrementToolStatLevel(SelectedToolType, InStat);
+		Data.IncrementToolStatLevel(SelectedTool, InStat);
     }
     private void CloseMenu() { UiManager.ChangeUiState(EUi.ToolUpgrades); }
     private void UiStateChanged(EUi InUi, bool RenderState)

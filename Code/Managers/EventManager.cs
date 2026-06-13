@@ -7,9 +7,12 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 {
 	public static event Action OnAutoSaveFinished;
 	public static event Action OnTrashSold;
+	public static event Action OnPlayerDataLoaded;
+	public static event Action OnToolChanged;
 	public static event Action<int> OnUpgradesAvailableToBePurchased;
 	public static event Action<double> OnMoneyChanged;
-	public static event Action<EUpgradeName> OnUpgradePurchased;
+	public static event Action<EPrestigeUpgradeName> OnUpgradePurchased;
+	public static event Action<EToolStat> OnToolUpgradePurchased;
 	public static event Action<EUi, bool> OnUiStateChanged;
 	public static event Func<PlayerData> OnPlayerDataRequired;
 	public static event Func<Player> OnRequestPlayerRef;
@@ -22,6 +25,14 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	{
 		OnTrashSold?.Invoke();
 	}
+	public static void TriggerPlayerDataLoaded()
+	{
+		OnPlayerDataLoaded?.Invoke();
+	}
+	public static void TriggerToolChange()
+	{
+		OnToolChanged?.Invoke();
+	}
 	public static void TriggerUpgradesAvailableToBePurchased(int InAmount)
 	{
 		OnUpgradesAvailableToBePurchased?.Invoke(InAmount);
@@ -30,9 +41,13 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	{
 		OnMoneyChanged?.Invoke(InMoney);
 	}
-	public static void TriggerUpgradePurchased(EUpgradeName InUpgradeName)
+	public static void TriggerUpgradePurchased(EPrestigeUpgradeName InUpgradeName)
 	{
 		OnUpgradePurchased?.Invoke(InUpgradeName);
+	}
+	public static void TriggerToolUpgradePurchased(EToolStat InToolStatName)
+	{
+		OnToolUpgradePurchased?.Invoke(InToolStatName);
 	}
 	public static void TriggerUiStateChange(EUi InUi, bool RenderState)
 	{

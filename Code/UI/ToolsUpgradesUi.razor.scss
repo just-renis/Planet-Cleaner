@@ -202,10 +202,25 @@ ToolsUpgradesUi
           font-size: 28px;
           font-weight: 800;
         }
-        .stat-desc 
+        .stat-desc-previous,
+        .stat-desc-next
+        {
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+        }
+        .stat-desc-previous
         {
           font-size: 20px;
-          color: #00bcd4;
+          color: #00ffeb;
+          text-shadow: 0 0 6px rgba(0, 255, 235, 0.3);
+        }
+        .stat-desc-next
+        {
+          font-size: 20px;
+          color: #ffb300;
+          font-weight: 700;
+          text-shadow: 0 0 6px rgba(255, 179, 0, 0.3);
         }
       }
       .pips-wrapper 

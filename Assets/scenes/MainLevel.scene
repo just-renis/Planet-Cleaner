@@ -304,16 +304,16 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "ToolsInformation": {
-            "Grabber": {
-              "UnlockPrice": 0,
-              "ToolName": "Grabber",
-              "Description": "Grabber Description",
+            "Hands": {
+              "UnlockPrice": 3,
+              "ToolName": "Hands",
               "Icon": null,
               "Upgrades": {
                 "Power": {
                   "MaxLevel": 3,
+                  "Value": 1,
                   "DisplayName": "Power",
-                  "Description": "Collect {0} trash at once.",
+                  "Description": "{0} collected at once.",
                   "Icon": null,
                   "Prices": [
                     1,
@@ -322,25 +322,125 @@
                   ]
                 },
                 "Range": {
-                  "MaxLevel": 1,
+                  "MaxLevel": 3,
+                  "Value": 20,
                   "DisplayName": "Range",
                   "Description": "{0}% increased range.",
                   "Icon": null,
                   "Prices": [
-                    2
+                    1,
+                    2,
+                    3
                   ]
                 },
                 "Speed": {
-                  "MaxLevel": 2,
+                  "MaxLevel": 3,
+                  "Value": 15,
                   "DisplayName": "Speed",
-                  "Description": "{0}% increased collecting speed.",
+                  "Description": "{0}% increased speed.",
                   "Icon": null,
                   "Prices": [
+                    1,
                     2,
-                    22
+                    3
                   ]
                 }
-              }
+              },
+              "Power": 1,
+              "Range": 80,
+              "CollectCooldown": 2
+            },
+            "Grabber": {
+              "UnlockPrice": 300,
+              "ToolName": "Grabber",
+              "Icon": null,
+              "Upgrades": {
+                "Power": {
+                  "MaxLevel": 3,
+                  "Value": 1,
+                  "DisplayName": "Power",
+                  "Description": "{0} collected at once.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Range": {
+                  "MaxLevel": 3,
+                  "Value": 20,
+                  "DisplayName": "Range",
+                  "Description": "{0}% increased range.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Speed": {
+                  "MaxLevel": 3,
+                  "Value": 15,
+                  "DisplayName": "Speed",
+                  "Description": "{0}% increased speed.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                }
+              },
+              "Power": 3,
+              "Range": 125,
+              "CollectCooldown": 1.5
+            },
+            "SuperGrabber": {
+              "UnlockPrice": 2000,
+              "ToolName": "Super Grabber",
+              "Icon": null,
+              "Upgrades": {
+                "Power": {
+                  "MaxLevel": 3,
+                  "Value": 1,
+                  "DisplayName": "Power",
+                  "Description": "{0} collected at once.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Range": {
+                  "MaxLevel": 3,
+                  "Value": 20,
+                  "DisplayName": "Range",
+                  "Description": "{0}% increased range.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Speed": {
+                  "MaxLevel": 3,
+                  "Value": 15,
+                  "DisplayName": "Speed",
+                  "Description": "{0}% increased speed.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                }
+              },
+              "Power": 6,
+              "Range": 250,
+              "CollectCooldown": 1
             }
           },
           "TrashTypes": {
@@ -365,14 +465,8 @@
               ]
             }
           },
-          "UpgradesMaxAmounts": {
-            "CollectRange1": 3,
-            "CollectSpeed1": 3
-          },
-          "UpgradesValues": {
-            "CollectRange1": 50,
-            "CollectSpeed1": 50
-          }
+          "UpgradesMaxAmounts": {},
+          "UpgradesValues": {}
         }
       ],
       "Children": []
@@ -408,7 +502,7 @@
             "Trash": {
               "Prefab": {
                 "_type": "gameobject",
-                "prefab": "prefabs/testtrash.prefab"
+                "prefab": "prefabs/trash.prefab"
               },
               "MaxAmountActive": 300,
               "InactiveObjects": [],
@@ -493,8 +587,8 @@
           "QuestionMarkIcon": "ui/questionmark.png",
           "Upgrades": [
             {
-              "UpgradeName": "CollectRange1",
-              "UpgradeValue": "CollectRange",
+              "UpgradeName": "None",
+              "UpgradeValue": "None",
               "DefaultAttribute": "None",
               "MaxAmount": 3,
               "Name": "Collection Range",
@@ -510,8 +604,8 @@
               "Y": 0
             },
             {
-              "UpgradeName": "CollectSpeed1",
-              "UpgradeValue": "CollectSpeed",
+              "UpgradeName": "None",
+              "UpgradeValue": "None",
               "DefaultAttribute": "None",
               "MaxAmount": 3,
               "Name": "Collect Speed",
@@ -521,9 +615,7 @@
                 2,
                 3
               ],
-              "ParentsUpgradeNames": [
-                "CollectRange1"
-              ],
+              "ParentsUpgradeNames": [],
               "Icon": null,
               "X": 0,
               "Y": -100
@@ -648,14 +740,14 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.Clutter.ClutterGridSystem": {
-        "Storage": {
-          "$blob": "6d9c5db6-9a59-4654-b962-00e365472ce3"
-        }
-      },
       "Sandbox.SelectionSetsSystem": {
         "Data": {
           "SelectionSets": []
+        }
+      },
+      "Sandbox.Clutter.ClutterGridSystem": {
+        "Storage": {
+          "$blob": "6d9c5db6-9a59-4654-b962-00e365472ce3"
         }
       }
     }

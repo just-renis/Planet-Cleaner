@@ -10,15 +10,16 @@ public sealed class GlobalData : Component
 	}
 	
 	public static GlobalData Instance { get; private set; }
-	[Property] private Dictionary<EUpgradeName, float> UpgradesValues { get; set; }
-	[Property] private Dictionary<EUpgradeName, int> UpgradesMaxAmounts { get; set; }
+	[Property] private Dictionary<EPrestigeUpgradeName, float> UpgradesValues { get; set; }
+	[Property] private Dictionary<EPrestigeUpgradeName, int> UpgradesMaxAmounts { get; set; }
 	[Property] private Dictionary<EDefaultAttribute, float> DefaultAttributes { get; set; }
 	[Property] private Dictionary<ETool, ToolData> ToolsInformation { get; set; }
 	[Property] private Dictionary<ETrashType, TrashGroup> TrashTypes { get; set; }
 
-	public float GetProcessedUpgradeValue(int InUpgradeAmount, EUpgradeName InUpgradeName) { return Math.Clamp(InUpgradeAmount, 0, GetUpgradeMaxAmount(InUpgradeName)) * GetUpgradeValue(InUpgradeName); }
-	public float GetUpgradeValue(EUpgradeName InUpgradeName) { return UpgradesValues.GetValueOrDefault(InUpgradeName, 0f); }
+	public float GetProcessedUpgradeValue(int InUpgradeAmount, EPrestigeUpgradeName InUpgradeName) { return Math.Clamp(InUpgradeAmount, 0, GetUpgradeMaxAmount(InUpgradeName)) * GetUpgradeValue(InUpgradeName); }
+	public float GetUpgradeValue(EPrestigeUpgradeName InUpgradeName) { return UpgradesValues.GetValueOrDefault(InUpgradeName, 0f); }
 	public float GetDefaultAttributeValue(EDefaultAttribute InDefaultAttribute) { return DefaultAttributes.GetValueOrDefault(InDefaultAttribute, 0f); }
+	public ToolData GetToolData(ETool InTool) { return ToolsInformation[InTool]; }
 	public Model GetRandomTrashModel(ETrashType InTrashType)
 	{
 		if (!TrashTypes.TryGetValue(InTrashType, out TrashGroup OutTrashGroup) || OutTrashGroup.Models == null) return null;
@@ -32,5 +33,5 @@ public sealed class GlobalData : Component
 	protected override void OnAwake() { Instance = this; }
 	protected override void OnDestroy() { if (Instance == this) Instance = null; }
 
-	private int GetUpgradeMaxAmount(EUpgradeName InUpgradeName) { return UpgradesMaxAmounts.GetValueOrDefault(InUpgradeName, 0); }
+	private int GetUpgradeMaxAmount(EPrestigeUpgradeName InUpgradeName) { return UpgradesMaxAmounts.GetValueOrDefault(InUpgradeName, 0); }
 }

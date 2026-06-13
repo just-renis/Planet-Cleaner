@@ -7,13 +7,13 @@ using System.Text;
 
 public sealed class PlayerData
 {
-	
 	public int CurrentVersion { get; set; }
 	public int CurrentTrashAmount { get; set; }
 	public double Money { get; set; }
 	public double TotalMoneyEarned { get; set; }
 	public string Checksum { get; set; }
-	public Dictionary<EUpgradeName, int> OwnedUpgrades { get; set; }
+	public ETool EquippedTool { get; set; }
+	public Dictionary<EPrestigeUpgradeName, int> PrestigeUpgrades { get; set; }
 	public Dictionary<ETool, ToolUpgradesData> ToolUpgrades { get; set; }
 
 	private bool IsPendingForSave;
@@ -23,11 +23,12 @@ public sealed class PlayerData
     public PlayerData()
     {
 	    CurrentVersion = LiveVersion;
-	    OwnedUpgrades = new Dictionary<EUpgradeName, int>();
+	    EquippedTool = ETool.Hands;
+	    PrestigeUpgrades = new Dictionary<EPrestigeUpgradeName, int>();
 	    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>
 	    {
 		    {
-			    ETool.Grabber, new ToolUpgradesData 
+			    ETool.Hands, new ToolUpgradesData 
 			    {
 				    IsOwned = true,
 				    Levels = new Dictionary<EToolStat, int>() 
@@ -47,23 +48,39 @@ public sealed class PlayerData
 	    if (!ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData)) return 0;
 	    return ToolData.Levels?.GetValueOrDefault(InToolStat, 0) ?? 0;
     }
+    public int GetUpgradeAmount(EPrestigeUpgradeName InUpgradeName) { return PrestigeUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
     public double GetMoney() { return Money; }
     public double GetTotalMoneyEarned() { return TotalMoneyEarned; }
-    public int GetUpgradeAmount(EUpgradeName InUpgradeName) { return OwnedUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
-    public Dictionary<EUpgradeName, int> GetOwnedUpgrades() { return OwnedUpgrades; }
+    public ETool GetEquippedTool() { return EquippedTool; }
+    public Dictionary<EPrestigeUpgradeName, int> GetOwnedPrestigeUpgrades() { return PrestigeUpgrades; }
 
+    public void EquipTool(ETool InToolName)
+    {
+	    EquippedTool = InToolName;
+	    Save(this);
+	    EventManager.TriggerToolChange();
+    }
     public void IncrementToolStatLevel(ETool InToolName, EToolStat InToolStat)
     {
-	    if (!ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData)) return;
-	    if (ToolData.Levels == null) return;
+	    if (!ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData))
+	    {
+		    ToolData = new ToolUpgradesData { IsOwned = true };
+		    ToolUpgrades.Add(InToolName, ToolData);
+	    }
+	    ToolData.Levels ??= new Dictionary<EToolStat, int>();
 	    ToolData.Levels.TryGetValue(InToolStat, out int CurrentLevel);
 	    ToolData.Levels[InToolStat] = CurrentLevel + 1;
 	    Save(this);
+	    EventManager.TriggerToolUpgradePurchased(InToolStat);
     }
     public void UnlockTool(ETool InToolType)
     {
-	    if (!ToolUpgrades.TryGetValue(InToolType, out ToolUpgradesData ToolData)) return;
-	    ToolData.IsOwned = true;
+	    if (ToolUpgrades.TryGetValue(InToolType, out ToolUpgradesData ToolData)) ToolData.IsOwned = true;
+	    else
+	    {
+		    ToolUpgradesData NewToolData = new() { IsOwned = true };
+		    ToolUpgrades.Add(InToolType, NewToolData);
+	    }
 	    Save(this);
     }
     public void AddMoney(double InAmount)
@@ -89,9 +106,9 @@ public sealed class PlayerData
 	    CurrentTrashAmount = 0;
 	    Save(this);
     }
-    public void BuyUpgrade(EUpgradeName InUpgradeName)
+    public void BuyUpgrade(EPrestigeUpgradeName InUpgradeName)
     {
-	    if (!OwnedUpgrades.TryAdd(InUpgradeName, 1)) OwnedUpgrades[InUpgradeName]++;
+	    if (!PrestigeUpgrades.TryAdd(InUpgradeName, 1)) PrestigeUpgrades[InUpgradeName]++;
 	    Save(this);
 	    EventManager.TriggerUpgradePurchased(InUpgradeName);
     }

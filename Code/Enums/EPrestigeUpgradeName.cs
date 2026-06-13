@@ -1,6 +1,6 @@
 namespace Sandbox.Enums;
 
-public enum EUpgradeName
+public enum EPrestigeUpgradeName
 {
 	None,
 	CollectRange1,

@@ -3,14 +3,14 @@ namespace Sandbox.Data;
 
 public class Upgrade
 {
-	public EUpgradeName UpgradeName { get; set; }
-	public EUpgradeValue UpgradeValue { get; set; }
+	public EPrestigeUpgradeName UpgradeName { get; set; }
+	public EPrestigeUpgradeValue UpgradeValue { get; set; }
 	public EDefaultAttribute DefaultAttribute { get; set; }
 	public int MaxAmount { get; set { field = value; AdjustCostsList(); } } = 1;
 	public string Name { get; set; }
 	[TextArea] public string Description { get; set; }
 	public List<int> Costs { get; set; }
-	public List<EUpgradeName> ParentsUpgradeNames { get; set; } = [];
+	public List<EPrestigeUpgradeName> ParentsUpgradeNames { get; set; } = [];
 	[ImageAssetPath]
 	public string Icon { get; set; }
 	public float X { get; set; }
@@ -24,6 +24,6 @@ public class Upgrade
 	}
 	public override string ToString()
 	{
-		return UpgradeName == EUpgradeName.None ? "New Upgrade" : UpgradeName.ToString();
+		return UpgradeName == EPrestigeUpgradeName.None ? "New Upgrade" : UpgradeName.ToString();
 	}
 }

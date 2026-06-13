@@ -3,22 +3,20 @@ namespace Sandbox.Data;
 
 public sealed class ToolData
 {
-	public class ToolUpgrade
-	{
-		[Property] public int MaxLevel { get; set; }
-		[Property] public string DisplayName { get; set; }
-		[Property] public string Description { get; set; }
-		[Property, ImageAssetPath] public string Icon { get; set; }
-		[Property] public List<int> Prices { get; set; }
-
-		public override string ToString() { return DisplayName; }
-	}
-
 	[Property] public int UnlockPrice { get; set; }
 	[Property] public string ToolName { get; set; }
-	[Property] public string Description { get; set; }
 	[Property, ImageAssetPath] public string Icon { get; set; }
-	[Property] public Dictionary<EToolStat, ToolUpgrade> Upgrades { get; set; }
+	[Property] public Dictionary<EToolStat, ToolUpgradeData> Upgrades { get; set; }
 
+	[Property] public int Power { get; set; }
+	[Property] public float Range { get; set; }
+	[Property] public float CollectCooldown { get; set; }
+
+	public float GetToolStatValue(EToolStat InToolStat)
+	{
+		if (Upgrades == null) return 0f;
+		if (!Upgrades.TryGetValue(InToolStat, out ToolUpgradeData UpgradeData) || UpgradeData == null) return 0f;
+		return UpgradeData.Value;
+	}
 	public override string ToString() { return ToolName; }
 }

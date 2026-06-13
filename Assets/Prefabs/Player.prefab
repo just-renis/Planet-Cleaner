@@ -30,8 +30,10 @@
         "CameraHeight": 50,
         "DefaultCollectAmount": 1,
         "DefaultCollectCooldown": 1,
-        "DefaultCollectRadius": 30,
+        "DefaultCollectRadius": 80,
+        "DefaultMoneyMultiplier": 1,
         "DefaultMovementSpeed": 1500,
+        "DefaultTrashCapacity": 10,
         "JumpStrength": 350,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -145,12 +147,16 @@
         "IkRightHand": null,
         "LookAt": null,
         "LookAtEnabled": false,
+        "LookAtEyes": null,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
+        "Sitting": "None",
+        "SittingOffsetHeight": 0,
+        "SpecialMove": "None",
         "Target": {
           "_type": "component",
           "component_id": "6e1858a1-ed75-4a12-8eb5-461f506af83d",
@@ -286,7 +292,7 @@
         ],
         "Children": [
           {
-            "__guid": "866da523-e8ed-474e-9de8-f1b81cc4afca",
+            "__guid": "1f510c03-f31d-4650-ae60-250f8949e8f0",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - boxing_gloves",
@@ -303,7 +309,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "800e67cb-c850-432e-ae43-67312bf954cf",
+                "__guid": "06e6087c-7d15-4056-b22a-422fe71dc42d",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -355,7 +361,7 @@
             "Children": []
           },
           {
-            "__guid": "bf7de1c5-fb23-4914-87d4-495343ec4eaa",
+            "__guid": "7f800bcc-5e7f-4fe5-a059-8817341d51ae",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - baseball_cap_black",
@@ -372,7 +378,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "ee850599-bf18-4d30-b7f8-8e9c930cb1a5",
+                "__guid": "c8600bcf-60a0-4cf5-835f-7508b9c8ff21",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -424,7 +430,7 @@
             "Children": []
           },
           {
-            "__guid": "4d7feb64-1a4b-44d4-ba1d-2f54496f0c7f",
+            "__guid": "36b6de00-6176-479a-826a-fd581811c2e7",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - black_boots",
@@ -441,7 +447,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "d4bc0d8e-d799-471d-8271-b79a499b8610",
+                "__guid": "a54701c5-a1c9-402c-91b5-972cacd0793c",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,

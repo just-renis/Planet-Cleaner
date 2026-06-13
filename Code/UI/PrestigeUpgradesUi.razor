@@ -37,7 +37,7 @@
 							bool IsAvailable = GetIsAvailable(Node.UpgradeName);
 							bool IsDiscoverable = !IsUpgradeOwned && Node.ParentsUpgradeNames.Any(GetIsAvailable);
 							if (!IsUpgradeOwned && !IsAvailable && !IsDiscoverable) continue;
-							@foreach (EUpgradeName ParentId in Node.ParentsUpgradeNames)
+							@foreach (EPrestigeUpgradeName ParentId in Node.ParentsUpgradeNames)
 							{
 								Upgrade Parent = Upgrades.FirstOrDefault(U => U.UpgradeName == ParentId);
 								if (Parent == null) continue;
@@ -95,10 +95,10 @@
 				@if (SelectedUpgrade != null)
 				{
 					<div class="sidebar">
-						<div class="close-sidebar" @onclick=@(() => { SelectedUpgradeName = EUpgradeName.None; })><i>close</i></div>
+						<div class="close-sidebar" @onclick=@(() => { SelectedUpgradeName = EPrestigeUpgradeName.None; })><i>close</i></div>
 						<h2>@SelectedUpgrade.Name</h2>
 						<p class="desc">@GetDynamicDescription(SelectedUpgrade)</p>
-						@if (SelectedUpgrade.UpgradeValue != EUpgradeValue.None)
+						@if (SelectedUpgrade.UpgradeValue != EPrestigeUpgradeValue.None)
 						{
 							<div class="stat-row">
 								<span>CURRENT VALUE</span>
@@ -141,7 +141,7 @@
 	[Property, ImageAssetPath] private string QuestionMarkIcon { get; set; }
 	private bool IsOpen;
 	private bool IsDragging;
-    private EUpgradeName SelectedUpgradeName;
+    private EPrestigeUpgradeName SelectedUpgradeName;
     private float CanvasX = -225f;
     private float CanvasY;
     private float Scale = 1f;
@@ -170,8 +170,8 @@
     }
     protected override int BuildHash()
     {
-	    if (GetPlayerData()?.GetOwnedUpgrades() == null) return -1;
-	    return HashCode.Combine(Data.GetMoney(), SelectedUpgradeName, Scale, CanvasX, CanvasY, Data.GetOwnedUpgrades().Count, IsDragging, IsOpen);
+	    if (GetPlayerData()?.GetOwnedPrestigeUpgrades() == null) return -1;
+	    return HashCode.Combine(Data.GetMoney(), SelectedUpgradeName, Scale, CanvasX, CanvasY, Data.GetOwnedPrestigeUpgrades().Count, IsDragging, IsOpen);
     }
     protected override void OnUpdate()
     {
@@ -186,29 +186,29 @@
 		return InUpgrade != null && Data.GetMoney() >= GetCurrentCost(InUpgrade);
 	}
 	private Upgrade SelectedUpgrade => Upgrades.FirstOrDefault(U => U.UpgradeName == SelectedUpgradeName);
-	private bool GetIsAvailable(EUpgradeName InUpgradeName)
+	private bool GetIsAvailable(EPrestigeUpgradeName InUpgradeName)
 	{
 		Upgrade Upgrade = Upgrades.FirstOrDefault(U => U.UpgradeName == InUpgradeName);
 		if (Upgrade == null) return false;
 		return Upgrade.ParentsUpgradeNames.Count == 0 || Upgrade.ParentsUpgradeNames.All(GetIsOwned);
 	}
-	private bool GetIsOwned(EUpgradeName InUpgradeName) => GetLevel(InUpgradeName) > 0;
+	private bool GetIsOwned(EPrestigeUpgradeName InUpgradeName) => GetLevel(InUpgradeName) > 0;
 	private bool CanBuyMore(Upgrade InUpgrade) 
 	{
 		return InUpgrade != null && GetLevel(InUpgrade.UpgradeName) < InUpgrade.MaxAmount;
 	}
-	private int GetLevel(EUpgradeName InUpgradeName) => Data.GetOwnedUpgrades().GetValueOrDefault(InUpgradeName, 0);
+	private int GetLevel(EPrestigeUpgradeName InUpgradeName) => Data.GetOwnedPrestigeUpgrades().GetValueOrDefault(InUpgradeName, 0);
 	private int GetCurrentCost(Upgrade InUpgrade)
 	{
 		if (InUpgrade?.Costs == null || InUpgrade.Costs.Count == 0) return 0;
 		int CurrentLevel = GetLevel(InUpgrade.UpgradeName);
 		return CurrentLevel >= InUpgrade.MaxAmount ? InUpgrade.Costs.Last() : InUpgrade.Costs[CurrentLevel];
 	}
-	private float GetUpgradeValue(EUpgradeValue InUpgradeValue)
+	private float GetUpgradeValue(EPrestigeUpgradeValue InUpgradeValue)
 	{
 		if (Data == null) return 0f;
 		GlobalData GlobalInstance = GlobalData.Instance;
-		float CalculateValue(EUpgradeName Name) => Data.GetUpgradeAmount(Name) * GlobalInstance.GetUpgradeValue(Name);
+		float CalculateValue(EPrestigeUpgradeName Name) => Data.GetUpgradeAmount(Name) * GlobalInstance.GetUpgradeValue(Name);
 		switch (InUpgradeValue)
 		{
 		//	case EUpgradeValue.MoneyAdded: return 1 + CalculateValue(EUpgradeName.MoreMoney1);
@@ -221,13 +221,13 @@
 			default: return 0;
 		}
 	}
-	private float CalculateBoxSpawnChance(EUpgradeName InUpgradeName, EUpgradeName InUpgradeNextTierName)
+	private float CalculateBoxSpawnChance(EPrestigeUpgradeName InUpgradeName, EPrestigeUpgradeName InUpgradeNextTierName)
 	{
 		float CurrentMultiplier = GlobalData.Instance.GetUpgradeValue(InUpgradeName);
 		float NextMultiplier = GlobalData.Instance.GetUpgradeValue(InUpgradeNextTierName);
 		return Data.GetUpgradeAmount(InUpgradeName) * CurrentMultiplier + Data.GetUpgradeAmount(InUpgradeNextTierName) * NextMultiplier;
 	}
-	private string GetFormattedUpgradeValue(EUpgradeValue InUpgradeValue)
+	private string GetFormattedUpgradeValue(EPrestigeUpgradeValue InUpgradeValue)
 	{
 		float Value = GetUpgradeValue(InUpgradeValue);
 		string Formatted = Value.ToString("0.##");
@@ -238,6 +238,12 @@
 		//	case EUpgradeValue.BiggerAlienMoreMoneyMultiplier: case EUpgradeValue.AlienComboMaxMultiplier: return $"{Formatted}x";
 			default: return $"{Formatted}%";
 		}
+	}
+	private string GetDynamicDescription(Upgrade InUpgrade)
+	{
+		return InUpgrade == null ? "" : InUpgrade.Description
+			.Replace("{0}", GlobalData.Instance.GetUpgradeValue(InUpgrade.UpgradeName).ToString("G"))
+			.Replace("{1}", GlobalData.Instance.GetDefaultAttributeValue(InUpgrade.DefaultAttribute).ToString("G"));
 	}
 	private PlayerData GetPlayerData()
 	{
@@ -281,14 +287,14 @@
 		SoundManager.Instance?.Play2D(ESound.UpgradeNodeClick);
 	}
 	private void OnMouseReleased() { IsDragging = false; }
-	private void SelectNode(EUpgradeName InUpgradeName)
+	private void SelectNode(EPrestigeUpgradeName InUpgradeName)
 	{
 		SelectedUpgradeName = InUpgradeName;
 		SoundManager.Instance?.Play2D(ESound.UpgradeNodeClick);
 	}
 	private void BuyUpgrade()
 	{
-		if (SelectedUpgradeName == EUpgradeName.None || SelectedUpgrade == null || !CanBuyMore(SelectedUpgrade) || !CanAfford(SelectedUpgrade) || !GetIsAvailable(SelectedUpgradeName)) return;
+		if (SelectedUpgradeName == EPrestigeUpgradeName.None || SelectedUpgrade == null || !CanBuyMore(SelectedUpgrade) || !CanAfford(SelectedUpgrade) || !GetIsAvailable(SelectedUpgradeName)) return;
 		Data.SubtractMoney(GetCurrentCost(SelectedUpgrade));
 		Data.BuyUpgrade(SelectedUpgradeName);
 		SoundManager.Instance?.Play2D(ESound.BuyUpgrade);
@@ -300,12 +306,6 @@
 		if (InUi != EUi.PrestigeUpgrades) return;
 		IsOpen = RenderState;
 		Panel?.Style.PointerEvents = IsOpen ? PointerEvents.All : PointerEvents.None;
-	}
-	private string GetDynamicDescription(Upgrade InUpgrade)
-	{
-		return InUpgrade == null ? "" : InUpgrade.Description
-			.Replace("{0}", GlobalData.Instance.GetUpgradeValue(InUpgrade.UpgradeName).ToString("G"))
-			.Replace("{1}", GlobalData.Instance.GetDefaultAttributeValue(InUpgrade.DefaultAttribute).ToString("G"));
 	}
 	
 	[Button("Reset Save File"), Group("Dev Tools")]
