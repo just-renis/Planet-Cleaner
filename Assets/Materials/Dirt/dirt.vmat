@@ -1,0 +1,25 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "materials/dirt/dirt.shader"
+
+	g_flBlendAmount "0.538"
+
+	//---- Dirt ----
+	DirtNormal "materials/dirt/dirt_normal.jpg"
+	DirtTexture "materials/dirt/dirt_color.jpg"
+	g_vDirtUVOffset "[1.000 1.000]"
+	g_vDirtUVScale "[20.000 20.000]"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+
+	//---- Mud ----
+	g_vMudUVOffset "[1.000 1.000]"
+	g_vMudUVScale "[15.000 15.000]"
+	MudAmbientOcclusion "materials/dirt/mud_ao.jpg"
+	MudNormal "materials/dirt/mud_normal.jpg"
+	MudRoughness "materials/dirt/mud_rough.jpg"
+	MudTexture "materials/dirt/mud_color.jpg"
+}

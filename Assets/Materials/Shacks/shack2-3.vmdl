@@ -1,0 +1,305 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc30:version{8c2d7a91-9c42-4bf0-883a-5a3b1762d4f1} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "door.vmat"
+								to = "materials/shacks/wood.vmat"
+							},
+							{
+								from = "hinge.vmat"
+								to = "materials/shacks/roof.vmat"
+							},
+							{
+								from = "painted blue metal sheets.vmat"
+								to = "materials/shacks/greenpaintedmetal.vmat"
+							},
+							{
+								from = "painted dark blue metal sheets.vmat"
+								to = "materials/shacks/greenpaintedmetal.vmat"
+							},
+							{
+								from = "painted green metal sheets.vmat"
+								to = "materials/shacks/greenpaintedmetal.vmat"
+							},
+							{
+								from = "painted green/white metal sheets.vmat"
+								to = "materials/shacks/paintedmetal013.vmat"
+							},
+							{
+								from = "painted wood white.vmat"
+								to = "materials/shacks/wood.vmat"
+							},
+							{
+								from = "painted wood yellow.vmat"
+								to = "materials/shacks/wood.vmat"
+							},
+							{
+								from = "painted yellow metal sheets.vmat"
+								to = "materials/shacks/roof.vmat"
+							},
+							{
+								from = "roof.vmat"
+								to = "materials/shacks/roof.vmat"
+							},
+							{
+								from = "weathered blue painted wooden planks.vmat"
+								to = "materials/shacks/floor.vmat"
+							},
+							{
+								from = "window.vmat"
+								to = "materials/glass.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "materials/default.vmat"
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						filename = "materials/shacks/shack2.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 0.5
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"Cube_009",
+								"Cube_010",
+								"Cube_012",
+								"Cube_014",
+								"Cube_017",
+								"Cube_018",
+								"Cube_019",
+								"Cube_020",
+								"Cube_001",
+								"Cube_004",
+								"Cube_003",
+								"Cube_002",
+								"Cube_006",
+								"Cube_008",
+								"Cube_011",
+								"Cube_015",
+								"Cube_016",
+								"Plane_003",
+								"Plane_005",
+								"Plane_007",
+								"Plane_014",
+								"Plane_012",
+								"Plane_013",
+								"Plane_022",
+								"Plane_021",
+								"Plane_027",
+								"Plane_028",
+								"Plane_031",
+								"Plane_032",
+								"Plane_033",
+								"Plane_034",
+								"Plane_030",
+								"Plane_029",
+								"Plane_024",
+								"Plane_025",
+								"Plane_023",
+								"Plane_016",
+							]
+						}
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -3.221455, 0.008608, -0.562203 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 142.339172, 180.444611, 1.168979 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 66.197105, -19.145342, 49.75507 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.482635, 9.047001, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -27.789194, -90.898766, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 104.935219, 2.661872, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -74.08448, -12.769894, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 4.709155, 158.919708, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -53.189812, 90.474075, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 54.133961, 2.964417, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 65.756577, 51.801521, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.091, 6.831818, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -5.314571, -83.448303, 106.729973 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 152.104553, 43.583809, 4.957353 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 30.22287, 26.202608, 51.101177 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.287605, 5.570145, 104.49575 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -18.933952, 53.968723, 103.749596 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 110.914169, 72.524406, 1.9473 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -15.705244, 91.824287, 156.252182 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 129.103119, 5.664841, 104.963654 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 68.927238, 68.331505, 156.252182 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 1.120087, 40.985569, 104.963654 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -60.44305, 8.371614, 156.252182 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 36.304581, 1.702565, 104.963654 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -74.096428, 28.503567, 156.252182 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 0.817459, 41.966469, 104.963654 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -3.221455, 51.162601, 211.220535 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 142.339172, 78.136635, 3.825806 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 66.197105, -37.91967, 76.53727 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.482635, 27.611574, 55.945755 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 65.281662, -86.040764, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.497555, 4.774701, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 65.634094, 87.444359, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.335965, 4.844711, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -76.118507, 80.831718, 156.252182 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 1.677563, 28.188339, 104.963654 ]
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

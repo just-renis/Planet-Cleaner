@@ -1,0 +1,6 @@
+
+Layer0
+{
+	shader "materials/metal box/metal.shader_c"
+
+}

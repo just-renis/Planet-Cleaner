@@ -1,0 +1,27 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "materials/water/water.shader"
+
+	g_flOpacity "1.000"
+	g_flWaterandTextureBlend "0.500"
+	g_flWaterHeight "1956.965"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+
+	//---- Water Depth Color ----
+	g_vDeepWaterColor "[0.054902 0.019608 0.000000 1.000000]"
+
+	//---- Wave Foam Settings ----
+	g_vWaveHeight "[0.000 30.000]"
+	g_vWaveHeightDistance "[200.000 2000.000]"
+	g_vWaveTopColor "[0.192157 0.101961 0.007843 1.000000]"
+	g_vWaveTopColorBlend "[0.000 20.000]"
+
+	//---- Wave Texture Settings ----
+	g_vWaveNormalScale "[14.419 13.699]"
+	g_vWavePanningSpeed "[0.000 0.108]"
+	WaveNormal "materials/water/water_height.jpg"
+}

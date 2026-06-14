@@ -1,0 +1,820 @@
+{
+  "IsSubgraph": false,
+  "Path": "materials/dirt/dirt.sgrph",
+  "Model": "models/dev/plane.vmdl",
+  "Title": "",
+  "Description": null,
+  "Category": "",
+  "Icon": "",
+  "AddToNodeLibrary": false,
+  "BlendMode": "Opaque",
+  "ShadingModel": "Lit",
+  "RenderFace": "Front",
+  "Domain": "Surface",
+  "Metadata": {},
+  "PreviewSettings": {
+    "ViewMode": "Perspective",
+    "RenderBackfaces": false,
+    "EnableShadows": true,
+    "ShowGround": true,
+    "ShowSkybox": true,
+    "BackgroundColor": "1,1,1,1",
+    "Tint": "1,1,1,1"
+  },
+  "nodes": [
+    {
+      "_class": "Result",
+      "DefaultOpacity": 1,
+      "DefaultRoughness": 1,
+      "DefaultMetalness": 0,
+      "DefaultAmbientOcclusion": 1,
+      "Identifier": "0",
+      "Position": "0,0",
+      "HandleOffsets": {},
+      "Albedo": {
+        "Identifier": "11",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Normal": {
+        "Identifier": "14",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Roughness": {
+        "Identifier": "6",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "AmbientOcclusion": {
+        "Identifier": "8",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Texture2DParameterNode",
+      "ParameterIdentifier": "4f82dd94-d2be-4e07-8107-93bd0481496d",
+      "Identifier": "1",
+      "Position": "-888,-156",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SampleTexture2DNode",
+      "SamplerState": {
+        "__version": 2,
+        "Name": "",
+        "IsAttribute": false,
+        "Filter": "Anisotropic",
+        "AddressModeU": "Wrap",
+        "AddressModeV": "Wrap",
+        "AddressModeW": "Wrap",
+        "MipLodBias": 0,
+        "MaxAnisotropy": 16,
+        "BorderColor": "0,0,0,0"
+      },
+      "Identifier": "2",
+      "Position": "-684,-156",
+      "HandleOffsets": {},
+      "Texture2DInput": {
+        "Identifier": "1",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "CoordsInput": {
+        "Identifier": "18",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Texture2DParameterNode",
+      "ParameterIdentifier": "8f74d7b2-a24a-4652-bfdf-f638d4e4e932",
+      "Identifier": "3",
+      "Position": "-528,432",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SampleTexture2DNode",
+      "SamplerState": {
+        "__version": 2,
+        "Name": "",
+        "IsAttribute": false,
+        "Filter": "Anisotropic",
+        "AddressModeU": "Wrap",
+        "AddressModeV": "Wrap",
+        "AddressModeW": "Wrap",
+        "MipLodBias": 0,
+        "MaxAnisotropy": 16,
+        "BorderColor": "0,0,0,0"
+      },
+      "Identifier": "4",
+      "Position": "-924,72",
+      "HandleOffsets": {},
+      "Texture2DInput": {
+        "Identifier": "5",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "CoordsInput": {
+        "Identifier": "17",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Texture2DParameterNode",
+      "ParameterIdentifier": "ae3661cf-5b40-4fec-9249-b31503882daf",
+      "Identifier": "5",
+      "Position": "-1128,72",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SampleTexture2DNode",
+      "SamplerState": {
+        "__version": 2,
+        "Name": "",
+        "IsAttribute": false,
+        "Filter": "Anisotropic",
+        "AddressModeU": "Wrap",
+        "AddressModeV": "Wrap",
+        "AddressModeW": "Wrap",
+        "MipLodBias": 0,
+        "MaxAnisotropy": 16,
+        "BorderColor": "0,0,0,0"
+      },
+      "Identifier": "6",
+      "Position": "-348,432",
+      "HandleOffsets": {},
+      "Texture2DInput": {
+        "Identifier": "3",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "CoordsInput": {
+        "Identifier": "20",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Texture2DParameterNode",
+      "ParameterIdentifier": "5c8c248d-d0b3-4488-ab92-1682e2f411b3",
+      "Identifier": "7",
+      "Position": "-552,684",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SampleTexture2DNode",
+      "SamplerState": {
+        "__version": 2,
+        "Name": "",
+        "IsAttribute": false,
+        "Filter": "Anisotropic",
+        "AddressModeU": "Wrap",
+        "AddressModeV": "Wrap",
+        "AddressModeW": "Wrap",
+        "MipLodBias": 0,
+        "MaxAnisotropy": 16,
+        "BorderColor": "0,0,0,0"
+      },
+      "Identifier": "8",
+      "Position": "-348,684",
+      "HandleOffsets": {},
+      "Texture2DInput": {
+        "Identifier": "7",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "CoordsInput": {
+        "Identifier": "21",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Texture2DParameterNode",
+      "ParameterIdentifier": "38337d19-249e-4647-afb4-0c9f4aa596a6",
+      "Identifier": "9",
+      "Position": "-888,-396",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SampleTexture2DNode",
+      "SamplerState": {
+        "__version": 2,
+        "Name": "",
+        "IsAttribute": false,
+        "Filter": "Anisotropic",
+        "AddressModeU": "Wrap",
+        "AddressModeV": "Wrap",
+        "AddressModeW": "Wrap",
+        "MipLodBias": 0,
+        "MaxAnisotropy": 16,
+        "BorderColor": "0,0,0,0"
+      },
+      "Identifier": "10",
+      "Position": "-684,-396",
+      "HandleOffsets": {},
+      "Texture2DInput": {
+        "Identifier": "9",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "CoordsInput": {
+        "Identifier": "16",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Blend",
+      "DefaultA": "0,0,0,1",
+      "DefaultB": "1,1,1,1",
+      "Fraction": 0.5,
+      "BlendMode": "Mix",
+      "Clamp": true,
+      "Identifier": "11",
+      "Position": "-264,-252",
+      "HandleOffsets": {},
+      "A": {
+        "Identifier": "10",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "B": {
+        "Identifier": "2",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "C": {
+        "Identifier": "15",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Texture2DParameterNode",
+      "ParameterIdentifier": "2d620ec4-fe98-409d-b178-79964650dcf8",
+      "Identifier": "12",
+      "Position": "-1116,336",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SampleTexture2DNode",
+      "SamplerState": {
+        "__version": 2,
+        "Name": "",
+        "IsAttribute": false,
+        "Filter": "Anisotropic",
+        "AddressModeU": "Wrap",
+        "AddressModeV": "Wrap",
+        "AddressModeW": "Wrap",
+        "MipLodBias": 0,
+        "MaxAnisotropy": 16,
+        "BorderColor": "0,0,0,0"
+      },
+      "Identifier": "13",
+      "Position": "-924,336",
+      "HandleOffsets": {},
+      "Texture2DInput": {
+        "Identifier": "12",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "CoordsInput": {
+        "Identifier": "19",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Blend",
+      "DefaultA": "0,0,0,1",
+      "DefaultB": "1,1,1,1",
+      "Fraction": 0.5,
+      "BlendMode": "Mix",
+      "Clamp": true,
+      "Identifier": "14",
+      "Position": "-492,228",
+      "HandleOffsets": {},
+      "A": {
+        "Identifier": "4",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "B": {
+        "Identifier": "13",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "C": {
+        "Identifier": "15",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "FloatParameterNode",
+      "ParameterIdentifier": "af71a00d-240e-485a-aa3f-e14f7398ce0b",
+      "Identifier": "15",
+      "Position": "-684,108",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "TileAndOffset",
+      "DefaultTile": "1,1",
+      "DefaultOffset": "0,0",
+      "WrapTo01": false,
+      "Identifier": "16",
+      "Position": "-888,-336",
+      "HandleOffsets": {},
+      "Tile": {
+        "Identifier": "22",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Offset": {
+        "Identifier": "28",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "TileAndOffset",
+      "DefaultTile": "1,1",
+      "DefaultOffset": "0,0",
+      "WrapTo01": false,
+      "Identifier": "17",
+      "Position": "-1128,132",
+      "HandleOffsets": {},
+      "Tile": {
+        "Identifier": "24",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Offset": {
+        "Identifier": "30",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "TileAndOffset",
+      "DefaultTile": "1,1",
+      "DefaultOffset": "0,0",
+      "WrapTo01": false,
+      "Identifier": "18",
+      "Position": "-888,-96",
+      "HandleOffsets": {},
+      "Tile": {
+        "Identifier": "23",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Offset": {
+        "Identifier": "29",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "TileAndOffset",
+      "DefaultTile": "1,1",
+      "DefaultOffset": "0,0",
+      "WrapTo01": false,
+      "Identifier": "19",
+      "Position": "-1116,396",
+      "HandleOffsets": {},
+      "Tile": {
+        "Identifier": "25",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Offset": {
+        "Identifier": "31",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "TileAndOffset",
+      "DefaultTile": "1,1",
+      "DefaultOffset": "0,0",
+      "WrapTo01": false,
+      "Identifier": "20",
+      "Position": "-528,492",
+      "HandleOffsets": {},
+      "Tile": {
+        "Identifier": "26",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Offset": {
+        "Identifier": "32",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "TileAndOffset",
+      "DefaultTile": "1,1",
+      "DefaultOffset": "0,0",
+      "WrapTo01": false,
+      "Identifier": "21",
+      "Position": "-552,744",
+      "HandleOffsets": {},
+      "Tile": {
+        "Identifier": "27",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Offset": {
+        "Identifier": "33",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "b92b81d4-791d-4cc7-b7b3-b728eb5f3cf9",
+      "Identifier": "22",
+      "Position": "-1176,-420",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "768a8253-0615-4851-a6a7-650bb3cf3317",
+      "Identifier": "23",
+      "Position": "-1176,-180",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "b92b81d4-791d-4cc7-b7b3-b728eb5f3cf9",
+      "Identifier": "24",
+      "Position": "-1380,48",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "768a8253-0615-4851-a6a7-650bb3cf3317",
+      "Identifier": "25",
+      "Position": "-1380,312",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "768a8253-0615-4851-a6a7-650bb3cf3317",
+      "Identifier": "26",
+      "Position": "-732,420",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "768a8253-0615-4851-a6a7-650bb3cf3317",
+      "Identifier": "27",
+      "Position": "-756,684",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "1b5f7167-3e2f-4004-8dc6-a57ff4faf2ed",
+      "Identifier": "28",
+      "Position": "-1176,-312",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "ef95ef38-e124-4138-a302-abfd9e89ac68",
+      "Identifier": "29",
+      "Position": "-1188,-72",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "1b5f7167-3e2f-4004-8dc6-a57ff4faf2ed",
+      "Identifier": "30",
+      "Position": "-1380,156",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "ef95ef38-e124-4138-a302-abfd9e89ac68",
+      "Identifier": "31",
+      "Position": "-1392,420",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "ef95ef38-e124-4138-a302-abfd9e89ac68",
+      "Identifier": "32",
+      "Position": "-744,528",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2ParameterNode",
+      "ParameterIdentifier": "ef95ef38-e124-4138-a302-abfd9e89ac68",
+      "Identifier": "33",
+      "Position": "-768,792",
+      "HandleOffsets": {}
+    }
+  ],
+  "parameters": [
+    {
+      "_class": "Texture2DParameter",
+      "Value": {
+        "Name": "Mud Texture",
+        "IsAttribute": false,
+        "DefaultColor": "0,0,0,0",
+        "DefaultTexture": "materials/dirt/mud_color.jpg",
+        "Extension": "Color",
+        "CustomExtension": null,
+        "ShowExtension": true,
+        "Processor": "None",
+        "ColorSpace": "Srgb",
+        "ImageFormat": "DXT1",
+        "SrgbRead": false,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": "Mud",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "4f82dd94-d2be-4e07-8107-93bd0481496d",
+      "Name": "Mud Texture"
+    },
+    {
+      "_class": "Texture2DParameter",
+      "Value": {
+        "Name": "Mud Roughness",
+        "IsAttribute": false,
+        "DefaultColor": "0,0,0,0",
+        "DefaultTexture": "materials/dirt/mud_rough.jpg",
+        "Extension": "Rough",
+        "CustomExtension": null,
+        "ShowExtension": true,
+        "Processor": "None",
+        "ColorSpace": "Linear",
+        "ImageFormat": "DXT1",
+        "SrgbRead": false,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": "Mud",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "8f74d7b2-a24a-4652-bfdf-f638d4e4e932",
+      "Name": "Mud Roughness"
+    },
+    {
+      "_class": "Texture2DParameter",
+      "Value": {
+        "Name": "Dirt Normal",
+        "IsAttribute": false,
+        "DefaultColor": "0,0,0,0",
+        "DefaultTexture": "materials/dirt/dirt_normal.jpg",
+        "Extension": "Normal",
+        "CustomExtension": null,
+        "ShowExtension": true,
+        "Processor": "None",
+        "ColorSpace": "Linear",
+        "ImageFormat": "DXT1",
+        "SrgbRead": false,
+        "Priority": 1,
+        "PrimaryGroup": {
+          "Name": "Dirt",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "ae3661cf-5b40-4fec-9249-b31503882daf",
+      "Name": "Dirt Normal"
+    },
+    {
+      "_class": "Texture2DParameter",
+      "Value": {
+        "Name": "Mud Ambient Occlusion",
+        "IsAttribute": false,
+        "DefaultColor": "0,0,0,0",
+        "DefaultTexture": "materials/dirt/mud_ao.jpg",
+        "Extension": "AO",
+        "CustomExtension": null,
+        "ShowExtension": true,
+        "Processor": "None",
+        "ColorSpace": "Linear",
+        "ImageFormat": "DXT1",
+        "SrgbRead": false,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": "Mud",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "5c8c248d-d0b3-4488-ab92-1682e2f411b3",
+      "Name": "Mud Ambient Occlusion"
+    },
+    {
+      "_class": "Texture2DParameter",
+      "Value": {
+        "Name": "Dirt Texture",
+        "IsAttribute": false,
+        "DefaultColor": "0,0,0,0",
+        "DefaultTexture": "materials/dirt/dirt_color.jpg",
+        "Extension": "Color",
+        "CustomExtension": null,
+        "ShowExtension": true,
+        "Processor": "None",
+        "ColorSpace": "Srgb",
+        "ImageFormat": "DXT1",
+        "SrgbRead": false,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": "Dirt",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "38337d19-249e-4647-afb4-0c9f4aa596a6",
+      "Name": "Dirt Texture"
+    },
+    {
+      "_class": "Texture2DParameter",
+      "Value": {
+        "Name": "Mud Normal",
+        "IsAttribute": false,
+        "DefaultColor": "0,0,0,0",
+        "DefaultTexture": "materials/dirt/mud_normal.jpg",
+        "Extension": "Normal",
+        "CustomExtension": null,
+        "ShowExtension": true,
+        "Processor": "None",
+        "ColorSpace": "Linear",
+        "ImageFormat": "DXT1",
+        "SrgbRead": false,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": "Mud",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "2d620ec4-fe98-409d-b178-79964650dcf8",
+      "Name": "Mud Normal"
+    },
+    {
+      "_class": "FloatParameter",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.5,
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "IsAttribute": false,
+      "Identifier": "af71a00d-240e-485a-aa3f-e14f7398ce0b",
+      "Name": "Blend Amount"
+    },
+    {
+      "_class": "FloatParameter",
+      "Min": 0,
+      "Max": 1,
+      "Value": 1,
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "IsAttribute": false,
+      "Identifier": "9434c319-6c1a-46d8-8006-aabd7fa030c5",
+      "Name": "MaterialParameter0"
+    },
+    {
+      "_class": "Float2Parameter",
+      "Min": "0,0",
+      "Max": "100,100",
+      "Value": "1,1",
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 2,
+        "PrimaryGroup": {
+          "Name": "Dirt",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "IsAttribute": false,
+      "Identifier": "b92b81d4-791d-4cc7-b7b3-b728eb5f3cf9",
+      "Name": "Dirt UV Scale"
+    },
+    {
+      "_class": "Float2Parameter",
+      "Min": "0,0",
+      "Max": "100,100",
+      "Value": "1,1",
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": "Mud",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "IsAttribute": false,
+      "Identifier": "768a8253-0615-4851-a6a7-650bb3cf3317",
+      "Name": "Mud UV Scale"
+    },
+    {
+      "_class": "Float2Parameter",
+      "Min": "0,0",
+      "Max": "100,100",
+      "Value": "1,1",
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 3,
+        "PrimaryGroup": {
+          "Name": "Dirt",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "IsAttribute": false,
+      "Identifier": "1b5f7167-3e2f-4004-8dc6-a57ff4faf2ed",
+      "Name": "Dirt UV Offset"
+    },
+    {
+      "_class": "Float2Parameter",
+      "Min": "0,0",
+      "Max": "100,100",
+      "Value": "1,1",
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": "Mud",
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "IsAttribute": false,
+      "Identifier": "ef95ef38-e124-4138-a302-abfd9e89ac68",
+      "Name": "Mud UV Offset"
+    }
+  ],
+  "__version": 9
+}

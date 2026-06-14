@@ -1,0 +1,19 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "materials/sand/sand.shader"
+
+	g_flGrainScale "8"
+	g_flWaveScale "5"
+	g_vSandColor "[0.309804 0.192157 0.101961 1.000000]"
+	GrainNormal "materials/dirt/mud_normal.jpg"
+	WaveNormal "materials/sand/sand_wave.jpg"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+
+	//---- Sand sparkle ----
+	g_flSparkleAmount "189"
+	g_flSparkleAngle "3.6"
+}

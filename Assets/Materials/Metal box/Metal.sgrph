@@ -1,0 +1,161 @@
+{
+  "IsSubgraph": false,
+  "Path": "materials/metal box/metal.sgrph",
+  "Model": "models/dev/box.vmdl",
+  "Title": "",
+  "Description": null,
+  "Category": "",
+  "Icon": "",
+  "AddToNodeLibrary": false,
+  "BlendMode": "Opaque",
+  "ShadingModel": "Lit",
+  "Domain": "Surface",
+  "Metadata": {},
+  "PreviewSettings": {
+    "ViewMode": "Perspective",
+    "RenderBackfaces": false,
+    "EnableShadows": true,
+    "ShowGround": false,
+    "ShowSkybox": true,
+    "BackgroundColor": "1,1,1,1",
+    "Tint": "1,1,1,1"
+  },
+  "nodes": [
+    {
+      "_class": "Result",
+      "DefaultOpacity": 1,
+      "DefaultRoughness": 0.2120142,
+      "DefaultMetalness": 1,
+      "DefaultAmbientOcclusion": 1,
+      "Identifier": "0",
+      "Position": "0,0",
+      "HandleOffsets": {},
+      "Albedo": {
+        "Identifier": "7",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Normal": {
+        "Identifier": "5",
+        "Output": "Result",
+        "Subgraph": null
+      },
+      "Roughness": {
+        "Identifier": "1",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "RemapValue",
+      "In": 0.5,
+      "InMin": -1,
+      "InMax": 1,
+      "OutMin": 0.4,
+      "OutMax": 0.7,
+      "Clamp": true,
+      "Identifier": "1",
+      "Position": "-276,72",
+      "HandleOffsets": {},
+      "A": {
+        "Identifier": "2",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "SimplexNoise",
+      "Identifier": "2",
+      "Position": "-504,96",
+      "HandleOffsets": {},
+      "Coords": {
+        "Identifier": "3",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "TileAndOffset",
+      "DefaultTile": "0.699999988,0.699999988",
+      "DefaultOffset": "0.669999838,-0.740000188",
+      "WrapTo01": false,
+      "Identifier": "3",
+      "Position": "-720,96",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Texture2DParameterNode",
+      "ParameterIdentifier": "dda5963e-4e06-4457-b0dc-b06d1dcfdcc9",
+      "Identifier": "4",
+      "Position": "-456,252",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SampleTexture2DNode",
+      "SamplerState": {
+        "__version": 2,
+        "Name": "",
+        "IsAttribute": false,
+        "Filter": "Anisotropic",
+        "AddressModeU": "Wrap",
+        "AddressModeV": "Wrap",
+        "AddressModeW": "Wrap",
+        "MipLodBias": 0,
+        "MaxAnisotropy": 32,
+        "BorderColor": "0,0,0,0"
+      },
+      "Identifier": "5",
+      "Position": "-276,252",
+      "HandleOffsets": {},
+      "Texture2DInput": {
+        "Identifier": "4",
+        "Output": "Result",
+        "Subgraph": null
+      }
+    },
+    {
+      "_class": "ColorConstantNode",
+      "Value": "0.62791,0.62791,0.62791,1",
+      "Identifier": "6",
+      "Position": "-600,-384",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "ColorConstantNode",
+      "Value": "0.74419,0.74419,0.74419,1",
+      "Identifier": "7",
+      "Position": "-600,-240",
+      "HandleOffsets": {}
+    }
+  ],
+  "parameters": [
+    {
+      "_class": "Texture2DParameter",
+      "Value": {
+        "Name": "MaterialParameter0",
+        "IsAttribute": false,
+        "DefaultColor": "0,0,0,0",
+        "DefaultTexture": "materials/metal box/metal-normal.jpg",
+        "Extension": "Normal",
+        "CustomExtension": null,
+        "ShowExtension": true,
+        "Processor": "None",
+        "ColorSpace": "Linear",
+        "ImageFormat": "DXT1",
+        "SrgbRead": false,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "dda5963e-4e06-4457-b0dc-b06d1dcfdcc9",
+      "Name": "MaterialParameter0"
+    }
+  ],
+  "__version": 5
+}

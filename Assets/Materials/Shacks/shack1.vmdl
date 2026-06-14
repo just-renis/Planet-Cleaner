@@ -23,19 +23,19 @@
 							},
 							{
 								from = "painted blue metal sheets.vmat"
-								to = "materials/shacks/bluepaintedmetal.vmat"
+								to = "materials/shacks/redpaintedmetal.vmat"
 							},
 							{
 								from = "painted dark blue metal sheets.vmat"
-								to = "materials/shacks/darkbluepaintedmetal.vmat"
+								to = "materials/shacks/bluepaintedmetal.vmat"
 							},
 							{
 								from = "painted green metal sheets.vmat"
-								to = "materials/shacks/greenpaintedmetal.vmat"
+								to = "materials/shacks/paintedmetal013.vmat"
 							},
 							{
 								from = "painted green/white metal sheets.vmat"
-								to = "materials/shacks/paintedmetal013.vmat"
+								to = "materials/shacks/greenpaintedmetal.vmat"
 							},
 							{
 								from = "painted wood white.vmat"
@@ -47,7 +47,7 @@
 							},
 							{
 								from = "painted yellow metal sheets.vmat"
-								to = "materials/shacks/yellowpaintedmetal.vmat"
+								to = "materials/shacks/darkbluepaintedmetal.vmat"
 							},
 							{
 								from = "roof.vmat"
@@ -76,7 +76,7 @@
 						filename = "materials/shacks/shack1.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 1.0
+						import_scale = 0.5
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
@@ -86,47 +86,120 @@
 							exclude_by_default = true
 							exception_list = 
 							[
-								"Cube_002",
-								"Cube_003",
-								"Cube_005",
-								"Cube_006",
-								"Cube_007",
-								"Cube_008",
-								"Cube_009",
-								"Cube_010",
-								"Cube_011",
-								"Cube_012",
-								"Cube_014",
-								"Cube_015",
-								"Cube_016",
-								"Cube_017",
-								"Cube_018",
-								"Cube_019",
-								"Plane",
-								"Plane_001",
-								"Plane_002",
-								"Plane_003",
-								"Plane_004",
-								"Plane_008",
-								"Plane_012",
-								"Plane_013",
-								"Plane_014",
-								"Plane_015",
-								"Plane_016",
-								"Plane_017",
-								"Plane_018",
-								"Plane_019",
-								"Plane_020",
-								"Plane_021",
 								"Plane_022",
-								"Plane_028",
-								"Plane_029",
-								"Plane_030",
-								"Plane_032",
-								"Plane_033",
-								"Plane_034",
+								"Plane_003",
+								"Cube_014",
+								"Cube_019",
+								"Cube_018",
+								"Cube_017",
+								"Cube_016",
+								"Cube_015",
+								"Cube_012",
+								"Cube_011",
+								"Cube_010",
+								"Cube_009",
+								"Cube_008",
+								"Cube_003",
+								"Cube_002",
+								"Cube_006",
 							]
 						}
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -3.221455, 0.008608, -0.562203 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 142.339172, 180.444611, 1.168979 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 65.357101, -86.144905, 49.75507 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.880626, 5.315721, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -74.247391, -86.881752, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.091007, 5.251163, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -71.995834, 86.806427, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.923647, 5.477379, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 66.186317, 86.570503, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 6.67749, 5.847153, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 65.357147, 52.140236, 49.7551 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 6.001175, 7.509277, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 65.357101, -18.923424, 49.75507 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 5.880626, 9.457779, 109.510139 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 66.847878, -37.933933, 75.724426 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 2.899063, 27.987146, 56.337402 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ 66.847878, -3.068356, 105.42588 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 2.899063, 193.906509, 2.056808 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						origin = [ -73.762978, -3.068356, 106.352516 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 2.785445, 193.906509, 1.686125 ]
 					},
 				]
 			},

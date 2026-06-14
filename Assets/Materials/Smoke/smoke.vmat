@@ -1,0 +1,8 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "materials/smoke/smoke.shader"
+
+	MaterialParameter0 "materials/smoke/t_smoke_b7.png"
+}
