@@ -11,7 +11,7 @@ ToolsUpgradesUi
   &.hidden { display: none; }
   .shop-container 
   {
-    width: 80%;
+    width: 90%;
     height: 95%;
     flex-direction: column;
     color: #e2e8f0;
@@ -184,7 +184,7 @@ ToolsUpgradesUi
       justify-content: space-between;
       .upgrade-info 
       {
-        width: 50%;
+        width: 70%;
         flex-direction: column;
         justify-content: center;
         .upgrade-row-header 
@@ -318,6 +318,77 @@ ToolsUpgradesUi
           color: #634d3d;
           cursor: not-allowed;
           transform: none;
+        }
+      }
+    }
+  }
+  .info-showcase-panel
+  {
+    width: 550px;
+    background-color: #0b0e0d;
+    border: 1px solid #1c2621;
+    border-radius: 20px;
+    padding: 32px 24px;
+    flex-direction: column;
+    position: relative;
+    gap: 16px;
+    .showcase-title-area
+    {
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 12px;
+      .meta-tool-name
+      {
+        font-size: 40px;
+        font-weight: 900;
+        color: #ffffff;
+        text-transform: uppercase;
+      }
+      .meta-tool-status
+      {
+        font-size: 14px;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 6px;
+        letter-spacing: 1px;
+        &.unlocked { background-color: rgba(0, 229, 255, 0.15); color: #00e5ff; }
+        &.locked { background-color: rgba(229, 62, 62, 0.15); color: #e53e3e; }
+      }
+    }
+    .stats-overview-box
+    {
+      flex-direction: column;
+      background-color: #121614;
+      border: 1px solid #1a221d;
+      border-radius: 12px;
+      padding: 16px;
+      gap: 10px;
+      .overview-header
+      {
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 900;
+        color: #00838f;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .meta-stat-row
+      {
+        justify-content: space-between;
+        align-items: center;
+        .meta-stat-label
+        {
+          font-size: 24px;
+          text-transform: uppercase;
+          color: #a0aec0;
+          font-weight: 500;
+        }
+        .meta-stat-value
+        {
+          font-size: 24px;
+          color: #00ffeb;
+          font-weight: 700;
         }
       }
     }

@@ -1,0 +1,19 @@
+namespace Sandbox.Data;
+
+public class PlayerUpgradeData
+{
+	[Property] public int MaxLevel { get; set { field = value; AdjustPricesList(); } } = 1;
+	[Property] public float Value { get; set; }
+	[Property] public string DisplayName { get; set; }
+	[Property, ImageAssetPath] public string Icon { get; set; }
+	[Property] public List<int> Prices { get; set; }
+
+	public override string ToString() { return DisplayName; }
+	
+	private void AdjustPricesList()
+	{
+		Prices ??= [];
+		while (Prices.Count < MaxLevel) Prices.Add(0);
+		while (Prices.Count > MaxLevel) Prices.RemoveAt(Prices.Count - 1);
+	}
+}

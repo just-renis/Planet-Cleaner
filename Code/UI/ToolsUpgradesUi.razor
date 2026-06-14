@@ -55,7 +55,7 @@
 										    <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
 										    <span class="stat-name">@Upgrade.Value.DisplayName</span>
 										    <span class="stat-desc-previous">@GetCurrentDescription(Upgrade.Key, Upgrade.Value)</span>
-										    @if (Data.GetToolStatLevel(SelectedTool, Upgrade.Key) < Upgrade.Value.MaxLevel)
+										    @if (!IsMaxed)
 										    {
 											    <span>-></span>
 											    <span class="stat-desc-next">@GetNextDescription(Upgrade.Key, Upgrade.Value)</span>
@@ -88,6 +88,39 @@
 					    }
 				    }
 			    </div>
+			    @if (ToolsData.TryGetValue(SelectedTool, out ToolData CurrentToolData))
+			    {
+				    <div class="info-showcase-panel">
+					    <div class="showcase-title-area">
+						    <span class="meta-tool-name">@CurrentToolData.ToolName</span>
+					    </div>
+					    <div class="stats-overview-box">
+						    <span class="overview-header">Default Tool Stats</span>
+						    <div class="meta-stat-row">
+							    <span class="meta-stat-label">POWER</span>
+							    <span class="meta-stat-value">@CurrentToolData.Power</span>
+						    </div>
+						    <div class="meta-stat-row">
+							    <span class="meta-stat-label">RANGE</span>
+							    <span class="meta-stat-value">@CurrentToolData.Range</span>
+						    </div>
+						    <div class="meta-stat-row">
+							    <span class="meta-stat-label">COLLECT COOLDOWN</span>
+							    <span class="meta-stat-value">@CurrentToolData.CollectCooldown s</span>
+						    </div>
+					    </div>
+					    <div class="stats-overview-box">
+						    <span class="overview-header">Upgraded Tool Stats</span>
+						    @foreach (KeyValuePair<EToolStat, ToolUpgradeData> Upgrade in CurrentToolData.Upgrades)
+						    {
+							    <div class="meta-stat-row">
+								    <span class="meta-stat-label">@Upgrade.Value.DisplayName</span>
+								    <span class="meta-stat-value">@GetUpgradedToolValue(Upgrade.Key)</span>
+							    </div>
+						    }
+					    </div>
+				    </div>
+			    }
 		    </div>
 	    </div>
     }
@@ -121,6 +154,22 @@
         EventManager.OnPlayerDataLoaded -= PlayerDataLoaded;
     }
 
+	private string GetUpgradedToolValue(EToolStat InToolStat)
+	{
+		ETool EquippedTool = Data.GetEquippedTool();
+		ToolData EquippedToolData = GlobalData.Instance.GetToolData(EquippedTool);
+		int CurrentLevel = Data.GetToolStatLevel(EquippedTool, InToolStat);
+		float StatValue = EquippedToolData.GetToolStatValue(InToolStat);
+		float AdditiveBonus = CurrentLevel * StatValue;
+		float Multiplier = 1f + AdditiveBonus * 0.01f;
+		switch (InToolStat)
+		{
+			case EToolStat.Power: return (EquippedToolData.Power + (int)AdditiveBonus).ToString();
+			case EToolStat.Range: return (EquippedToolData.Range * Multiplier).ToString("0.##");
+			case EToolStat.Speed: return (EquippedToolData.CollectCooldown / Multiplier).ToString("0.##") + " s";
+		}
+		return "";
+	}
     private string GetCurrentDescription(EToolStat InToolStat, ToolUpgradeData InToolUpgrade)
     {
 	    if (InToolUpgrade == null) return "";

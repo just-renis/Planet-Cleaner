@@ -303,6 +303,34 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
+          "PlayerUpgradesInformation": {
+            "BagSize": {
+              "MaxLevel": 5,
+              "Value": 15,
+              "DisplayName": "Bag size",
+              "Icon": null,
+              "Prices": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "MovementSpeed": {
+              "MaxLevel": 5,
+              "Value": 20,
+              "DisplayName": "Movement Speed",
+              "Icon": null,
+              "Prices": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
           "ToolsInformation": {
             "Hands": {
               "UnlockPrice": 3,
@@ -336,7 +364,7 @@
                 "Speed": {
                   "MaxLevel": 3,
                   "Value": 15,
-                  "DisplayName": "Speed",
+                  "DisplayName": "Collect cooldown",
                   "Description": "{0}% increased speed.",
                   "Icon": null,
                   "Prices": [
@@ -382,7 +410,7 @@
                 "Speed": {
                   "MaxLevel": 3,
                   "Value": 15,
-                  "DisplayName": "Speed",
+                  "DisplayName": "Collect cooldown",
                   "Description": "{0}% increased speed.",
                   "Icon": null,
                   "Prices": [
@@ -428,7 +456,7 @@
                 "Speed": {
                   "MaxLevel": 3,
                   "Value": 15,
-                  "DisplayName": "Speed",
+                  "DisplayName": "Collect cooldown",
                   "Description": "{0}% increased speed.",
                   "Icon": null,
                   "Prices": [
@@ -633,6 +661,18 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        },
+        {
+          "__type": "Sandbox.UI.PlayerUpgradesUi",
+          "__guid": "40df1f99-767e-4b4d-acaf-969dc67d0ef2",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ],
       "Children": []
@@ -697,6 +737,47 @@
         {
           "__type": "ToolUpgradeZone",
           "__guid": "cda69b8b-99f0-477b-8c55-28a890d2b114",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "5158c5e0-4469-4abc-831c-a2e77e6757b0",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "PlayerUpgradeZone",
+      "Position": "-532.126343,1000,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "PlayerUpgradeZone",
+          "__guid": "60bc1a9f-bb0e-45e1-b229-af24b73ce5ae",
           "__enabled": true,
           "Flags": 0,
           "CapsuleHeight": 100,

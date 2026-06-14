@@ -194,18 +194,9 @@ public sealed class Player : Component
 		float Multiplier = 1f + AdditiveBonus * 0.01f;
 		switch (InToolStat)
 		{
-			case EToolStat.Power:
-				MaximumCollectAmount = EquippedToolData.Power + (int)AdditiveBonus;
-				Log.Info("POWER: " + MaximumCollectAmount);
-				break;
-			case EToolStat.Range: 
-				CollectRadius = EquippedToolData.Range * Multiplier;
-				Log.Info("RADIUS: " + CollectRadius);
-				break;
-			case EToolStat.Speed:
-				CollectCooldown = EquippedToolData.CollectCooldown / Multiplier;
-				Log.Info("SPEED: " + CollectCooldown);
-				break;
+			case EToolStat.Power: MaximumCollectAmount = EquippedToolData.Power + (int)AdditiveBonus; break;
+			case EToolStat.Range: CollectRadius = EquippedToolData.Range * Multiplier; break;
+			case EToolStat.Speed: CollectCooldown = EquippedToolData.CollectCooldown / Multiplier; break;
 		}
 	}
 	private void ApplyToolStats()

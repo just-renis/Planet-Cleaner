@@ -14,6 +14,7 @@ public sealed class PlayerData
 	public string Checksum { get; set; }
 	public ETool EquippedTool { get; set; }
 	public Dictionary<EPrestigeUpgradeName, int> PrestigeUpgrades { get; set; }
+	public Dictionary<EPlayerUpgrade, int> PlayerUpgrades { get; set; }
 	public Dictionary<ETool, ToolUpgradesData> ToolUpgrades { get; set; }
 
 	private bool IsPendingForSave;
@@ -25,6 +26,7 @@ public sealed class PlayerData
 	    CurrentVersion = LiveVersion;
 	    EquippedTool = ETool.Hands;
 	    PrestigeUpgrades = new Dictionary<EPrestigeUpgradeName, int>();
+	    PlayerUpgrades = new Dictionary<EPlayerUpgrade, int>();
 	    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>
 	    {
 		    {
@@ -49,6 +51,7 @@ public sealed class PlayerData
 	    return ToolData.Levels?.GetValueOrDefault(InToolStat, 0) ?? 0;
     }
     public int GetUpgradeAmount(EPrestigeUpgradeName InUpgradeName) { return PrestigeUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
+    public int GetPlayerUpgradeLevel(EPlayerUpgrade InUpgradeName) { return PlayerUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
     public double GetMoney() { return Money; }
     public double GetTotalMoneyEarned() { return TotalMoneyEarned; }
     public ETool GetEquippedTool() { return EquippedTool; }
@@ -72,6 +75,14 @@ public sealed class PlayerData
 	    ToolData.Levels[InToolStat] = CurrentLevel + 1;
 	    Save(this);
 	    EventManager.TriggerToolUpgradePurchased(InToolStat);
+    }
+    public void IncrementPlayerUpgradeLevel(EPlayerUpgrade InPlayerUpgradeName)
+    {
+	    PlayerUpgrades ??= new Dictionary<EPlayerUpgrade, int>();
+	    PlayerUpgrades.TryGetValue(InPlayerUpgradeName, out int CurrentLevel);
+	    PlayerUpgrades[InPlayerUpgradeName] = CurrentLevel + 1;
+	    Save(this);
+	    EventManager.TriggerToolUpgradePurchased(InPlayerUpgradeName);
     }
     public void UnlockTool(ETool InToolType)
     {

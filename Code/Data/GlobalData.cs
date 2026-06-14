@@ -14,6 +14,7 @@ public sealed class GlobalData : Component
 	[Property] private Dictionary<EPrestigeUpgradeName, int> UpgradesMaxAmounts { get; set; }
 	[Property] private Dictionary<EDefaultAttribute, float> DefaultAttributes { get; set; }
 	[Property] private Dictionary<ETool, ToolData> ToolsInformation { get; set; }
+	[Property] private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesInformation { get; set; }
 	[Property] private Dictionary<ETrashType, TrashGroup> TrashTypes { get; set; }
 
 	public float GetProcessedUpgradeValue(int InUpgradeAmount, EPrestigeUpgradeName InUpgradeName) { return Math.Clamp(InUpgradeAmount, 0, GetUpgradeMaxAmount(InUpgradeName)) * GetUpgradeValue(InUpgradeName); }
@@ -29,6 +30,7 @@ public sealed class GlobalData : Component
 		return OutTrashGroup.Models[RandomIndex];
 	}
 	public Dictionary<ETool, ToolData> GetToolsInformation() { return ToolsInformation; }
+	public Dictionary<EPlayerUpgrade, PlayerUpgradeData> GetPlayerUpgradesInformation() { return PlayerUpgradesInformation; }
 	
 	protected override void OnAwake() { Instance = this; }
 	protected override void OnDestroy() { if (Instance == this) Instance = null; }

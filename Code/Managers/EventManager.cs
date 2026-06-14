@@ -13,6 +13,7 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	public static event Action<double> OnMoneyChanged;
 	public static event Action<EPrestigeUpgradeName> OnUpgradePurchased;
 	public static event Action<EToolStat> OnToolUpgradePurchased;
+	public static event Action<EPlayerUpgrade> OnPlayerUpgradePurchased;
 	public static event Action<EUi, bool> OnUiStateChanged;
 	public static event Func<PlayerData> OnPlayerDataRequired;
 	public static event Func<Player> OnRequestPlayerRef;
@@ -48,6 +49,10 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	public static void TriggerToolUpgradePurchased(EToolStat InToolStatName)
 	{
 		OnToolUpgradePurchased?.Invoke(InToolStatName);
+	}
+	public static void TriggerToolUpgradePurchased(EPlayerUpgrade InPlayerUpgradeName)
+	{
+		OnPlayerUpgradePurchased?.Invoke(InPlayerUpgradeName);
 	}
 	public static void TriggerUiStateChange(EUi InUi, bool RenderState)
 	{

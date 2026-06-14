@@ -1,0 +1,121 @@
+@using Sandbox.Data
+@using Sandbox.Enums
+@using Sandbox.Managers
+@using System
+@inherits PanelComponent
+
+<root class="@(IsOpen ? "" : "hidden")">
+    @if (IsOpen && Data != null)
+    {
+	    <div class="shop-container">
+           <div class="shop-header">
+              <span class="shop-title">PLAYER UPGRADES</span>
+           </div>
+           <div class="shop-body">
+              <div class="right-panel">
+                 <div class="close-btn" @onclick=@CloseMenu>X</div>
+                 <div class="upgrades-list">
+	                 @foreach (KeyValuePair<EPlayerUpgrade, PlayerUpgradeData> Upgrade in PlayerUpgradesData)
+	                 {
+		                 int CurrentStatLevel = Data.GetPlayerUpgradeLevel(Upgrade.Key);
+		                 bool IsMaxed = CurrentStatLevel >= Upgrade.Value.MaxLevel;
+		                 <div class="upgrade-row row-layout">
+			                 <div class="icon-right-wrapper">
+				                 <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
+			                 </div>
+			                 <div class="row-top-section">
+				                 <div class="upgrade-info">
+					                 <div class="upgrade-row-header">
+						                 <span class="stat-name">@Upgrade.Value.DisplayName</span>
+						                 <span class="stat-desc-previous">@GetCurrentDescription(Upgrade.Key, Upgrade.Value.Value)</span>
+						                 @if (!IsMaxed)
+						                 {
+							                 <span>-></span>
+							                 <span class="stat-desc-next">@GetNextDescription(Upgrade.Key, Upgrade.Value.Value)</span>
+						                 }
+					                 </div>
+				                 </div>
+				                 <div class="action-button-container">
+					                 @if (IsMaxed)
+					                 {
+						                 <div class="buy-btn maxed" disabled>MAX</div>
+					                 }
+					                 else
+					                 {
+						                 int Price = Upgrade.Value.Prices[CurrentStatLevel];
+						                 <div class="buy-btn @(Data.Money >= Price ? "" : "cant-afford")" onclick="@(() => PurchaseUpgrade(Upgrade.Key, Price))">$@Price.ToString("N0")</div>
+					                 }
+				                 </div>
+			                 </div>
+			                 <div class="row-bottom-section">
+				                 <div class="pips-wrapper">
+					                 @for (int Index = 0; Index < Upgrade.Value.MaxLevel; Index++)
+					                 {
+						                 <div class="pip @(Index < CurrentStatLevel ? "filled" : "")"></div>
+					                 }
+				                 </div>
+			                 </div>
+		                 </div>
+	                 }
+                 </div>
+              </div>
+           </div>
+        </div>
+    }
+</root>
+
+@code
+{
+	private bool IsOpen;
+	private PlayerData Data;
+	private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesData;
+
+	protected override int BuildHash()
+	{
+		if (GetPlayerData() == null) return -1;
+		return HashCode.Combine(IsOpen, Data.Money);
+	}
+    
+	protected override void OnAwake()
+	{
+		EventManager.OnUiStateChanged += UiStateChanged;
+	}
+	protected override void OnStart()
+	{
+		PlayerUpgradesData = GlobalData.Instance.GetPlayerUpgradesInformation();
+	}
+	protected override void OnDestroy()
+	{
+		EventManager.OnUiStateChanged -= UiStateChanged;
+	}
+	
+	private string GetCurrentDescription(EPlayerUpgrade InPlayerUpgradeName, float InUpgradeValue)
+	{
+		int CurrentLevel = Data.GetPlayerUpgradeLevel(InPlayerUpgradeName);
+		return CurrentLevel == 0 ? "None" : (InUpgradeValue * CurrentLevel).ToString("G");
+	}
+	private string GetNextDescription(EPlayerUpgrade InPlayerUpgradeName, float InUpgradeValue)
+	{
+		int CurrentLevel = Data.GetPlayerUpgradeLevel(InPlayerUpgradeName);
+		return (InUpgradeValue * (CurrentLevel + 1)).ToString("G");
+	}
+	private PlayerData GetPlayerData()
+	{
+		Data ??= EventManager.TriggerGetPlayerData();
+		return Data;
+	}
+	
+	private void PurchaseUpgrade(EPlayerUpgrade InPlayerUpgradeName, int InPrice)
+	{
+		if (Data.GetMoney() < InPrice) return;
+		Data.SubtractMoney(InPrice);
+		Data.IncrementPlayerUpgradeLevel(InPlayerUpgradeName);
+	}
+	private void CloseMenu() { UiManager.ChangeUiState(EUi.PlayerUpgrades); }
+	private void UiStateChanged(EUi InUi, bool RenderState)
+	{
+		if (InUi != EUi.PlayerUpgrades) return;
+		IsOpen = RenderState;
+		Panel?.Style.PointerEvents = IsOpen ? PointerEvents.All : PointerEvents.None;
+	}
+}
