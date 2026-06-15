@@ -307,26 +307,4 @@
 		IsOpen = RenderState;
 		Panel?.Style.PointerEvents = IsOpen ? PointerEvents.All : PointerEvents.None;
 	}
-	
-	[Button("Reset Save File"), Group("Dev Tools")]
-	public void ResetSave()
-	{
-		if (!Game.IsEditor) return;
-		if (FileSystem.Data.FileExists("save.dat")) FileSystem.Data.DeleteFile("save.dat");
-		else Log.Warning("No save file found to delete.");
-	}
-	[Property, Group("Dev Tools")] 
-	private float DebugMoneyAmount { get; set; } = 1000f;
-	[Button("Add Money"), Group("Dev Tools")]
-	public void AddMoney()
-	{
-		if (!Game.IsEditor || Data == null) return;
-		Data.AddMoney(DebugMoneyAmount);
-	}
-	[Button("Remove Money"), Group("Dev Tools")]
-	public void SubtractMoney()
-	{
-		if (!Game.IsEditor || Data == null) return;
-		Data.SubtractMoney(DebugMoneyAmount);
-	}
 }

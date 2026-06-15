@@ -9,56 +9,88 @@
     {
 	    <div class="shop-container">
            <div class="shop-header">
-              <span class="shop-title">PLAYER UPGRADES</span>
+	           <span class="shop-title">PLAYER UPGRADES</span>
+	           <div class="money-card">
+		           <span class="money-label">Money Amount</span>
+		           <span class="money-amount">$@Data.Money.ToString("N0")</span>
+	           </div>
            </div>
            <div class="shop-body">
-              <div class="right-panel">
-                 <div class="close-btn" @onclick=@CloseMenu>X</div>
-                 <div class="upgrades-list">
-	                 @foreach (KeyValuePair<EPlayerUpgrade, PlayerUpgradeData> Upgrade in PlayerUpgradesData)
-	                 {
-		                 int CurrentStatLevel = Data.GetPlayerUpgradeLevel(Upgrade.Key);
-		                 bool IsMaxed = CurrentStatLevel >= Upgrade.Value.MaxLevel;
-		                 <div class="upgrade-row row-layout">
-			                 <div class="icon-right-wrapper">
-				                 <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
-			                 </div>
-			                 <div class="row-top-section">
-				                 <div class="upgrade-info">
-					                 <div class="upgrade-row-header">
-						                 <span class="stat-name">@Upgrade.Value.DisplayName</span>
-						                 <span class="stat-desc-previous">@GetCurrentDescription(Upgrade.Key, Upgrade.Value.Value)</span>
-						                 @if (!IsMaxed)
-						                 {
-							                 <span>-></span>
-							                 <span class="stat-desc-next">@GetNextDescription(Upgrade.Key, Upgrade.Value.Value)</span>
-						                 }
-					                 </div>
-				                 </div>
-				                 <div class="action-button-container">
-					                 @if (IsMaxed)
-					                 {
-						                 <div class="buy-btn maxed" disabled>MAX</div>
-					                 }
-					                 else
-					                 {
-						                 int Price = Upgrade.Value.Prices[CurrentStatLevel];
-						                 <div class="buy-btn @(Data.Money >= Price ? "" : "cant-afford")" onclick="@(() => PurchaseUpgrade(Upgrade.Key, Price))">$@Price.ToString("N0")</div>
-					                 }
-				                 </div>
-			                 </div>
-			                 <div class="row-bottom-section">
-				                 <div class="pips-wrapper">
-					                 @for (int Index = 0; Index < Upgrade.Value.MaxLevel; Index++)
-					                 {
-						                 <div class="pip @(Index < CurrentStatLevel ? "filled" : "")"></div>
-					                 }
-				                 </div>
-			                 </div>
-		                 </div>
-	                 }
-                 </div>
-              </div>
+	           <div class="right-panel">
+		           <div class="close-btn" @onclick=@CloseMenu>X</div>
+		           <div class="upgrades-list">
+			           @foreach (KeyValuePair<EPlayerUpgrade, PlayerUpgradeData> Upgrade in PlayerUpgradesInformation)
+			           {
+				           int CurrentStatLevel = Data.GetPlayerUpgradeLevel(Upgrade.Key);
+				           float CurrentStatValue = Data.GetPlayerUpgradeValue(Upgrade.Key);
+				           bool IsMaxed = CurrentStatLevel >= Upgrade.Value.MaxLevel;
+				           <div class="upgrade-row row-layout">
+					           <div class="icon-right-wrapper">
+						           <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
+					           </div>
+					           <div class="row-top-section">
+						           <div class="upgrade-info">
+							           <div class="upgrade-row-header">
+								           <span class="stat-name">@GetDisplayName(Upgrade.Value.DisplayName)</span>
+								           <span class="stat-desc-previous">
+									           @if (CurrentStatLevel > 0) { @GetValueDescription(Upgrade.Value.DisplayName, CurrentStatValue) }
+									           else { <span>None</span> }
+								           </span>
+								           @if (CurrentStatLevel == 0)
+								           {
+									           <span>-></span>
+									           <span class="stat-desc-next">@GetValueDescription(Upgrade.Value.DisplayName, Upgrade.Value.Values[CurrentStatLevel])</span>
+								           }
+								           else if (!IsMaxed)
+								           {
+									           <span>-></span>
+									           <span class="stat-desc-next">@GetValueDescription(Upgrade.Value.DisplayName, CurrentStatValue + Upgrade.Value.Values[CurrentStatLevel])</span>
+								           }
+							           </div>
+						           </div>
+						           <div class="action-button-container">
+							           @if (IsMaxed)
+							           {
+								           <div class="buy-btn maxed" disabled>MAXED OUT</div>
+							           }
+							           else
+							           {
+								           int Price = Upgrade.Value.Prices[CurrentStatLevel];
+								           <div class="buy-btn @(Data.Money >= Price ? "" : "cant-afford")" onclick="@(() => PurchaseUpgrade(Upgrade.Key, Price, Upgrade.Value.Values[CurrentStatLevel]))">$@Price.ToString("N0")</div>
+							           }
+						           </div>
+					           </div>
+					           <div class="row-bottom-section">
+						           <div class="pips-wrapper">
+							           @for (int Index = 0; Index < Upgrade.Value.MaxLevel; Index++)
+							           {
+								           <div class="pip @(Index < CurrentStatLevel ? "filled" : "")"></div>
+							           }
+						           </div>
+					           </div>
+				           </div>
+			           }
+		           </div>
+	           </div>
+	           <div class="info-showcase-panel">
+		           @{
+			           int DefaultBagSize = PlayerUpgradesInformation[EPlayerUpgrade.BagSize].DefaultValue;
+			           float DefaultMovementSpeed = PlayerUpgradesInformation[EPlayerUpgrade.MovementSpeed].DefaultValue * 0.01f;
+		           }
+		           <div class="showcase-title-area">
+			           <span class="meta-tool-name">PLAYER STATS</span>
+		           </div>
+		           <div class="stats-overview-box">
+			           <div class="meta-stat-row">
+				           <span class="meta-stat-label">BAG SIZE</span>
+				           <span class="meta-stat-value">@(DefaultBagSize + Data.GetPlayerUpgradeValue(EPlayerUpgrade.BagSize))</span>
+			           </div>
+			           <div class="meta-stat-row">
+				           <span class="meta-stat-label">MOVEMENT SPEED</span>
+				           <span class="meta-stat-value">@(DefaultMovementSpeed + DefaultMovementSpeed * 0.01f * Data.GetPlayerUpgradeValue(EPlayerUpgrade.MovementSpeed))</span>
+			           </div>
+		           </div>
+	           </div>
            </div>
         </div>
     }
@@ -68,7 +100,7 @@
 {
 	private bool IsOpen;
 	private PlayerData Data;
-	private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesData;
+	private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesInformation;
 
 	protected override int BuildHash()
 	{
@@ -82,22 +114,30 @@
 	}
 	protected override void OnStart()
 	{
-		PlayerUpgradesData = GlobalData.Instance.GetPlayerUpgradesInformation();
+		PlayerUpgradesInformation = GlobalData.Instance.GetPlayerUpgradesInformation();
 	}
 	protected override void OnDestroy()
 	{
 		EventManager.OnUiStateChanged -= UiStateChanged;
 	}
-	
-	private string GetCurrentDescription(EPlayerUpgrade InPlayerUpgradeName, float InUpgradeValue)
+
+	private string GetDisplayName(EPlayerUpgrade InPlayerUpgradeName)
 	{
-		int CurrentLevel = Data.GetPlayerUpgradeLevel(InPlayerUpgradeName);
-		return CurrentLevel == 0 ? "None" : (InUpgradeValue * CurrentLevel).ToString("G");
+		switch (InPlayerUpgradeName)
+		{
+			case EPlayerUpgrade.BagSize: return "Bag Size";
+			case EPlayerUpgrade.MovementSpeed: return "Movement Speed";
+			default: return "";
+		}
 	}
-	private string GetNextDescription(EPlayerUpgrade InPlayerUpgradeName, float InUpgradeValue)
+	private string GetValueDescription(EPlayerUpgrade InPlayerUpgradeName, float InCurrentUpgradeValue)
 	{
-		int CurrentLevel = Data.GetPlayerUpgradeLevel(InPlayerUpgradeName);
-		return (InUpgradeValue * (CurrentLevel + 1)).ToString("G");
+		switch (InPlayerUpgradeName)
+		{
+			case EPlayerUpgrade.BagSize: return "+" + InCurrentUpgradeValue.ToString("0.##");
+			case EPlayerUpgrade.MovementSpeed: return InCurrentUpgradeValue.ToString("0.##") + "%";
+			default: return "";
+		}
 	}
 	private PlayerData GetPlayerData()
 	{
@@ -105,11 +145,11 @@
 		return Data;
 	}
 	
-	private void PurchaseUpgrade(EPlayerUpgrade InPlayerUpgradeName, int InPrice)
+	private void PurchaseUpgrade(EPlayerUpgrade InPlayerUpgradeName, int InPrice, float InAddedValue)
 	{
 		if (Data.GetMoney() < InPrice) return;
 		Data.SubtractMoney(InPrice);
-		Data.IncrementPlayerUpgradeLevel(InPlayerUpgradeName);
+		Data.IncrementPlayerUpgradeLevel(InPlayerUpgradeName, InAddedValue);
 	}
 	private void CloseMenu() { UiManager.ChangeUiState(EUi.PlayerUpgrades); }
 	private void UiStateChanged(EUi InUi, bool RenderState)

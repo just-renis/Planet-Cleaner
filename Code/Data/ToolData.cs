@@ -4,7 +4,7 @@ namespace Sandbox.Data;
 public sealed class ToolData
 {
 	[Property] public int UnlockPrice { get; set; }
-	[Property] public string ToolName { get; set; }
+	[Property] public ETool ToolName { get; set; }
 	[Property, ImageAssetPath] public string Icon { get; set; }
 	[Property] public Dictionary<EToolStat, ToolUpgradeData> Upgrades { get; set; }
 
@@ -18,5 +18,5 @@ public sealed class ToolData
 		if (!Upgrades.TryGetValue(InToolStat, out ToolUpgradeData UpgradeData) || UpgradeData == null) return 0f;
 		return UpgradeData.Value;
 	}
-	public override string ToString() { return ToolName; }
+	public override string ToString() { return ToolName.ToString(); }
 }

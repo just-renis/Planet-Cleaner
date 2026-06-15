@@ -11,14 +11,15 @@ PlayerUpgradesUi
   &.hidden { display: none; }
   .shop-container
   {
-    width: 50%;
-    height: 75%;
+    width: 80%;
+    height: 85%;
     flex-direction: column;
     color: #e2e8f0;
     .shop-header
     {
       text-align: center;
       margin-bottom: 30px;
+      gap: 15px;
       .shop-title
       {
         font-size: 48px;
@@ -30,6 +31,30 @@ PlayerUpgradesUi
         padding: 10px 32px;
         border-radius: 12px;
         border: 1px solid #1c2621;
+      }
+      .money-card
+      {
+        background-color: #121814;
+        border: 1px solid #1c2820;
+        border-radius: 16px;
+        padding: 16px 20px;
+        flex-direction: column;
+        align-items: center;
+        .money-label
+        {
+          font-size: 18px;
+          font-weight: 900;
+          color: #00838f;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        .money-amount
+        {
+          font-size: 26px;
+          font-weight: 800;
+          color: #00bcd4;
+          margin-top: 4px;
+        }
       }
     }
     .shop-body
@@ -45,29 +70,6 @@ PlayerUpgradesUi
     width: 320px;
     flex-direction: column;
     gap: 16px;
-    .money-card
-    {
-      background-color: #121814;
-      border: 1px solid #1c2820;
-      border-radius: 16px;
-      padding: 16px 20px;
-      flex-direction: column;
-      .money-label
-      {
-        font-size: 18px;
-        font-weight: 900;
-        color: #00838f;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      .money-amount
-      {
-        font-size: 26px;
-        font-weight: 800;
-        color: #00bcd4;
-        margin-top: 4px;
-      }
-    }
   }
   .right-panel
   {
@@ -154,19 +156,19 @@ PlayerUpgradesUi
           }
           .stat-name
           {
-            font-size: 26px;
+            font-size: 36px;
             font-weight: 800;
             color: #ffffff;
           }
           .stat-desc-previous
           {
-            font-size: 26px;
+            font-size: 32px;
             color: #00ffeb;
             text-shadow: 0 0 6px rgba(0, 255, 235, 0.3);
           }
           .stat-desc-next
           {
-            font-size: 26px;
+            font-size: 32px;
             color: #ffb300;
             font-weight: 700;
             text-shadow: 0 0 6px rgba(255, 179, 0, 0.3);
@@ -191,6 +193,7 @@ PlayerUpgradesUi
         flex-direction: row;
         justify-content: center;
         padding-top: 4px;
+        padding-left: 16px;
         .pips-wrapper
         {
           gap: 6px;
@@ -242,6 +245,68 @@ PlayerUpgradesUi
           border-color: #2d3a31;
           color: #4a5d51;
           cursor: default;
+        }
+      }
+    }
+  }
+  .info-showcase-panel
+  {
+    width: 450px;
+    background-color: #0b0e0d;
+    border: 1px solid #1c2621;
+    border-radius: 20px;
+    padding: 32px 24px;
+    flex-direction: column;
+    position: relative;
+    gap: 16px;
+    .showcase-title-area
+    {
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 12px;
+      .meta-tool-name
+      {
+        font-size: 40px;
+        font-weight: 900;
+        color: #ffffff;
+        text-transform: uppercase;
+      }
+      .meta-tool-status
+      {
+        font-size: 14px;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 6px;
+        letter-spacing: 1px;
+        &.unlocked { background-color: rgba(0, 229, 255, 0.15); color: #00e5ff; }
+        &.locked { background-color: rgba(229, 62, 62, 0.15); color: #e53e3e; }
+      }
+    }
+    .stats-overview-box
+    {
+      flex-direction: column;
+      background-color: #121614;
+      border: 1px solid #1a221d;
+      border-radius: 12px;
+      padding: 16px;
+      gap: 10px;
+      .meta-stat-row
+      {
+        justify-content: space-between;
+        align-items: center;
+        .meta-stat-label
+        {
+          font-size: 24px;
+          text-transform: uppercase;
+          color: #a0aec0;
+          font-weight: 500;
+        }
+        .meta-stat-value
+        {
+          font-size: 24px;
+          color: #00ffeb;
+          font-weight: 700;
         }
       }
     }

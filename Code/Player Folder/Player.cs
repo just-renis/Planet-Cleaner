@@ -10,10 +10,8 @@ public sealed class Player : Component
 	[Property] private float Sensitivity { get; set; } = 0.2f;
 	[Property] private float CameraDistance { get; set; } = 200f;
 	[Property] private float CameraHeight { get; set; } = 50f;
-	[Property] private float DefaultMovementSpeed { get; set; } = 2500f;
 	[Property] private float JumpStrength { get; set; } = 350f;
 	[Property] private float DefaultMoneyMultiplier { get; set; } = 1f;
-	[Property] private int DefaultTrashCapacity { get; set; } = 10;
 	[Property] private Rigidbody PlayerRigidbody { get; set; }
 	[Property] private CitizenAnimationHelper AnimationHelper { get; set; }
 	private bool IsGrounded;
@@ -53,6 +51,7 @@ public sealed class Player : Component
 		EventManager.OnUiStateChanged += UiStateChanged;
 		EventManager.OnUpgradePurchased += PrestigeUpgradePurchased;
 		EventManager.OnToolUpgradePurchased += ToolUpgradePurchased;
+		EventManager.OnPlayerBaseUpgradePurchased += BaseUpgradePurchased;
 		EventManager.OnToolChanged += ApplyToolStats;
 		LoadSaveData();
 		ApplyUpgradesOnJoin();
@@ -67,6 +66,7 @@ public sealed class Player : Component
 		EventManager.OnUiStateChanged -= UiStateChanged;
 		EventManager.OnUpgradePurchased -= PrestigeUpgradePurchased;
 		EventManager.OnToolUpgradePurchased -= ToolUpgradePurchased;
+		EventManager.OnPlayerBaseUpgradePurchased -= BaseUpgradePurchased;
 		EventManager.OnToolChanged -= ApplyToolStats;
 	}
 
@@ -159,9 +159,8 @@ public sealed class Player : Component
 	}
 	private void ApplyUpgradesOnJoin()
 	{
-		MovementSpeed = DefaultMovementSpeed;
-		TrashCapacity = DefaultTrashCapacity;
 		MoneyMultiplier = DefaultMoneyMultiplier;
+		ApplyBaseUpgrades();
 		ApplyToolStats();
 		Dictionary<EPrestigeUpgradeName, int> OwnedPrestigeUpgrades = Data?.GetOwnedPrestigeUpgrades();
 		if (OwnedPrestigeUpgrades == null) return;
@@ -184,6 +183,17 @@ public sealed class Player : Component
 			case EPrestigeUpgradeName.CollectSpeed1: AdditionalMoneyAmount = 1 + (int)GlobalInstance.GetProcessedUpgradeValue(Data.GetUpgradeAmount(EUpgradeName.MoreMoney1), EUpgradeName.MoreMoney1); break;
 		}*/
 	}
+	private void BaseUpgradePurchased(EPlayerUpgrade InPlayerUpgrade)
+	{
+		float DefaultPlayerValue = GlobalInstance.GetDefaultPlayerData(InPlayerUpgrade);
+		float UpgradedPlayerValue = Data.GetPlayerUpgradeValue(InPlayerUpgrade);
+		switch (InPlayerUpgrade)
+		{
+			case EPlayerUpgrade.BagSize: TrashCapacity = (int)(DefaultPlayerValue + UpgradedPlayerValue); break;
+			case EPlayerUpgrade.MovementSpeed: MovementSpeed = DefaultPlayerValue + DefaultPlayerValue * 0.01f * UpgradedPlayerValue; break;
+			default: break;
+		}
+	}
 	private void ToolUpgradePurchased(EToolStat InToolStat)
 	{
 		ETool EquippedTool = Data.GetEquippedTool();
@@ -198,6 +208,12 @@ public sealed class Player : Component
 			case EToolStat.Range: CollectRadius = EquippedToolData.Range * Multiplier; break;
 			case EToolStat.Speed: CollectCooldown = EquippedToolData.CollectCooldown / Multiplier; break;
 		}
+	}
+	private void ApplyBaseUpgrades()
+	{
+		MovementSpeed = GlobalInstance.GetDefaultPlayerData(EPlayerUpgrade.MovementSpeed);
+		TrashCapacity = (int)GlobalInstance.GetDefaultPlayerData(EPlayerUpgrade.BagSize);
+		foreach (EPlayerUpgrade PlayerUpgrade in Enum.GetValues<EPlayerUpgrade>()) BaseUpgradePurchased(PlayerUpgrade);
 	}
 	private void ApplyToolStats()
 	{

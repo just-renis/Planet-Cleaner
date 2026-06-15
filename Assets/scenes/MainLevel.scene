@@ -274,6 +274,19 @@
       "OwnerTransfer": 1,
       "Components": [
         {
+          "__type": "Sandbox.Data.DevTools",
+          "__guid": "5d12466c-73cb-44e8-b540-17c640776f90",
+          "__enabled": true,
+          "Flags": 0,
+          "DebugMoneyAmount": 1000,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
           "__type": "Sandbox.Managers.GameManager",
           "__guid": "4a6bc3b9-561b-456f-802c-ec0da03040a6",
           "__enabled": true,
@@ -306,8 +319,15 @@
           "PlayerUpgradesInformation": {
             "BagSize": {
               "MaxLevel": 5,
-              "Value": 15,
-              "DisplayName": "Bag size",
+              "DefaultValue": 10,
+              "Values": [
+                15,
+                25,
+                40,
+                50,
+                100
+              ],
+              "DisplayName": "BagSize",
               "Icon": null,
               "Prices": [
                 1,
@@ -319,8 +339,15 @@
             },
             "MovementSpeed": {
               "MaxLevel": 5,
-              "Value": 20,
-              "DisplayName": "Movement Speed",
+              "DefaultValue": 1500,
+              "Values": [
+                5,
+                15,
+                15,
+                25,
+                35
+              ],
+              "DisplayName": "MovementSpeed",
               "Icon": null,
               "Prices": [
                 1,
@@ -340,7 +367,7 @@
                 "Power": {
                   "MaxLevel": 3,
                   "Value": 1,
-                  "DisplayName": "Power",
+                  "ToolStat": "Power",
                   "Description": "{0} collected at once.",
                   "Icon": null,
                   "Prices": [
@@ -352,7 +379,7 @@
                 "Range": {
                   "MaxLevel": 3,
                   "Value": 20,
-                  "DisplayName": "Range",
+                  "ToolStat": "Range",
                   "Description": "{0}% increased range.",
                   "Icon": null,
                   "Prices": [
@@ -364,7 +391,7 @@
                 "Speed": {
                   "MaxLevel": 3,
                   "Value": 15,
-                  "DisplayName": "Collect cooldown",
+                  "ToolStat": "Speed",
                   "Description": "{0}% increased speed.",
                   "Icon": null,
                   "Prices": [
@@ -386,7 +413,7 @@
                 "Power": {
                   "MaxLevel": 3,
                   "Value": 1,
-                  "DisplayName": "Power",
+                  "ToolStat": "Power",
                   "Description": "{0} collected at once.",
                   "Icon": null,
                   "Prices": [
@@ -398,7 +425,7 @@
                 "Range": {
                   "MaxLevel": 3,
                   "Value": 20,
-                  "DisplayName": "Range",
+                  "ToolStat": "Range",
                   "Description": "{0}% increased range.",
                   "Icon": null,
                   "Prices": [
@@ -410,7 +437,7 @@
                 "Speed": {
                   "MaxLevel": 3,
                   "Value": 15,
-                  "DisplayName": "Collect cooldown",
+                  "ToolStat": "Speed",
                   "Description": "{0}% increased speed.",
                   "Icon": null,
                   "Prices": [
@@ -426,13 +453,13 @@
             },
             "SuperGrabber": {
               "UnlockPrice": 2000,
-              "ToolName": "Super Grabber",
+              "ToolName": "SuperGrabber",
               "Icon": null,
               "Upgrades": {
                 "Power": {
                   "MaxLevel": 3,
                   "Value": 1,
-                  "DisplayName": "Power",
+                  "ToolStat": "Power",
                   "Description": "{0} collected at once.",
                   "Icon": null,
                   "Prices": [
@@ -444,7 +471,7 @@
                 "Range": {
                   "MaxLevel": 3,
                   "Value": 20,
-                  "DisplayName": "Range",
+                  "ToolStat": "Range",
                   "Description": "{0}% increased range.",
                   "Icon": null,
                   "Prices": [
@@ -456,7 +483,7 @@
                 "Speed": {
                   "MaxLevel": 3,
                   "Value": 15,
-                  "DisplayName": "Collect cooldown",
+                  "ToolStat": "Speed",
                   "Description": "{0}% increased speed.",
                   "Icon": null,
                   "Prices": [
@@ -605,7 +632,6 @@
           "__guid": "a2926400-9b4c-41c9-b5ff-ad4a834ca8fb",
           "__enabled": true,
           "Flags": 0,
-          "DebugMoneyAmount": 1000,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,

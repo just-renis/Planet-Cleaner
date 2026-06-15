@@ -21,13 +21,13 @@
 					    @foreach (KeyValuePair<ETool, ToolData> Tool in ToolsData)
 					    {
 						    bool IsSelected = SelectedTool == Tool.Key;
-						    bool IsUnlocked = Data.IsToolUnlocked(Tool.Key);
-						    <div class="tool-item @(IsSelected ? "selected" : "")" onclick="@(() => SelectTool(Tool.Key, IsUnlocked))">
+						    bool IsToolUnlocked = Data.IsToolUnlocked(Tool.Key);
+						    <div class="tool-item @(IsSelected ? "selected" : "")" onclick="@(() => SelectTool(Tool.Key, IsToolUnlocked))">
 							    <img class="tool-icon" alt="" src="@Tool.Value.Icon"/>
 							    <div class="tool-meta">
-								    <span class="tool-name">@(IsUnlocked ? Tool.Value.ToolName : "???")</span>
+								    <span class="tool-name">@(IsToolUnlocked ? GetToolName(Tool.Value.ToolName) : "???")</span>
 							    </div>
-							    @if (!IsUnlocked)
+							    @if (!IsToolUnlocked)
 							    {
 								    <i class="lock-icon">lock</i>
 							    }
@@ -42,7 +42,7 @@
 					    bool IsToolUnlocked = Data.IsToolUnlocked(SelectedTool);
 					    <div class="tool-showcase-header">
 						    <img class="showcase-icon" alt="" src="@CurrentTool.Icon"/>
-						    <span class="showcase-name">@CurrentTool.ToolName</span>
+						    <span class="showcase-name">@(IsToolUnlocked ? GetToolName(CurrentTool.ToolName) : "???")</span>
 					    </div>
 					    <div class="upgrades-list @(IsToolUnlocked ? "" : "blurred-lock")">
 						    @foreach (KeyValuePair<EToolStat, ToolUpgradeData> Upgrade in CurrentTool.Upgrades)
@@ -53,12 +53,12 @@
 								    <div class="upgrade-info">
 									    <div class="upgrade-row-header">
 										    <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
-										    <span class="stat-name">@Upgrade.Value.DisplayName</span>
-										    <span class="stat-desc-previous">@GetCurrentDescription(Upgrade.Key, Upgrade.Value)</span>
+										    <span class="stat-name">@GetToolStatDisplayName(Upgrade.Value.ToolStat)</span>
+										    <span class="stat-desc-previous">@GetCurrentDescription(CurrentStatLevel, Upgrade.Value)</span>
 										    @if (!IsMaxed)
 										    {
 											    <span>-></span>
-											    <span class="stat-desc-next">@GetNextDescription(Upgrade.Key, Upgrade.Value)</span>
+											    <span class="stat-desc-next">@GetNextDescription(CurrentStatLevel, Upgrade.Value)</span>
 										    }
 									    </div>
 								    </div>
@@ -92,7 +92,7 @@
 			    {
 				    <div class="info-showcase-panel">
 					    <div class="showcase-title-area">
-						    <span class="meta-tool-name">@CurrentToolData.ToolName</span>
+						    <span class="meta-tool-name">@(Data.IsToolUnlocked(SelectedTool) ? GetToolName(CurrentToolData.ToolName) : "???")</span>
 					    </div>
 					    <div class="stats-overview-box">
 						    <span class="overview-header">Default Tool Stats</span>
@@ -109,16 +109,19 @@
 							    <span class="meta-stat-value">@CurrentToolData.CollectCooldown s</span>
 						    </div>
 					    </div>
-					    <div class="stats-overview-box">
-						    <span class="overview-header">Upgraded Tool Stats</span>
-						    @foreach (KeyValuePair<EToolStat, ToolUpgradeData> Upgrade in CurrentToolData.Upgrades)
-						    {
-							    <div class="meta-stat-row">
-								    <span class="meta-stat-label">@Upgrade.Value.DisplayName</span>
-								    <span class="meta-stat-value">@GetUpgradedToolValue(Upgrade.Key)</span>
-							    </div>
-						    }
-					    </div>
+					    @if (Data.HasAtLeastOneToolUpgrade(SelectedTool))
+					    {
+						    <div class="stats-overview-box">
+							    <span class="overview-header">Upgraded Tool Stats</span>
+							    @foreach (KeyValuePair<EToolStat, ToolUpgradeData> Upgrade in CurrentToolData.Upgrades)
+							    {
+								    <div class="meta-stat-row">
+									    <span class="meta-stat-label">@GetToolStatDisplayName(Upgrade.Value.ToolStat)</span>
+									    <span class="meta-stat-value">@GetUpgradedToolValue(Upgrade.Key)</span>
+								    </div>
+							    }
+						    </div>
+					    }
 				    </div>
 			    }
 		    </div>
@@ -154,6 +157,26 @@
         EventManager.OnPlayerDataLoaded -= PlayerDataLoaded;
     }
 
+    private string GetToolName(ETool InTool)
+    {
+	    switch (InTool)
+	    {
+		    case ETool.Hands: return "Hands";
+		    case ETool.Grabber: return "Grabber";
+		    case ETool.SuperGrabber: return "Super Grabber";
+		    default: return "";
+	    }
+    }
+    private string GetToolStatDisplayName(EToolStat InToolStat)
+    {
+	    switch (InToolStat)
+	    {
+		    case EToolStat.Power: return "POWER";
+		    case EToolStat.Range: return "RANGE";
+		    case EToolStat.Speed: return "SPEED";
+		    default: return "";
+	    }
+    }
 	private string GetUpgradedToolValue(EToolStat InToolStat)
 	{
 		ETool EquippedTool = Data.GetEquippedTool();
@@ -170,22 +193,28 @@
 		}
 		return "";
 	}
-    private string GetCurrentDescription(EToolStat InToolStat, ToolUpgradeData InToolUpgrade)
+    private string GetCurrentDescription(int InCurrentLevel, ToolUpgradeData InToolUpgrade)
     {
 	    if (InToolUpgrade == null) return "";
-	    int CurrentLevel = Data.GetToolStatLevel(SelectedTool, InToolStat);
-	    if (CurrentLevel == 0) return "None"; 
-	    float CurrentValue = InToolUpgrade.Value * CurrentLevel;
-	    return InToolUpgrade.Description.Replace("{0}", CurrentValue.ToString("G"));
+	    if (InCurrentLevel == 0) return "None"; 
+	    float CurrentValue = InToolUpgrade.Value * InCurrentLevel;
+	    switch (InToolUpgrade.ToolStat)
+	    {
+		    case EToolStat.Power: return "+" + InToolUpgrade.Description.Replace("{0}", CurrentValue.ToString("G"));
+		    default: return InToolUpgrade.Description.Replace("{0}", CurrentValue.ToString("G"));
+	    }
     }
-    private string GetNextDescription(EToolStat InToolStat, ToolUpgradeData InToolUpgrade)
+    private string GetNextDescription(int InCurrentLevel, ToolUpgradeData InToolUpgrade)
     {
 	    if (InToolUpgrade == null) return "";
-	    int CurrentLevel = Data.GetToolStatLevel(SelectedTool, InToolStat);
-	    bool IsMaxed = CurrentLevel >= InToolUpgrade.MaxLevel;
+	    bool IsMaxed = InCurrentLevel >= InToolUpgrade.MaxLevel;
 	    if (IsMaxed) return "";
-	    float NextValue = InToolUpgrade.Value * (CurrentLevel + 1);
-	    return InToolUpgrade.Description.Replace("{0}", NextValue.ToString("G"));
+	    float NextValue = InToolUpgrade.Value * (InCurrentLevel + 1);
+	    switch (InToolUpgrade.ToolStat)
+	    {
+		    case EToolStat.Power: return "+" + InToolUpgrade.Description.Replace("{0}", NextValue.ToString("G"));
+		    default: return InToolUpgrade.Description.Replace("{0}", NextValue.ToString("G"));
+	    }
     }
     private PlayerData GetPlayerData()
     {

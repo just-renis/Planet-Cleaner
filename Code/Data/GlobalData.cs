@@ -17,6 +17,10 @@ public sealed class GlobalData : Component
 	[Property] private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesInformation { get; set; }
 	[Property] private Dictionary<ETrashType, TrashGroup> TrashTypes { get; set; }
 
+	public float GetDefaultPlayerData(EPlayerUpgrade InPlayerUpgradeName)
+	{
+		return PlayerUpgradesInformation.TryGetValue(InPlayerUpgradeName, out PlayerUpgradeData UpgradeData) ? UpgradeData.DefaultValue : 0f;
+	}
 	public float GetProcessedUpgradeValue(int InUpgradeAmount, EPrestigeUpgradeName InUpgradeName) { return Math.Clamp(InUpgradeAmount, 0, GetUpgradeMaxAmount(InUpgradeName)) * GetUpgradeValue(InUpgradeName); }
 	public float GetUpgradeValue(EPrestigeUpgradeName InUpgradeName) { return UpgradesValues.GetValueOrDefault(InUpgradeName, 0f); }
 	public float GetDefaultAttributeValue(EDefaultAttribute InDefaultAttribute) { return DefaultAttributes.GetValueOrDefault(InDefaultAttribute, 0f); }
