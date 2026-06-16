@@ -10,6 +10,9 @@ public sealed class GlobalData : Component
 	}
 	
 	public static GlobalData Instance { get; private set; }
+	
+	[Property] private GlobalPrestigeData PrestigeData { get; set; }
+	[Property] private List<double> CustomPrestigeRequirements { get; set; }
 	[Property] private Dictionary<EPrestigeUpgradeName, float> UpgradesValues { get; set; }
 	[Property] private Dictionary<EPrestigeUpgradeName, int> UpgradesMaxAmounts { get; set; }
 	[Property] private Dictionary<EDefaultAttribute, float> DefaultAttributes { get; set; }
@@ -17,6 +20,7 @@ public sealed class GlobalData : Component
 	[Property] private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesInformation { get; set; }
 	[Property] private Dictionary<ETrashType, TrashGroup> TrashTypes { get; set; }
 
+	public float GetPrestigeEarningsBonus() { return PrestigeData.GetEarningsBoost(); }
 	public float GetDefaultPlayerData(EPlayerUpgrade InPlayerUpgradeName)
 	{
 		return PlayerUpgradesInformation.TryGetValue(InPlayerUpgradeName, out PlayerUpgradeData UpgradeData) ? UpgradeData.DefaultValue : 0f;
@@ -33,6 +37,7 @@ public sealed class GlobalData : Component
 		int RandomIndex = Game.Random.Int(0, Count - 1);
 		return OutTrashGroup.Models[RandomIndex];
 	}
+	public List<double> GetCustomPrestigeRequirements() { return CustomPrestigeRequirements; }
 	public Dictionary<ETool, ToolData> GetToolsInformation() { return ToolsInformation; }
 	public Dictionary<EPlayerUpgrade, PlayerUpgradeData> GetPlayerUpgradesInformation() { return PlayerUpgradesInformation; }
 	

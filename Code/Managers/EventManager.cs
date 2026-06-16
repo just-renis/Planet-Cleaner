@@ -70,9 +70,13 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	{
 		OnAutoSaveFinished = null;
 		OnTrashSold = null;
+		OnPlayerDataLoaded = null;
+		OnToolChanged = null;
 		OnUpgradesAvailableToBePurchased = null;
 		OnMoneyChanged = null;
 		OnUpgradePurchased = null;
+		OnToolUpgradePurchased = null;
+		OnPlayerBaseUpgradePurchased = null;
 		OnUiStateChanged = null;
 		OnPlayerDataRequired = null;
 		OnRequestPlayerRef = null;

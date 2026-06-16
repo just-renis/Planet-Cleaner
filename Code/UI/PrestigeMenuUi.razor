@@ -1,0 +1,106 @@
+@inherits PanelComponent
+@using System
+@using Sandbox.Data
+@using Sandbox.Enums
+@using Sandbox.Managers
+
+<root class="@(IsOpen ? "" : "hidden")">
+	@if (IsOpen && Data != null)
+	{
+		BulkPrestigeData PrestigeBulkData = Data.GetBulkPrestigeCalculation();
+		float PrestigeEarningBonus = GlobalData.Instance.GetPrestigeEarningsBonus();
+		<div class="menu-container">
+			<div class="prestige-window">
+				<div class="close-btn" onclick="@CloseMenu">X</div>
+				<div class="prestige-header">
+					<div class="prestige-title">Prestige</div>
+					<div class="prestige-subtitle">Reset your progress for permanent boosts!</div>
+				</div>
+				<div class="stats-overview">
+					<div class="stat-badge">
+						<span class="prestige-text-label">Current Prestige</span>
+						<span class="prestige-amount current-count">@Data.GetCurrentPrestige()</span>
+					</div>
+				</div>
+				<div class="comparison-row">
+					<div class="comparison-box current">
+						<div class="box-header">Current Prestige Boosts</div>
+						<div class="box-content">
+							<div class="perk-line">💰 Earnings: <span class="stat-desc-previous">x@((1f + Data.GetCurrentPrestige() * PrestigeEarningBonus).ToString("0.##"))</span></div>
+							<div class="perk-line">🌟 Skill Points: <span class="stat-desc-previous">@(Data.GetPrestigeSkillPoints().ToString("0.##"))</span></div>
+						</div>
+					</div>
+					<div class="comparison-arrow">➔</div>
+					<div class="comparison-box next">
+						<div class="box-header">After Prestige Boosts</div>
+						<div class="box-content">
+							<div class="perk-line">💰 Earnings: <span class="stat-desc-next">x@((1f + (Data.GetCurrentPrestige() + PrestigeBulkData.LevelsGained) * PrestigeEarningBonus).ToString("0.##"))</span></div>
+							<div class="perk-line">🌟 Skill Points: <span class="stat-desc-previous">@((Data.GetPrestigeSkillPoints() + PrestigeBulkData.LevelsGained).ToString("0.##"))</span></div>
+						</div>
+					</div>
+				</div>
+				<div class="prestige-footer">
+					<div class="requirement-text @(Data.CanPrestige() ? "met" : "unmet")">
+						Requirement: $@Data.GetMoney().ToString("N0") / $@Data.GetNextPrestigeRequirement(PrestigeBulkData.TotalCost, PrestigeBulkData.LevelsGained).ToString("N0")
+					</div>
+					<div class="buy-btn @(Data.CanPrestige() ? "" : "cant-afford")" onclick="@OnPrestigeClicked">
+						@if (Data.CanPrestige())
+						{
+							<div class="btn-content">
+								<span class="sparkle">✨</span>
+								<span class="level-highlight">+@PrestigeBulkData.LevelsGained</span>
+								<span class="btn-text text-action">Prestiges</span>
+								<span class="sparkle">✨</span>
+							</div>
+						}
+						else
+						{
+							<div class="btn-content">
+								<span class="btn-text locked">🔒 Need More Money</span>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</root>
+
+@code
+{
+	private bool IsOpen;
+	private PlayerData Data;
+
+    protected override int BuildHash()
+    {
+	    if (GetPlayerData() == null) return -1;
+	    return HashCode.Combine(Data.GetMoney(), IsOpen);
+    }
+
+	protected override void OnAwake()
+    {
+	    EventManager.OnUiStateChanged += UiStateChanged;
+    }
+    protected override void OnDestroy()
+    {
+	    EventManager.OnUiStateChanged -= UiStateChanged;
+    }
+
+    private PlayerData GetPlayerData()
+    {
+	    Data ??= EventManager.TriggerGetPlayerData();
+	    return Data;
+    }
+
+    private void OnPrestigeClicked()
+    {
+	    Data.ExecutePrestige();
+    }
+    private void CloseMenu() { UiManager.ChangeUiState(EUi.PrestigeMenu); }
+    private void UiStateChanged(EUi InUi, bool RenderState)
+    {
+	    if (InUi != EUi.PrestigeMenu) return;
+	    IsOpen = RenderState;
+	    Panel?.Style.PointerEvents = IsOpen ? PointerEvents.All : PointerEvents.None;
+    }
+}

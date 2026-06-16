@@ -1,0 +1,234 @@
+PrestigeMenuUi
+{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 14, 12, 0.6);
+  backdrop-filter: blur(10px);
+  font-family: 'Roboto', 'Poppins', sans-serif;
+  &.hidden { display: none; }
+  .menu-container
+  {
+    width: 85%;
+    height: 85%;
+    align-items: center;
+    justify-content: center;
+  }
+  .prestige-window
+  {
+    width: 55%;
+    height: 90%;
+    background-color: #121614;
+    border: 1px solid #1a221d;
+    border-radius: 20px;
+    padding: 40px;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    .close-btn
+    {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 35px;
+      font-weight: 800;
+      color: #a0aec0;
+      z-index: 100;
+      &:hover { color: #ffffff; }
+    }
+    .prestige-header
+    {
+      text-align: center;
+      margin-bottom: 30px;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      .prestige-title
+      {
+        font-size: 48px;
+        font-weight: 900;
+        color: #ffb300;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        background-color: #161d22;
+        padding: 10px 40px;
+        border-radius: 12px;
+        border: 5px solid #223027;
+      }
+      .prestige-subtitle
+      {
+        font-size: 26px;
+        color: #a0aec0;
+        font-weight: 500;
+      }
+    }
+    .stats-overview
+    {
+      flex-direction: row;
+      gap: 24px;
+      margin-bottom: 35px;
+      .stat-badge
+      {
+        background-color: #121814;
+        border: 5px solid #1c2820;
+        border-radius: 16px;
+        padding: 16px 32px;
+        flex-direction: column;
+        align-items: center;
+        min-width: 240px;
+        .prestige-text-label
+        {
+          font-size: 26px;
+          font-weight: 900;
+          color: #00838f;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+        }
+        .prestige-amount
+        {
+          font-size: 32px;
+          font-weight: 800;
+          margin-top: 4px;
+          &.current-count { color: #ffffff; }
+          &.bonus-count { color: #00ffeb; }
+        }
+      }
+    }
+    .comparison-row
+    {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      margin-bottom: 35px;
+      .comparison-arrow
+      {
+        font-size: 45px;
+        color: #ffb300;
+        font-weight: 900;
+      }
+      .comparison-box
+      {
+        flex: 1;
+        background-color: #161d22;
+        border-radius: 14px;
+        height: 220px;
+        flex-direction: column;
+        .box-header
+        {
+          padding: 12px;
+          text-align: center;
+          font-size: 24px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 5px;
+          border-top-left-radius: 13px;
+          border-top-right-radius: 13px;
+        }
+        .box-content
+        {
+          flex-direction: column;
+          padding: 24px;
+          gap: 14px;
+          .perk-line
+          {
+            font-size: 26px;
+            color: #e2e8f0;
+            font-weight: 600;
+            justify-content: space-between;
+            flex-direction: row;
+          }
+        }
+        &.current
+        {
+          border: 5px solid #223027;
+          .box-header { background-color: #1a241e; color: #a0aec0; }
+          .stat-desc-previous { font-size: 26px; font-weight: 800; }
+        }
+        &.next
+        {
+          border: 5px solid #ffb300;
+          .box-header { background-color: rgba(255, 179, 0, 0.1); color: #ffb300; }
+          .stat-desc-next { font-size: 26px; font-weight: 800; }
+        }
+      }
+    }
+    .prestige-footer
+    {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 16px;
+      .requirement-text
+      {
+        font-size: 28px;
+        font-weight: 800;
+        text-transform: uppercase;
+        &.met { color: #00ffeb; }
+        &.unmet { color: #e53e3e; }
+      }
+      .buy-btn
+      {
+        width: 70%;
+        padding: 16px 24px;
+        background-color: #ffb300;
+        border: 5px solid #ffd54f;
+        border-radius: 12px;
+        color: white;
+        font-weight: 900;
+        font-size: 32px;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        &:hover { background-color: #ffd54f; }
+        &.cant-afford
+        {
+          background-color: #2c3135;
+          border-color: #3f454a;
+          color: #5d6b62;
+          cursor: not-allowed;
+        }
+        .btn-content
+        {
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          width: 100%;
+          height: 100%;
+        }
+        .btn-text
+        {
+          font-size: 30px;
+          font-weight: 900;
+          letter-spacing: 1px;
+          color: #ffffff;
+          line-height: 36px;
+          &.locked { color: #5d6b62; }
+        }
+        .level-highlight
+        {
+          font-size: 38px;
+          color: #000000;
+          font-weight: 900;
+          padding: 0 4px;
+          line-height: 36px;
+        }
+        .sparkle
+        {
+          font-size: 28px;
+          line-height: 36px;
+        }
+      }
+    }
+  }
+}

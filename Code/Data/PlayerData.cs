@@ -9,6 +9,7 @@ public sealed class PlayerData
 {
 	public int CurrentVersion { get; set; }
 	public int CurrentTrashAmount { get; set; }
+	public int CurrentPrestige { get; set; }
 	public double Money { get; set; }
 	public double TotalMoneyEarned { get; set; }
 	public string Checksum { get; set; }
@@ -20,6 +21,7 @@ public sealed class PlayerData
 	private bool IsPendingForSave;
 	private const int LiveVersion = 1;
     private static readonly string SECRET_KEY = "CRAZY_SECRET_KEY69";
+    private List<double> CustomPrestigeRequirements;
     
     public PlayerData()
     {
@@ -39,6 +41,7 @@ public sealed class PlayerData
 	    };
     }
 
+    public bool CanPrestige() { return Money >= GetPrestigeCost(CurrentPrestige); }
     public bool HasAtLeastOneToolUpgrade(ETool InToolName)
     {
 	    return ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData) && ToolData.Levels != null && ToolData.Levels.Values.Any(Level => Level > 0);
@@ -48,6 +51,8 @@ public sealed class PlayerData
 	    return ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData) && ToolData.IsOwned;
     }
     public bool GetIsPendingForSave() { return IsPendingForSave; }
+    public int GetCurrentPrestige() { return CurrentPrestige; }
+    public int GetPrestigeSkillPoints() { return CurrentPrestige - PrestigeUpgrades.Count; }
     public int GetCurrentTrashAmount() { return CurrentTrashAmount; }
     public int GetToolStatLevel(ETool InToolName, EToolStat InToolStat)
     {
@@ -65,9 +70,66 @@ public sealed class PlayerData
     }
     public double GetMoney() { return Money; }
     public double GetTotalMoneyEarned() { return TotalMoneyEarned; }
+    public double GetPrestigeCost(int InTargetPrestigeLevel)
+    {
+	    CustomPrestigeRequirements ??= GlobalData.Instance.GetCustomPrestigeRequirements();
+	    if (InTargetPrestigeLevel < CustomPrestigeRequirements.Count)
+	    {
+		    return CustomPrestigeRequirements[InTargetPrestigeLevel];
+	    }
+	    int ScaleFactor = InTargetPrestigeLevel - CustomPrestigeRequirements.Count + 1;
+	    double BaseFormulaCost = 50000 * Math.Pow(1.5, ScaleFactor); 
+	    return Math.Round(BaseFormulaCost);
+    }
+    public double GetNextPrestigeRequirement(double InPurchasablePrestigesPrice, int InPurchasablePrestigeLevels)
+    {
+	    return InPurchasablePrestigesPrice + GetPrestigeCost(CurrentPrestige + InPurchasablePrestigeLevels);
+    }
     public ETool GetEquippedTool() { return EquippedTool; }
+    public BulkPrestigeData GetBulkPrestigeCalculation()
+    {
+	    BulkPrestigeData PrestigeData = new();
+	    double TempMoneyPool = Money;
+	    while (true)
+	    {
+		    int NextTargetPrestige = CurrentPrestige + PrestigeData.LevelsGained;
+		    double RequiredCost = GetPrestigeCost(NextTargetPrestige);
+		    if (TempMoneyPool >= RequiredCost)
+		    {
+			    TempMoneyPool -= RequiredCost;
+			    PrestigeData.TotalCost += RequiredCost;
+			    PrestigeData.LevelsGained++;
+		    }
+		    else
+		    {
+			    if (PrestigeData.LevelsGained == 0) return PrestigeData;
+			    break;
+		    }
+	    }
+	    return PrestigeData;
+    }
     public Dictionary<EPrestigeUpgradeName, int> GetOwnedPrestigeUpgrades() { return PrestigeUpgrades; }
 
+    public void ExecutePrestige()
+    {
+	    BulkPrestigeData PrestigeData = GetBulkPrestigeCalculation();
+	    if (PrestigeData.LevelsGained <= 0 || Money < PrestigeData.TotalCost) return;
+	    CurrentPrestige += PrestigeData.LevelsGained;
+	    Money = 0;
+	    CurrentTrashAmount = 0;
+	    PlayerUpgrades.Clear();
+	    ToolUpgrades.Clear();
+	    ToolUpgrades.Add(ETool.Hands, new ToolUpgradesData 
+	    {
+		    IsOwned = true,
+		    Levels = new Dictionary<EToolStat, int>() 
+	    });
+	    EquippedTool = ETool.Hands;
+	    Save(this);
+	    EventManager.TriggerMoneyChange(Money);
+	    EventManager.TriggerToolChange();
+	    Log.Info($"Prestiged! Gained +{PrestigeData.LevelsGained} Levels. Cost: ${PrestigeData.TotalCost:N0}");
+    }
     public void EquipTool(ETool InToolName)
     {
 	    EquippedTool = InToolName;

@@ -309,6 +309,13 @@
           "__guid": "0c6f3046-e56e-46ce-8f17-1c3bc2ce127d",
           "__enabled": true,
           "Flags": 0,
+          "CustomPrestigeRequirements": [
+            100,
+            1200,
+            3500,
+            5600,
+            10000
+          ],
           "DefaultAttributes": {},
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -358,6 +365,7 @@
               ]
             }
           },
+          "PrestigeData": {},
           "ToolsInformation": {
             "Hands": {
               "UnlockPrice": 3,
@@ -699,6 +707,18 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
+        },
+        {
+          "__type": "Sandbox.UI.PrestigeMenuUi",
+          "__guid": "ad33987a-5f91-4a69-904e-31fe5479fe01",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ],
       "Children": []
@@ -804,6 +824,47 @@
         {
           "__type": "PlayerUpgradeZone",
           "__guid": "60bc1a9f-bb0e-45e1-b229-af24b73ce5ae",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "e59acee0-61df-4af4-980e-8f5929c9afaf",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "PrestigeZone",
+      "Position": "-822.634155,1000,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "PrestigeZone",
+          "__guid": "304d3506-3cd1-4754-ab9f-9e450651e208",
           "__enabled": true,
           "Flags": 0,
           "CapsuleHeight": 100,

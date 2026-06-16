@@ -5,5 +5,6 @@ public enum EUi
 	PrestigeUpgrades,
 	Settings,
 	ToolUpgrades,
-	PlayerUpgrades
+	PlayerUpgrades,
+	PrestigeMenu
 }

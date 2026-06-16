@@ -11,7 +11,6 @@ public sealed class Player : Component
 	[Property] private float CameraDistance { get; set; } = 200f;
 	[Property] private float CameraHeight { get; set; } = 50f;
 	[Property] private float JumpStrength { get; set; } = 350f;
-	[Property] private float DefaultMoneyMultiplier { get; set; } = 1f;
 	[Property] private Rigidbody PlayerRigidbody { get; set; }
 	[Property] private CitizenAnimationHelper AnimationHelper { get; set; }
 	private bool IsGrounded;
@@ -19,7 +18,6 @@ public sealed class Player : Component
 	private float CollectRadius;
 	private float CollectCooldownTimer;
 	private float CollectCooldown;
-	private float MoneyMultiplier;
 	private int MaximumCollectAmount;
 	private int TrashCapacity;
 	private Angles CurrentCameraRotation;
@@ -82,7 +80,7 @@ public sealed class Player : Component
 	private void SellTrash()
 	{
 		if (Data.GetCurrentTrashAmount() <= 0) return;
-		Data.AddMoney(MoneyMultiplier * Data.GetCurrentTrashAmount());
+		Data.AddMoney((1f + Data.GetCurrentPrestige() * GlobalInstance.GetPrestigeEarningsBonus()) * Data.GetCurrentTrashAmount());
 		Data.ResetTrash();
 	}
 	private void ProcessInput()
@@ -159,7 +157,6 @@ public sealed class Player : Component
 	}
 	private void ApplyUpgradesOnJoin()
 	{
-		MoneyMultiplier = DefaultMoneyMultiplier;
 		ApplyBaseUpgrades();
 		ApplyToolStats();
 		Dictionary<EPrestigeUpgradeName, int> OwnedPrestigeUpgrades = Data?.GetOwnedPrestigeUpgrades();
