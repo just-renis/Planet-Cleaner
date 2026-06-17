@@ -366,6 +366,53 @@
             }
           },
           "PrestigeData": {},
+          "PrestigeUpgrades": [
+            {
+              "Name": "ToolsSpecialization",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Tools Specializaition",
+              "Description": "Unlocks special upgrades for tools.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 0,
+              "Y": 0
+            },
+            {
+              "Name": "MovementBagAfterPrestige",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Movement bag after prestige",
+              "Description": "Movement and bag after prestige doesn't reset.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 100,
+              "Y": 0
+            },
+            {
+              "Name": "HandsMaxedAfterPrestige",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Hands maxed after prestige",
+              "Description": "Hands maxed after prestige.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 200,
+              "Y": 0
+            }
+          ],
           "ToolsInformation": {
             "Hands": {
               "UnlockPrice": 3,
@@ -528,7 +575,6 @@
               ]
             }
           },
-          "UpgradesMaxAmounts": {},
           "UpgradesValues": {}
         }
       ],
@@ -646,43 +692,7 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "QuestionMarkIcon": "ui/questionmark.png",
-          "Upgrades": [
-            {
-              "UpgradeName": "None",
-              "UpgradeValue": "None",
-              "DefaultAttribute": "None",
-              "MaxAmount": 3,
-              "Name": "Collection Range",
-              "Description": "Collection Range increase {0}%.",
-              "Costs": [
-                10,
-                20,
-                30
-              ],
-              "ParentsUpgradeNames": [],
-              "Icon": null,
-              "X": 0,
-              "Y": 0
-            },
-            {
-              "UpgradeName": "None",
-              "UpgradeValue": "None",
-              "DefaultAttribute": "None",
-              "MaxAmount": 3,
-              "Name": "Collect Speed",
-              "Description": "Collectspeed increase {0}%.",
-              "Costs": [
-                1,
-                2,
-                3
-              ],
-              "ParentsUpgradeNames": [],
-              "Icon": null,
-              "X": 0,
-              "Y": -100
-            }
-          ]
+          "QuestionMarkIcon": "ui/questionmark.png"
         },
         {
           "__type": "Sandbox.UI.ToolsUpgradesUi",

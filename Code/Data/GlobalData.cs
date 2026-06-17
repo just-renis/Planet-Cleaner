@@ -1,10 +1,9 @@
-using System;
 using Sandbox.Enums;
 namespace Sandbox.Data;
 
 public sealed class GlobalData : Component
 {
-	public struct TrashGroup
+	private struct TrashGroup
 	{
 		[Property] public List<Model> Models { get; set; }
 	}
@@ -13,8 +12,8 @@ public sealed class GlobalData : Component
 	
 	[Property] private GlobalPrestigeData PrestigeData { get; set; }
 	[Property] private List<double> CustomPrestigeRequirements { get; set; }
+	[Property] private List<PrestigeUpgrade> PrestigeUpgrades { get; set; }
 	[Property] private Dictionary<EPrestigeUpgradeName, float> UpgradesValues { get; set; }
-	[Property] private Dictionary<EPrestigeUpgradeName, int> UpgradesMaxAmounts { get; set; }
 	[Property] private Dictionary<EDefaultAttribute, float> DefaultAttributes { get; set; }
 	[Property] private Dictionary<ETool, ToolData> ToolsInformation { get; set; }
 	[Property] private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesInformation { get; set; }
@@ -25,7 +24,6 @@ public sealed class GlobalData : Component
 	{
 		return PlayerUpgradesInformation.TryGetValue(InPlayerUpgradeName, out PlayerUpgradeData UpgradeData) ? UpgradeData.DefaultValue : 0f;
 	}
-	public float GetProcessedUpgradeValue(int InUpgradeAmount, EPrestigeUpgradeName InUpgradeName) { return Math.Clamp(InUpgradeAmount, 0, GetUpgradeMaxAmount(InUpgradeName)) * GetUpgradeValue(InUpgradeName); }
 	public float GetUpgradeValue(EPrestigeUpgradeName InUpgradeName) { return UpgradesValues.GetValueOrDefault(InUpgradeName, 0f); }
 	public float GetDefaultAttributeValue(EDefaultAttribute InDefaultAttribute) { return DefaultAttributes.GetValueOrDefault(InDefaultAttribute, 0f); }
 	public ToolData GetToolData(ETool InTool) { return ToolsInformation[InTool]; }
@@ -38,11 +36,10 @@ public sealed class GlobalData : Component
 		return OutTrashGroup.Models[RandomIndex];
 	}
 	public List<double> GetCustomPrestigeRequirements() { return CustomPrestigeRequirements; }
+	public List<PrestigeUpgrade> GetPrestigeUpgrades() { return PrestigeUpgrades; }
 	public Dictionary<ETool, ToolData> GetToolsInformation() { return ToolsInformation; }
 	public Dictionary<EPlayerUpgrade, PlayerUpgradeData> GetPlayerUpgradesInformation() { return PlayerUpgradesInformation; }
 	
 	protected override void OnAwake() { Instance = this; }
 	protected override void OnDestroy() { if (Instance == this) Instance = null; }
-
-	private int GetUpgradeMaxAmount(EPrestigeUpgradeName InUpgradeName) { return UpgradesMaxAmounts.GetValueOrDefault(InUpgradeName, 0); }
 }

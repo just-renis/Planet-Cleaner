@@ -1,18 +1,17 @@
 using Sandbox.Enums;
 namespace Sandbox.Data;
 
-public class Upgrade
+public class PrestigeUpgrade
 {
-	public EPrestigeUpgradeName UpgradeName { get; set; }
-	public EPrestigeUpgradeValue UpgradeValue { get; set; }
+	public EPrestigeUpgradeName Name { get; set; }
+	public EPrestigeUpgradeValue Value { get; set; }
 	public EDefaultAttribute DefaultAttribute { get; set; }
 	public int MaxAmount { get; set { field = value; AdjustCostsList(); } } = 1;
-	public string Name { get; set; }
+	public string Title { get; set; }
 	[TextArea] public string Description { get; set; }
 	public List<int> Costs { get; set; }
 	public List<EPrestigeUpgradeName> ParentsUpgradeNames { get; set; } = [];
-	[ImageAssetPath]
-	public string Icon { get; set; }
+	[ImageAssetPath] public string Icon { get; set; }
 	public float X { get; set; }
 	public float Y { get; set; }
 	
@@ -24,6 +23,6 @@ public class Upgrade
 	}
 	public override string ToString()
 	{
-		return UpgradeName == EPrestigeUpgradeName.None ? "New Upgrade" : UpgradeName.ToString();
+		return Name == EPrestigeUpgradeName.None ? "New Upgrade" : Name.ToString();
 	}
 }

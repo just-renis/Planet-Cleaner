@@ -1,5 +1,3 @@
-/* --- Core Layout --- */
-
 PrestigeUpgradesUi
 {
   position: absolute;
@@ -9,425 +7,270 @@ PrestigeUpgradesUi
   color: #f8fafc;
   flex-direction: column;
   z-index: 100;
-}
-
-PrestigeUpgradesUi .wrapper
-{
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  flex-direction: column;
-}
-
-PrestigeUpgradesUi i
-{
-  font-family: 'Material Icons';
-  font-style: normal;
-}
-
-/* --- Header Section --- */
-
-PrestigeUpgradesUi header
-{
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 40px;
-  background-color: #161c24;
-  border-bottom: 2px solid #ff6b00;
-  z-index: 50;
-}
-
-PrestigeUpgradesUi .header-left
-{
-  flex-direction: row;
-  align-items: center;
-}
-
-PrestigeUpgradesUi h1
-{
-  font-size: 24px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #ffffff;
-}
-
-PrestigeUpgradesUi header p
-{
-  font-size: 24px;
-  color: #64748b;
-  font-family: monospace;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-PrestigeUpgradesUi .header-right
-{
-  flex-direction: row;
-  align-items: center;
-}
-
-PrestigeUpgradesUi .money-info
-{
-  flex-direction: column;
-  align-items: flex-end;
-  margin-right: 32px;
-}
-
-PrestigeUpgradesUi .money-info span
-{
-  font-size: 28px;
-  font-weight: 700;
-  color: #2c9c21;
-  text-transform: uppercase;
-  letter-spacing: 5px;
-}
-
-PrestigeUpgradesUi .money-amount
-{
-  flex-direction: row;
-  align-items: center;
-  font-size: 28px;
-  font-weight: 900;
-}
-
-PrestigeUpgradesUi .money-amount i
-{
-  font-size: 24px;
-  margin-right: 8px;
-  color: #ff6b00;
-}
-
-PrestigeUpgradesUi .close-btn
-{
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 2px;
-  cursor: pointer;
-}
-
-PrestigeUpgradesUi .close-btn i
-{
-  font-family: 'Material Icons';
-  font-size: 40px;
-  color: #64748b;
-}
-
-PrestigeUpgradesUi .close-btn:hover i
-{
-  color: #ffffff;
-}
-
-/* --- Canvas Area --- */
-
-PrestigeUpgradesUi .canvas-container
-{
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  background-color: #464a4e;
-}
-
-PrestigeUpgradesUi .canvas-bg
-{
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 0;
-}
-
-PrestigeUpgradesUi .canvas
-{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0;
-  height: 0;
-  z-index: 0;
-}
-
-/* --- Lines --- */
-
-PrestigeUpgradesUi .lines
-{
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
-}
-
-PrestigeUpgradesUi .line
-{
-  position: absolute;
-  transform-origin: 0 50%;
-}
-
-PrestigeUpgradesUi .line.owned
-{
-  box-shadow: 0 0 10px rgb(44, 250, 21);
-}
-
-PrestigeUpgradesUi .line.unowned
-{
-  box-shadow: 0 0 10px rgb(250, 21, 55);
-}
-
-/* --- Nodes --- */
-
-PrestigeUpgradesUi .nodes
-{
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-}
-
-PrestigeUpgradesUi .node-wrapper
-{
-  position: absolute;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-}
-
-PrestigeUpgradesUi .node-wrapper.selected { z-index: 20; }
-
-PrestigeUpgradesUi .node-wrapper.selected .node
-{
-  border: 2px solid #ff6b00;
-  background-color: rgba(255, 107, 0, 0.1);
-}
-
-PrestigeUpgradesUi .node
-{
-  width: 64px;
-  height: 64px;
-  border-radius: 0;
-  border: 1px solid #64748b;
-  justify-content: center;
-  align-items: center;
-  background-color: #161c24;
-  position: relative;
-}
-
-PrestigeUpgradesUi .node i
-{
-  font-size: 24px;
-  color: #ffffff;
-}
-
-PrestigeUpgradesUi .node.locked
-{
-  border: 1px dashed rgba(100, 116, 139, 0.4);
-  background-color: transparent;
-}
-
-PrestigeUpgradesUi .node.locked i { opacity: 0.15; }
-
-PrestigeUpgradesUi .node.available:not(.owned)
-{
-  border: 1px solid #ffffff;
-}
-
-PrestigeUpgradesUi .node.owned
-{
-  border: 1px solid #ff6b00;
-}
-PrestigeUpgradesUi .node.owned i { color: #ff6b00; }
-
-PrestigeUpgradesUi .node .check
-{
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background-color: #ff6b00;
-  border-radius: 0;
-  padding: 1px;
-}
-
-PrestigeUpgradesUi .node .check i
-{
-  font-size: 10px;
-  color: #ffffff;
-  font-weight: 900;
-}
-
-PrestigeUpgradesUi .level-badge
-{
-  position: absolute;
-  font-size: 32px;
-  font-weight: bold;
-  transform: scale(0.4);
-  transform-origin: bottom right;
-  padding: 2px 6px;
-  bottom: -2px;
-  right: 2px;
-  font-family: monospace;
-  color: #0b1927;
-}
-
-/* --- Docked Right Sidebar Panel --- */
-
-PrestigeUpgradesUi .sidebar
-{
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 420px;
-  background-color: #161c24;
-  border-left: 2px solid rgba(255, 255, 255, 0.05);
-  border-radius: 0;
-  padding: 40px 32px;
-  flex-direction: column;
-  z-index: 40;
-  box-shadow: -10px 0px 40px rgba(0, 0, 0, 0.5);
-}
-
-PrestigeUpgradesUi .close-sidebar
-{
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  padding: 4px;
-  cursor: pointer;
-  color: #64748b;
-}
-PrestigeUpgradesUi .close-sidebar:hover { color: #ffffff; }
-
-PrestigeUpgradesUi .sidebar-icon
-{
-  width: 48px;
-  height: 48px;
-  border-radius: 0px;
-  margin-bottom: 32px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-PrestigeUpgradesUi .sidebar h2
-{
-  font-size: 26px;
-  font-weight: 900;
-  text-transform: uppercase;
-  margin: 0 0 12px 0;
-  letter-spacing: 1px;
-}
-
-PrestigeUpgradesUi .badges
-{
-  flex-direction: row;
-  margin-bottom: 24px;
-}
-
-PrestigeUpgradesUi .badge
-{
-  padding: 2px 6px;
-  border-radius: 0;
-  font-size: 9px;
-  font-family: monospace;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-right: 8px;
-}
-
-PrestigeUpgradesUi .badge.combat { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
-PrestigeUpgradesUi .badge.owned { background-color: rgba(255, 107, 0, 0.15); color: #ff6b00; }
-
-PrestigeUpgradesUi .desc
-{
-  color: #94a3b8;
-  font-size: 24px;
-  line-height: 1.5;
-  margin-bottom: 40px;
-}
-
-PrestigeUpgradesUi .stat-row
-{
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 24px;
-  font-family: monospace;
-  color: #64748b;
-  margin-bottom: 14px;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed rgba(100, 116, 139, 0.15);
-}
-
-PrestigeUpgradesUi .text-yellow { color: #ff6b00; }
-PrestigeUpgradesUi .text-red    { color: #f43f5e; }
-PrestigeUpgradesUi .text-green  { color: #10b981; }
-
-.hidden
-{
-  display: none;
-  opacity: 0;
-}
-
-/* --- Tactical Button Action --- */
-
-PrestigeUpgradesUi .buy-btn
-{
-  width: 100%;
-  padding: 16px 0;
-  border-radius: 0;
-  font-family: monospace;
-  font-weight: 900;
-  font-size: 24px;
-  text-transform: uppercase;
-  text-align: center;
-  justify-content: center;
-  background-color: #ff6b00;
-  color: #ffffff;
-  cursor: pointer;
-}
-PrestigeUpgradesUi .buy-btn:hover { background-color: #ff8533; }
-
-PrestigeUpgradesUi .buy-btn.disabled
-{
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #64748b;
-  cursor: default;
-}
-
-/* --- Control Blocks --- */
-
-PrestigeUpgradesUi .zoom-controls
-{
-  position: absolute;
-  left: 32px;
-  bottom: 32px;
-  flex-direction: column;
-  z-index: 60;
-}
-
-PrestigeUpgradesUi .zoom-controls .btn
-{
-  width: 50px;
-  height: 50px;
-  background-color: #161c24;
-  border: 1px solid #64748b;
-  border-radius: 0;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 6px;
-}
-PrestigeUpgradesUi .zoom-controls .btn i { color: #ffffff; font-size: 18px; }
-
-PrestigeUpgradesUi .zoom-scale
-{
-  font-size: 15px;
-  font-family: monospace;
-  color: #ffffff;
-  text-align: center;
+  .wrapper
+  {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+  }
+  header
+  {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+    background-color: #161c24;
+    border-bottom: 2px solid #ff6b00;
+    z-index: 50;
+  }
+  .header-left { font-size: 36px; }
+  .skill-points-info
+  {
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 32px;
+    span
+    {
+      font-size: 35px;
+      font-weight: 700;
+      color: #2c9c21;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+    }
+  }
+  .close-btn
+  {
+    font-size: 44px;
+    cursor: pointer;
+    color: #64748b;
+    &:hover { color: #ffffff; }
+  }
+  // ------------------------------------------------------------------ CANVAS ----------------------------------------------------------------------
+  .canvas-container
+  {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background-color: #464a4e;
+    .canvas-bg
+    {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 0;
+    }
+    .canvas
+    {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      z-index: 0;
+      // ------------------------------------------------------------------ LINES ----------------------------------------------------------------------
+      .lines
+      {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        .line
+        {
+          position: absolute;
+          transform-origin: 0 50%;
+        }
+        .line.owned { box-shadow: 0 0 10px rgb(44, 250, 21); }
+        .line.unowned { box-shadow: 0 0 10px rgb(250, 21, 55); }
+      }
+      // ------------------------------------------------------------------ UPGRADE NODES --------------------------------------------------------------
+      .nodes
+      {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        .node-wrapper
+        {
+          position: absolute;
+          flex-direction: column;
+          align-items: center;
+          cursor: pointer;
+          &.selected
+          {
+            .node.available:not(.owned)
+            {
+              border: 2px solid #ff6b00;
+              background-color: rgba(255, 107, 0, 0.15);
+            }
+          }
+          .node
+          {
+            width: 64px;
+            height: 64px;
+            border-radius: 0;
+            justify-content: center;
+            align-items: center;
+            background-color: #161c24;
+            position: relative;
+            .check
+            {
+              position: absolute;
+              top: -4px;
+              right: -4px;
+              background-color: #ff6b00;
+              border-radius: 0;
+              padding: 1px;
+              i
+              {
+                font-size: 10px;
+                color: #ffffff;
+                font-weight: 900;
+              }
+            }
+            .level-badge
+            {
+              position: absolute;
+              font-size: 32px;
+              font-weight: bold;
+              transform: scale(0.4);
+              transform-origin: bottom right;
+              padding: 2px 6px;
+              bottom: -2px;
+              right: 2px;
+              font-family: monospace;
+              color: #0b1927;
+            }
+          }
+          .node.owned { border: 1px solid #ff6b00; }
+          .available:not(.owned) { border: 1px solid #ffffff; }
+          .locked
+          {
+            border: 2px dashed rgba(100, 116, 139, 0.4);
+            background-color: transparent;
+            i { opacity: 0.15; }
+          }
+        }
+      }
+    }
+    // ---------------------------------------------------------------------------------------------SIDE BAR ----------------------------------------------------------------------------------------------
+    .sidebar
+    {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 420px;
+      background-color: #161c24;
+      border-left: 2px solid rgba(255, 255, 255, 0.05);
+      border-radius: 0;
+      padding: 40px 32px;
+      flex-direction: column;
+      z-index: 40;
+      box-shadow: -10px 0px 40px rgba(0, 0, 0, 0.5);
+      .close-sidebar
+      {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        padding: 4px;
+        cursor: pointer;
+        color: #64748b;
+        &:hover { color: #ffffff; }
+      }
+      h2
+      {
+        font-size: 26px;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin: 0 0 12px 0;
+        letter-spacing: 1px;
+      }
+      .desc
+      {
+        color: #94a3b8;
+        font-size: 24px;
+        line-height: 1.5;
+        margin-bottom: 40px;
+      }
+      .stat-row
+      {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        font-family: monospace;
+        color: #64748b;
+        margin-bottom: 14px;
+        padding-bottom: 6px;
+        border-bottom: 1px dashed rgba(100, 116, 139, 0.15);
+        .text-yellow { color: #ff6b00; }
+        .text-red { color: #f43f5e; }
+        .text-green { color: #10b981; }
+      }
+      .buy-section
+      {
+        .buy-btn
+        {
+          width: 100%;
+          padding: 16px 0;
+          border-radius: 0;
+          font-family: monospace;
+          font-weight: 900;
+          font-size: 24px;
+          text-transform: uppercase;
+          text-align: center;
+          justify-content: center;
+          background-color: #ff6b00;
+          color: #ffffff;
+          cursor: pointer;
+          &:hover { background-color: #ff8533; }
+        }
+        .disabled
+        {
+          background-color: rgba(255, 255, 255, 0.05);
+          color: #64748b;
+          cursor: default;
+        }
+      }
+    }
+    // ---------------------------------------------------------------------------------- ZOOM CONTROLS ------------------------------------------------------------------------------------------
+    .zoom-controls
+    {
+      position: absolute;
+      left: 32px;
+      bottom: 32px;
+      flex-direction: column;
+      z-index: 60;
+      .btn
+      {
+        width: 50px;
+        height: 50px;
+        background-color: #161c24;
+        border: 1px solid #64748b;
+        border-radius: 0;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 6px;
+        i { color: #ffffff; font-size: 18px; }
+      }
+      .zoom-scale
+      {
+        font-size: 15px;
+        font-family: monospace;
+        color: #ffffff;
+        text-align: center;
+      }
+    }
+  }
+  .hidden
+  {
+    display: none;
+    opacity: 0;
+  }
 }

@@ -3,6 +3,10 @@ namespace Sandbox.Enums;
 public enum EPrestigeUpgradeName
 {
 	None,
-	CollectRange1,
-	CollectSpeed1
+	ToolsSpecialization,
+	MovementBagAfterPrestige,
+	HandsMaxedAfterPrestige,
+	GrabberUnlockedAfterPrestige,
+	MovementMaxLimit1,
+	BagMaxLimit1
 }

@@ -9,21 +9,16 @@
 	@if (IsOpen && GetPlayerData() != null)
 	{
 		<div class="wrapper">
-			<!-- Header -->
 			<header>
-				<div class="header-left">
-					<div class="title-info">
-						<h1>PRESTIGE UPGRADES</h1>
-					</div>
-				</div>
+				<div class="header-left">PRESTIGE UPGRADES</div>
 				<div class="header-right">
-					<div class="money-info">
-						<span>AVAILABLE MONEY</span>
-						<div class="money-amount">
-							<span>$@Data.GetMoney().ToString("F0")</span>
+					<div class="skill-points-info">
+						<span>AVAILABLE SKILL POINTS</span>
+						<div class="skill-points-amount">
+							<span>@Data.GetPrestigeSkillPoints()</span>
 						</div>
 					</div>
-					<div class="close-btn" @onclick=@CloseMenu><i>close</i></div>
+					<div class="close-btn" @onclick=@CloseMenu>X</div>
 				</div>
 			</header>
 			<div class="canvas-container">
@@ -31,51 +26,50 @@
 				<div class="canvas" style="transform: translate(@(CanvasX)px, @(CanvasY)px) scale(@Scale);">
 					<!-- Lines -->
 					<div class="lines">
-						@foreach (Upgrade Node in Upgrades)
+						@foreach (PrestigeUpgrade Upgrade in PrestigeUpgrades)
 						{
-							bool IsUpgradeOwned = GetIsOwned(Node.UpgradeName);
-							bool IsAvailable = GetIsAvailable(Node.UpgradeName);
-							bool IsDiscoverable = !IsUpgradeOwned && Node.ParentsUpgradeNames.Any(GetIsAvailable);
+							bool IsUpgradeOwned = GetIsOwned(Upgrade.Name);
+							bool IsAvailable = GetIsAvailable(Upgrade.Name);
+							bool IsDiscoverable = !IsUpgradeOwned && Upgrade.ParentsUpgradeNames.Any(GetIsAvailable);
 							if (!IsUpgradeOwned && !IsAvailable && !IsDiscoverable) continue;
-							@foreach (EPrestigeUpgradeName ParentId in Node.ParentsUpgradeNames)
+							@foreach (EPrestigeUpgradeName ParentId in Upgrade.ParentsUpgradeNames)
 							{
-								Upgrade Parent = Upgrades.FirstOrDefault(U => U.UpgradeName == ParentId);
+								PrestigeUpgrade Parent = PrestigeUpgrades.FirstOrDefault(U => U.Name == ParentId);
 								if (Parent == null) continue;
-								float Dx = Node.X - Parent.X;
-								float Dy = Node.Y - Parent.Y;
+								float Dx = Upgrade.X - Parent.X;
+								float Dy = Upgrade.Y - Parent.Y;
 								float Length = MathF.Sqrt(Dx * Dx + Dy * Dy);
 								float Angle = MathF.Atan2(Dy, Dx) * 180f / MathF.PI;
-								bool IsOwnedPath = IsUpgradeOwned && GetIsOwned(Parent.UpgradeName);
+								bool IsOwnedPath = IsUpgradeOwned && GetIsOwned(Parent.Name);
 								<div class="line @(IsOwnedPath ? "owned" : "unowned")" style="left: @(Parent.X + 32)px; top: @(Parent.Y + 32)px; width: @(Length)px; transform: rotate(@(Angle)deg);"></div>
 							}
 						}
 					</div>
 					<!-- Upgrade Nodes -->
 					<div class="nodes">
-						@foreach (Upgrade Node in Upgrades)
+						@foreach (PrestigeUpgrade Upgrade in PrestigeUpgrades)
 						{
-							bool IsUpgradeOwned = GetIsOwned(Node.UpgradeName);
-							bool IsAvailable = GetIsAvailable(Node.UpgradeName);
-							bool IsDiscoverable = !IsUpgradeOwned && !IsAvailable && Node.ParentsUpgradeNames.Any(GetIsAvailable);
+							bool IsUpgradeOwned = GetIsOwned(Upgrade.Name);
+							bool IsAvailable = GetIsAvailable(Upgrade.Name);
+							bool IsDiscoverable = !IsUpgradeOwned && !IsAvailable && Upgrade.ParentsUpgradeNames.Any(GetIsAvailable);
 							if (!IsAvailable && !IsDiscoverable) continue;
-							bool IsSelected = SelectedUpgradeName == Node.UpgradeName;
+							bool IsSelected = SelectedUpgradeName == Upgrade.Name;
 							string BackgroundStyle = "background-color: black;";
 							if (!IsDiscoverable)
 							{
-								if (!CanBuyMore(Node)) BackgroundStyle = "background-color: #FFFF00BF;";
-								else if (CanAfford(Node)) BackgroundStyle = "background-color: #41D34D;";
+								if (!CanBuyMore(Upgrade)) BackgroundStyle = "background-color: #FFFF00BF;";
+								else if (CanAfford(Upgrade)) BackgroundStyle = "background-color: #41D34D;";
 								else BackgroundStyle = "background-color: #C92121;";
 							}
-
-							<div class="node-wrapper @(IsSelected ? "selected" : "")" style="left: @(Node.X)px; top: @(Node.Y)px;"
-							     @onclick=@(IsDiscoverable ? null : () => SelectNode(Node.UpgradeName))>
+							<div class="node-wrapper @(IsSelected ? "selected" : "")" style="left: @(Upgrade.X)px; top: @(Upgrade.Y)px;"
+							     @onclick=@(IsDiscoverable ? null : () => SelectUpgrade(Upgrade.Name))>
 								<div class="node @(IsUpgradeOwned ? "owned" : "") @(IsAvailable ? "available" : "locked")" style="@BackgroundStyle">
-									<img src="@(IsDiscoverable ? QuestionMarkIcon : Node.Icon)" alt=""/>
-									@if (Node.MaxAmount > 1 && IsAvailable)
+									<img src="@(IsDiscoverable ? QuestionMarkIcon : Upgrade.Icon)" alt=""/>
+									@if (Upgrade.MaxAmount > 1 && IsAvailable)
 									{
-										<div class="level-badge">@GetLevel(Node.UpgradeName)/@Node.MaxAmount</div>
+										<div class="level-badge">@GetLevel(Upgrade.Name)/@Upgrade.MaxAmount</div>
 									}
-									@if (IsUpgradeOwned && GetLevel(Node.UpgradeName) == Node.MaxAmount)
+									@if (IsUpgradeOwned && GetLevel(Upgrade.Name) == Upgrade.MaxAmount)
 									{
 										<div class="check"><i>check</i></div>
 									}
@@ -95,21 +89,21 @@
 				@if (SelectedUpgrade != null)
 				{
 					<div class="sidebar">
-						<div class="close-sidebar" @onclick=@(() => { SelectedUpgradeName = EPrestigeUpgradeName.None; })><i>close</i></div>
-						<h2>@SelectedUpgrade.Name</h2>
+						<div class="close-sidebar" @onclick=@(() => { SelectedUpgradeName = EPrestigeUpgradeName.None; })>X</div>
+						<h2>@SelectedUpgrade.Title</h2>
 						<p class="desc">@GetDynamicDescription(SelectedUpgrade)</p>
-						@if (SelectedUpgrade.UpgradeValue != EPrestigeUpgradeValue.None)
+						@if (SelectedUpgrade.Value != EPrestigeUpgradeValue.None)
 						{
 							<div class="stat-row">
 								<span>CURRENT VALUE</span>
-								<span class="text-yellow">@GetFormattedUpgradeValue(SelectedUpgrade.UpgradeValue)</span>
+								<span class="text-yellow">@GetFormattedUpgradeValue(SelectedUpgrade.Value)</span>
 							</div>
 						}
 						@if (CanBuyMore(SelectedUpgrade))
 						{
 							<div class="stat-row">
 								<span>UPGRADE COST</span>
-								<span class="@(CanAfford(SelectedUpgrade) ? "text-green" : "text-red")">$@GetCurrentCost(SelectedUpgrade)</span>
+								<span class="@(CanAfford(SelectedUpgrade) ? "text-green" : "text-red")">@GetCurrentCost(SelectedUpgrade)</span>
 							</div>
 						}
 						<div class="stat-row">
@@ -124,7 +118,7 @@
 							else
 							{
 								<div class="buy-btn @(CanAfford(SelectedUpgrade) && GetIsAvailable(SelectedUpgradeName) ? "active" : "disabled")" @onclick=@BuyUpgrade>
-									@(!GetIsAvailable(SelectedUpgradeName) ? "LOCKED" : CanAfford(SelectedUpgrade) ? "BUY UPGRADE" : "INSUFFICIENT MONEY")
+									@(!GetIsAvailable(SelectedUpgradeName) ? "LOCKED" : CanAfford(SelectedUpgrade) ? "BUY UPGRADE" : "NEED MORE SKILL POINTS")
 								</div>
 							}
 						</div>
@@ -137,7 +131,6 @@
 
 @code
 {
-	[Property] private List<Upgrade> Upgrades { get; set; } = [];
 	[Property, ImageAssetPath] private string QuestionMarkIcon { get; set; }
 	private bool IsOpen;
 	private bool IsDragging;
@@ -147,7 +140,8 @@
     private float Scale = 1f;
     private Vector2 DragStartPos;
     private Vector2 DragStartOffset;
-    private PlayerData Data; 
+    private PlayerData Data;
+    private List<PrestigeUpgrade> PrestigeUpgrades;
 	// --------------------------------------------------------------PROTECTED METHODS--------------------------------------------------------------
     protected override void OnMouseWheel(Vector2 InValue)
     {
@@ -157,21 +151,22 @@
     protected override void OnAwake()
     {
 	    EventManager.OnUiStateChanged += UiStateChanged;
-	    EventManager.OnMoneyChanged += OnMoneyChanged;
+	    EventManager.OnPrestigeUpgradePurchased += OnPrestigeUpgradePurchased;
     }
     protected override void OnStart()
     {
+	    PrestigeUpgrades = GlobalData.Instance.GetPrestigeUpgrades();
 	    CalculatePurchasableUpgrades();
     }
     protected override void OnDestroy()
     {
 	    EventManager.OnUiStateChanged -= UiStateChanged;
-	    EventManager.OnMoneyChanged -= OnMoneyChanged;
+	    EventManager.OnPrestigeUpgradePurchased -= OnPrestigeUpgradePurchased;
     }
     protected override int BuildHash()
     {
 	    if (GetPlayerData()?.GetOwnedPrestigeUpgrades() == null) return -1;
-	    return HashCode.Combine(Data.GetMoney(), SelectedUpgradeName, Scale, CanvasX, CanvasY, Data.GetOwnedPrestigeUpgrades().Count, IsDragging, IsOpen);
+	    return HashCode.Combine(Data.GetPrestigeSkillPoints(), SelectedUpgradeName, Scale, CanvasX, CanvasY, Data.GetOwnedPrestigeUpgrades().Count, IsDragging, IsOpen);
     }
     protected override void OnUpdate()
     {
@@ -181,27 +176,27 @@
 	    CanvasY = DragStartOffset.y + Delta.y / Scale;
     }
 	// --------------------------------------------------------------PRIVATE METHODS--------------------------------------------------------------
-	private bool CanAfford(Upgrade InUpgrade)
+	private bool CanAfford(PrestigeUpgrade InUpgrade)
 	{
-		return InUpgrade != null && Data.GetMoney() >= GetCurrentCost(InUpgrade);
+		return InUpgrade != null && Data.GetPrestigeSkillPoints() >= GetCurrentCost(InUpgrade);
 	}
-	private Upgrade SelectedUpgrade => Upgrades.FirstOrDefault(U => U.UpgradeName == SelectedUpgradeName);
+	private PrestigeUpgrade SelectedUpgrade => PrestigeUpgrades.FirstOrDefault(U => U.Name == SelectedUpgradeName);
 	private bool GetIsAvailable(EPrestigeUpgradeName InUpgradeName)
 	{
-		Upgrade Upgrade = Upgrades.FirstOrDefault(U => U.UpgradeName == InUpgradeName);
+		PrestigeUpgrade Upgrade = PrestigeUpgrades.FirstOrDefault(U => U.Name == InUpgradeName);
 		if (Upgrade == null) return false;
 		return Upgrade.ParentsUpgradeNames.Count == 0 || Upgrade.ParentsUpgradeNames.All(GetIsOwned);
 	}
 	private bool GetIsOwned(EPrestigeUpgradeName InUpgradeName) => GetLevel(InUpgradeName) > 0;
-	private bool CanBuyMore(Upgrade InUpgrade) 
+	private bool CanBuyMore(PrestigeUpgrade InUpgrade) 
 	{
-		return InUpgrade != null && GetLevel(InUpgrade.UpgradeName) < InUpgrade.MaxAmount;
+		return InUpgrade != null && GetLevel(InUpgrade.Name) < InUpgrade.MaxAmount;
 	}
 	private int GetLevel(EPrestigeUpgradeName InUpgradeName) => Data.GetOwnedPrestigeUpgrades().GetValueOrDefault(InUpgradeName, 0);
-	private int GetCurrentCost(Upgrade InUpgrade)
+	private int GetCurrentCost(PrestigeUpgrade InUpgrade)
 	{
 		if (InUpgrade?.Costs == null || InUpgrade.Costs.Count == 0) return 0;
-		int CurrentLevel = GetLevel(InUpgrade.UpgradeName);
+		int CurrentLevel = GetLevel(InUpgrade.Name);
 		return CurrentLevel >= InUpgrade.MaxAmount ? InUpgrade.Costs.Last() : InUpgrade.Costs[CurrentLevel];
 	}
 	private float GetUpgradeValue(EPrestigeUpgradeValue InUpgradeValue)
@@ -239,10 +234,10 @@
 			default: return $"{Formatted}%";
 		}
 	}
-	private string GetDynamicDescription(Upgrade InUpgrade)
+	private string GetDynamicDescription(PrestigeUpgrade InUpgrade)
 	{
 		return InUpgrade == null ? "" : InUpgrade.Description
-			.Replace("{0}", GlobalData.Instance.GetUpgradeValue(InUpgrade.UpgradeName).ToString("G"))
+			.Replace("{0}", GlobalData.Instance.GetUpgradeValue(InUpgrade.Name).ToString("G"))
 			.Replace("{1}", GlobalData.Instance.GetDefaultAttributeValue(InUpgrade.DefaultAttribute).ToString("G"));
 	}
 	private PlayerData GetPlayerData()
@@ -251,15 +246,15 @@
 		return Data;
 	}
 
-	private void OnMoneyChanged(double InMoney) { CalculatePurchasableUpgrades(); }
+	private void OnPrestigeUpgradePurchased(EPrestigeUpgradeName InPrestigeUpgradeName) { CalculatePurchasableUpgrades(); }
 	private void CalculatePurchasableUpgrades()
 	{
 		if (GetPlayerData() == null) return;
 		int PurchasableCount = 0;
-		foreach (Upgrade Node in Upgrades)
+		foreach (PrestigeUpgrade Upgrade in PrestigeUpgrades)
 		{
-			if (Node == null) continue;
-			if (GetIsAvailable(Node.UpgradeName) && CanBuyMore(Node) && CanAfford(Node)) PurchasableCount++;
+			if (Upgrade == null) continue;
+			if (GetIsAvailable(Upgrade.Name) && CanBuyMore(Upgrade) && CanAfford(Upgrade)) PurchasableCount++;
 		}
 		EventManager.TriggerUpgradesAvailableToBePurchased(PurchasableCount);
 	}
@@ -287,7 +282,7 @@
 		SoundManager.Instance?.Play2D(ESound.UpgradeNodeClick);
 	}
 	private void OnMouseReleased() { IsDragging = false; }
-	private void SelectNode(EPrestigeUpgradeName InUpgradeName)
+	private void SelectUpgrade(EPrestigeUpgradeName InUpgradeName)
 	{
 		SelectedUpgradeName = InUpgradeName;
 		SoundManager.Instance?.Play2D(ESound.UpgradeNodeClick);
@@ -295,8 +290,8 @@
 	private void BuyUpgrade()
 	{
 		if (SelectedUpgradeName == EPrestigeUpgradeName.None || SelectedUpgrade == null || !CanBuyMore(SelectedUpgrade) || !CanAfford(SelectedUpgrade) || !GetIsAvailable(SelectedUpgradeName)) return;
-		Data.SubtractMoney(GetCurrentCost(SelectedUpgrade));
-		Data.BuyUpgrade(SelectedUpgradeName);
+		//Data.SubtractMoney(GetCurrentCost(SelectedUpgrade));
+		Data.BuyPrestigeUpgrade(SelectedUpgradeName);
 		SoundManager.Instance?.Play2D(ESound.BuyUpgrade);
 		CalculatePurchasableUpgrades();
 	}

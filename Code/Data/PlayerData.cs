@@ -125,10 +125,8 @@ public sealed class PlayerData
 		    Levels = new Dictionary<EToolStat, int>() 
 	    });
 	    EquippedTool = ETool.Hands;
-	    Save(this);
-	    EventManager.TriggerMoneyChange(Money);
-	    EventManager.TriggerToolChange();
-	    Log.Info($"Prestiged! Gained +{PrestigeData.LevelsGained} Levels. Cost: ${PrestigeData.TotalCost:N0}");
+	    ApplySave(this);
+	    EventManager.TriggerOnPrestige();
     }
     public void EquipTool(ETool InToolName)
     {
@@ -194,11 +192,11 @@ public sealed class PlayerData
 	    CurrentTrashAmount = 0;
 	    Save(this);
     }
-    public void BuyUpgrade(EPrestigeUpgradeName InUpgradeName)
+    public void BuyPrestigeUpgrade(EPrestigeUpgradeName InUpgradeName)
     {
 	    if (!PrestigeUpgrades.TryAdd(InUpgradeName, 1)) PrestigeUpgrades[InUpgradeName]++;
 	    Save(this);
-	    EventManager.TriggerUpgradePurchased(InUpgradeName);
+	    EventManager.TriggerPrestigeUpgradePurchased(InUpgradeName);
     }
     public static void Save(PlayerData InData) { InData.IsPendingForSave = true; }
     public static void ApplySave(PlayerData InData)

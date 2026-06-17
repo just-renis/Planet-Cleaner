@@ -47,10 +47,11 @@ public sealed class Player : Component
 		EventManager.OnRequestPlayerRef += GetThisRef;
 		EventManager.OnTrashSold += SellTrash;
 		EventManager.OnUiStateChanged += UiStateChanged;
-		EventManager.OnUpgradePurchased += PrestigeUpgradePurchased;
+		EventManager.OnPrestigeUpgradePurchased += PrestigeUpgradePurchased;
 		EventManager.OnToolUpgradePurchased += ToolUpgradePurchased;
 		EventManager.OnPlayerBaseUpgradePurchased += BaseUpgradePurchased;
 		EventManager.OnToolChanged += ApplyToolStats;
+		EventManager.OnPrestige += OnPrestige;
 		LoadSaveData();
 		ApplyUpgradesOnJoin();
 	}
@@ -62,10 +63,11 @@ public sealed class Player : Component
 		EventManager.OnRequestPlayerRef -= GetThisRef;
 		EventManager.OnTrashSold -= SellTrash;
 		EventManager.OnUiStateChanged -= UiStateChanged;
-		EventManager.OnUpgradePurchased -= PrestigeUpgradePurchased;
+		EventManager.OnPrestigeUpgradePurchased -= PrestigeUpgradePurchased;
 		EventManager.OnToolUpgradePurchased -= ToolUpgradePurchased;
 		EventManager.OnPlayerBaseUpgradePurchased -= BaseUpgradePurchased;
 		EventManager.OnToolChanged -= ApplyToolStats;
+		EventManager.OnPrestige -= OnPrestige;
 	}
 
 	private PlayerData GetPlayerData() { return Data; }
@@ -188,7 +190,6 @@ public sealed class Player : Component
 		{
 			case EPlayerUpgrade.BagSize: TrashCapacity = (int)(DefaultPlayerValue + UpgradedPlayerValue); break;
 			case EPlayerUpgrade.MovementSpeed: MovementSpeed = DefaultPlayerValue + DefaultPlayerValue * 0.01f * UpgradedPlayerValue; break;
-			default: break;
 		}
 	}
 	private void ToolUpgradePurchased(EToolStat InToolStat)
@@ -220,5 +221,10 @@ public sealed class Player : Component
 		CollectRadius = EquippedToolData.Range;
 		CollectCooldown = EquippedToolData.CollectCooldown;
 		foreach (EToolStat StatKey in EquippedToolData.Upgrades.Keys) ToolUpgradePurchased(StatKey);
+	}
+	private void OnPrestige()
+	{
+		LoadSaveData();
+		ApplyUpgradesOnJoin();
 	}
 }

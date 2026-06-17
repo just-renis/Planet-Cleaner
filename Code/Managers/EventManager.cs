@@ -9,9 +9,10 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	public static event Action OnTrashSold;
 	public static event Action OnPlayerDataLoaded;
 	public static event Action OnToolChanged;
+	public static event Action OnPrestige;
 	public static event Action<int> OnUpgradesAvailableToBePurchased;
 	public static event Action<double> OnMoneyChanged;
-	public static event Action<EPrestigeUpgradeName> OnUpgradePurchased;
+	public static event Action<EPrestigeUpgradeName> OnPrestigeUpgradePurchased;
 	public static event Action<EToolStat> OnToolUpgradePurchased;
 	public static event Action<EPlayerUpgrade> OnPlayerBaseUpgradePurchased;
 	public static event Action<EUi, bool> OnUiStateChanged;
@@ -34,6 +35,10 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	{
 		OnToolChanged?.Invoke();
 	}
+	public static void TriggerOnPrestige()
+	{
+		OnPrestige?.Invoke();
+	}
 	public static void TriggerUpgradesAvailableToBePurchased(int InAmount)
 	{
 		OnUpgradesAvailableToBePurchased?.Invoke(InAmount);
@@ -42,9 +47,9 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	{
 		OnMoneyChanged?.Invoke(InMoney);
 	}
-	public static void TriggerUpgradePurchased(EPrestigeUpgradeName InUpgradeName)
+	public static void TriggerPrestigeUpgradePurchased(EPrestigeUpgradeName InUpgradeName)
 	{
-		OnUpgradePurchased?.Invoke(InUpgradeName);
+		OnPrestigeUpgradePurchased?.Invoke(InUpgradeName);
 	}
 	public static void TriggerToolUpgradePurchased(EToolStat InToolStatName)
 	{
@@ -72,9 +77,10 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 		OnTrashSold = null;
 		OnPlayerDataLoaded = null;
 		OnToolChanged = null;
+		OnPrestige = null;
 		OnUpgradesAvailableToBePurchased = null;
 		OnMoneyChanged = null;
-		OnUpgradePurchased = null;
+		OnPrestigeUpgradePurchased = null;
 		OnToolUpgradePurchased = null;
 		OnPlayerBaseUpgradePurchased = null;
 		OnUiStateChanged = null;
