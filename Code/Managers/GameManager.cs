@@ -8,7 +8,6 @@ public sealed class GameManager : Component
 	private bool IsHostLogicInitiated;
 	private int AutoSavingHandle;
 	private const float SaveInterval = 20f;
-	//[Property] private List<GameObject> PlayerSpawners { get; set; }
 
 	private SpawnerManager SpawnerManager;
 	
@@ -16,7 +15,6 @@ public sealed class GameManager : Component
 	{
 		SpawnerManager = Scene.GetSystem<SpawnerManager>();
 		SpawnerManager.Init();
-	//	EventManager.OnTeleportToSpawnLocation += GetSpawnerLocation;
 		AutoSavingHandle = TimerManager.AddTimer(AutoSavingHandle, SaveInterval, true, AutoSave);
 		UiManager.OnStart();
 		SoundManager.Instance?.Init(Sounds);
@@ -30,21 +28,15 @@ public sealed class GameManager : Component
 	}
 	protected override void OnDestroy()
 	{
-	//	EventManager.OnTeleportToSpawnLocation -= GetSpawnerLocation;
 		TimerManager.ClearTimer(AutoSavingHandle);
 		TimerManager.OnDestroy();
 		UiManager.OnDestroy();
 		SoundManager.Instance?.OnDestroy();
 	}
 
-	/*private Vector3 GetSpawnerLocation()
-	{
-		return SpawnerManager[Random.Shared.Int(0, PlayerSpawners.Count - 1)].WorldPosition;
-	}*/
-
 	private void AutoSave()
 	{
-		PlayerData ActiveData = EventManager.TriggerGetPlayerData();
+		PlayerData ActiveData = PlayerSaveManager.Instance.Data;
 		if (ActiveData == null) return;
 		if (!ActiveData.GetIsPendingForSave()) return;
 		PlayerData.ApplySave(ActiveData);

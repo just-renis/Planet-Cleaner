@@ -229,6 +229,14 @@ PrestigeUpgradesUi
           color: #ffffff;
           cursor: pointer;
           &:hover { background-color: #ff8533; }
+          &.maxed
+          {
+            background-color: #1b3822;
+            border-color: #2e693e;
+            color: #4ade80;
+            cursor: default;
+            &:hover { background-color: #1b3822; }
+          }
         }
         .disabled
         {

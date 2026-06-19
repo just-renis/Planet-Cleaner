@@ -4,7 +4,7 @@ public enum EPrestigeUpgradeName
 {
 	None,
 	ToolsSpecialization,
-	MovementBagAfterPrestige,
+	MovementBagSavedAfterPrestige1,
 	HandsMaxedAfterPrestige,
 	GrabberUnlockedAfterPrestige,
 	MovementMaxLimit1,

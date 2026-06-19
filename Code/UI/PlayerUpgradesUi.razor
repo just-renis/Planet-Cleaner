@@ -23,7 +23,7 @@
 			           {
 				           int CurrentStatLevel = Data.GetPlayerUpgradeLevel(Upgrade.Key);
 				           float CurrentStatValue = Data.GetPlayerUpgradeValue(Upgrade.Key);
-				           bool IsMaxed = CurrentStatLevel >= Upgrade.Value.MaxLevel;
+				           bool IsMaxed = CurrentStatLevel >= Data.GetPlayerUpgradeMaxLevel(Upgrade.Key);
 				           <div class="upgrade-row row-layout">
 					           <div class="icon-right-wrapper">
 						           <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
@@ -62,7 +62,7 @@
 					           </div>
 					           <div class="row-bottom-section">
 						           <div class="pips-wrapper">
-							           @for (int Index = 0; Index < Upgrade.Value.MaxLevel; Index++)
+							           @for (int Index = 0; Index < Data.GetPlayerUpgradeMaxLevel(Upgrade.Key); Index++)
 							           {
 								           <div class="pip @(Index < CurrentStatLevel ? "filled" : "")"></div>
 							           }
@@ -141,7 +141,7 @@
 	}
 	private PlayerData GetPlayerData()
 	{
-		Data ??= EventManager.TriggerGetPlayerData();
+		Data ??= PlayerSaveManager.Instance.Data;
 		return Data;
 	}
 	

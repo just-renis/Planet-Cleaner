@@ -2,5 +2,7 @@ namespace Sandbox.Enums;
 
 public enum EDefaultAttribute
 {
-	None
+	None,
+	MovementSpeedMaxLimit,
+	BagMaxLimit
 }

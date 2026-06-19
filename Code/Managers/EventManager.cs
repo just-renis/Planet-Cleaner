@@ -1,5 +1,4 @@
 using System;
-using Sandbox.Data;
 using Sandbox.Enums;
 namespace Sandbox.Managers;
 
@@ -16,7 +15,6 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	public static event Action<EToolStat> OnToolUpgradePurchased;
 	public static event Action<EPlayerUpgrade> OnPlayerBaseUpgradePurchased;
 	public static event Action<EUi, bool> OnUiStateChanged;
-	public static event Func<PlayerData> OnPlayerDataRequired;
 	public static event Func<Player> OnRequestPlayerRef;
 	
 	public static void TriggerAutoSaveFinished()
@@ -63,10 +61,6 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	{
 		OnUiStateChanged?.Invoke(InUi, RenderState);
 	}
-	public static PlayerData TriggerGetPlayerData()
-	{
-		return OnPlayerDataRequired?.Invoke();
-	}
 	public static Player TriggerGetPlayerRef()
 	{
 		return OnRequestPlayerRef?.Invoke();
@@ -84,7 +78,6 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 		OnToolUpgradePurchased = null;
 		OnPlayerBaseUpgradePurchased = null;
 		OnUiStateChanged = null;
-		OnPlayerDataRequired = null;
 		OnRequestPlayerRef = null;
 		base.Dispose();
 	}

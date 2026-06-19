@@ -88,7 +88,7 @@
 
     private PlayerData GetPlayerData()
     {
-	    Data ??= EventManager.TriggerGetPlayerData();
+	    Data ??= PlayerSaveManager.Instance.Data;
 	    return Data;
     }
 

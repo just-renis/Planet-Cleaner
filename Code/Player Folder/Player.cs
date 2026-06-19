@@ -43,7 +43,6 @@ public sealed class Player : Component
 		GlobalInstance = GlobalData.Instance;
 		SoundManager.Instance.Play2D(ESound.MainSoundtrack);
 		Camera = Scene.GetComponentInChildren<CameraComponent>();
-		EventManager.OnPlayerDataRequired += GetPlayerData;
 		EventManager.OnRequestPlayerRef += GetThisRef;
 		EventManager.OnTrashSold += SellTrash;
 		EventManager.OnUiStateChanged += UiStateChanged;
@@ -59,7 +58,6 @@ public sealed class Player : Component
 	{
 		if (Data != null && Data.GetIsPendingForSave()) PlayerData.ApplySave(Data);
 		if (IsProxy) return;
-		EventManager.OnPlayerDataRequired -= GetPlayerData;
 		EventManager.OnRequestPlayerRef -= GetThisRef;
 		EventManager.OnTrashSold -= SellTrash;
 		EventManager.OnUiStateChanged -= UiStateChanged;
@@ -70,7 +68,6 @@ public sealed class Player : Component
 		EventManager.OnPrestige -= OnPrestige;
 	}
 
-	private PlayerData GetPlayerData() { return Data; }
 	private Player GetThisRef() { return this; }
 
 	private void UiStateChanged(EUi InUi, bool InState)
@@ -167,20 +164,25 @@ public sealed class Player : Component
 	}
 	private void LoadSaveData()
 	{
-		Data = PlayerData.Load();
-		EventManager.TriggerPlayerDataLoaded();
+		Data = PlayerSaveManager.Instance.Data;
 		EventManager.TriggerMoneyChange(Data.GetMoney());
 	}
 	private void PrestigeUpgradePurchased(EPrestigeUpgradeName InPrestigeUpgradeName)
 	{
-		/*switch (InPrestigeUpgradeName)
+		switch (InPrestigeUpgradeName)
 		{
-			case EPrestigeUpgradeName.CollectRange1:
-				float LessMoneyLoss1 = GlobalInstance.GetProcessedUpgradeValue(Data.GetUpgradeAmount(EUpgradeName.LessMoneyLoss1), EUpgradeName.LessMoneyLoss1);
-				float LessMoneyLoss2 = GlobalInstance.GetProcessedUpgradeValue(Data.GetUpgradeAmount(EUpgradeName.LessMoneyLoss2), EUpgradeName.LessMoneyLoss2);
-				MoneyLossToAliensPercentage = (GlobalInstance.GetDefaultAttributeValue(EDefaultAttribute.MoneyLossPercentageToAliens) - LessMoneyLoss1 - LessMoneyLoss2) * 0.01f; break;
-			case EPrestigeUpgradeName.CollectSpeed1: AdditionalMoneyAmount = 1 + (int)GlobalInstance.GetProcessedUpgradeValue(Data.GetUpgradeAmount(EUpgradeName.MoreMoney1), EUpgradeName.MoreMoney1); break;
-		}*/
+			case EPrestigeUpgradeName.MovementBagSavedAfterPrestige1:
+			case EPrestigeUpgradeName.ToolsSpecialization:
+				break;
+			case EPrestigeUpgradeName.HandsMaxedAfterPrestige:
+				break;
+			case EPrestigeUpgradeName.GrabberUnlockedAfterPrestige:
+				break;
+			case EPrestigeUpgradeName.MovementMaxLimit1:
+				break;
+			case EPrestigeUpgradeName.BagMaxLimit1:
+				break;
+		}
 	}
 	private void BaseUpgradePurchased(EPlayerUpgrade InPlayerUpgrade)
 	{

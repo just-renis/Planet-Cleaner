@@ -19,10 +19,18 @@ public sealed class GlobalData : Component
 	[Property] private Dictionary<EPlayerUpgrade, PlayerUpgradeData> PlayerUpgradesInformation { get; set; }
 	[Property] private Dictionary<ETrashType, TrashGroup> TrashTypes { get; set; }
 
+	public int GetPlayerUpgradeDefaultMaxLevel(EPlayerUpgrade InPlayerUpgradeName)
+	{
+		return PlayerUpgradesInformation.TryGetValue(InPlayerUpgradeName, out PlayerUpgradeData UpgradeData) ? UpgradeData.MaxLevel : 0;
+	}
 	public float GetPrestigeEarningsBonus() { return PrestigeData.GetEarningsBoost(); }
 	public float GetDefaultPlayerData(EPlayerUpgrade InPlayerUpgradeName)
 	{
 		return PlayerUpgradesInformation.TryGetValue(InPlayerUpgradeName, out PlayerUpgradeData UpgradeData) ? UpgradeData.DefaultValue : 0f;
+	}
+	public float GetPlayerUpgradeCachedCumulatedValue(EPlayerUpgrade InPlayerUpgradeName, int InAmount)
+	{
+		return PlayerUpgradesInformation.TryGetValue(InPlayerUpgradeName, out PlayerUpgradeData UpgradeData) ? UpgradeData.GetCachedCumulativeValue(InAmount) : 0f;
 	}
 	public float GetUpgradeValue(EPrestigeUpgradeName InUpgradeName) { return UpgradesValues.GetValueOrDefault(InUpgradeName, 0f); }
 	public float GetDefaultAttributeValue(EDefaultAttribute InDefaultAttribute) { return DefaultAttributes.GetValueOrDefault(InDefaultAttribute, 0f); }

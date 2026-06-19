@@ -1,5 +1,4 @@
 using Sandbox.Managers;
-
 namespace Sandbox.Data;
 
 public sealed class DevTools : Component
@@ -17,18 +16,13 @@ public sealed class DevTools : Component
 	[Button("Add Money"), Group("Save File")]
 	public void AddMoney()
 	{
-		if (!Game.IsEditor || GetPlayerSaveData() == null) return;
-		GetPlayerSaveData().AddMoney(DebugMoneyAmount);
+		if (!Game.IsEditor || PlayerSaveManager.Instance.Data == null) return;
+		PlayerSaveManager.Instance.Data.AddMoney(DebugMoneyAmount);
 	}
 	[Button("Remove Money"), Group("Save File")]
 	public void SubtractMoney()
 	{
-		if (!Game.IsEditor || GetPlayerSaveData() == null) return;
-		GetPlayerSaveData().SubtractMoney(DebugMoneyAmount);
-	}
-
-	private PlayerData GetPlayerSaveData()
-	{
-		return EventManager.TriggerGetPlayerData();
+		if (!Game.IsEditor || PlayerSaveManager.Instance.Data == null) return;
+		PlayerSaveManager.Instance.Data.SubtractMoney(DebugMoneyAmount);
 	}
 }

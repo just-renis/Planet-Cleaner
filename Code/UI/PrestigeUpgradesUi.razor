@@ -113,7 +113,7 @@
 						<div class="buy-section">
 							@if (!CanBuyMore(SelectedUpgrade))
 							{
-								<div class="buy-btn">MAXED OUT</div>
+								<div class="buy-btn maxed">MAXED OUT</div>
 							}
 							else
 							{
@@ -203,24 +203,12 @@
 	{
 		if (Data == null) return 0f;
 		GlobalData GlobalInstance = GlobalData.Instance;
-		float CalculateValue(EPrestigeUpgradeName Name) => Data.GetUpgradeAmount(Name) * GlobalInstance.GetUpgradeValue(Name);
 		switch (InUpgradeValue)
 		{
-		//	case EUpgradeValue.MoneyAdded: return 1 + CalculateValue(EUpgradeName.MoreMoney1);
-		//	case EUpgradeValue.BoxGrabRange: return 100 + CalculateValue(EUpgradeName.BoxGrabRange1) + CalculateValue(EUpgradeName.BoxGrabRange2);
-		//	case EUpgradeValue.SwordPower: return 100 + CalculateValue(EUpgradeName.SwordPower1) + CalculateValue(EUpgradeName.SwordPower2);
-		//	case EUpgradeValue.DashImpulseStrength: return 100 + CalculateValue(EUpgradeName.DashImpulseStrength1) + CalculateValue(EUpgradeName.DashImpulseStrength2);
-		//	case EUpgradeValue.BoxThrowStrength: return 100 + CalculateValue(EUpgradeName.BoxThrowImpulseStrength1) + CalculateValue(EUpgradeName.BoxThrowImpulseStrength2) + CalculateValue(EUpgradeName.BoxThrowImpulseStrength3);
-		//	case EUpgradeValue.MovementSpeed: return 100 + CalculateValue(EUpgradeName.MovementSpeed1) + CalculateValue(EUpgradeName.MovementSpeed2) + CalculateValue(EUpgradeName.MovementSpeed3);
-		//	case EUpgradeValue.MoneyLoss: return GlobalInstance.GetDefaultAttributeValue(EDefaultAttribute.MoneyLossPercentageToAliens) - CalculateValue(EUpgradeName.LessMoneyLoss1) - CalculateValue(EUpgradeName.LessMoneyLoss2);
+			case EPrestigeUpgradeValue.MovementMaxLimit: return GlobalInstance.GetDefaultAttributeValue(EDefaultAttribute.MovementSpeedMaxLimit) + Data.GetPrestigeUpgradeValueAmount(EPrestigeUpgradeName.MovementMaxLimit1);
+			case EPrestigeUpgradeValue.BagMaxLimit: return GlobalInstance.GetDefaultAttributeValue(EDefaultAttribute.BagMaxLimit) + Data.GetPrestigeUpgradeValueAmount(EPrestigeUpgradeName.BagMaxLimit1);
 			default: return 0;
 		}
-	}
-	private float CalculateBoxSpawnChance(EPrestigeUpgradeName InUpgradeName, EPrestigeUpgradeName InUpgradeNextTierName)
-	{
-		float CurrentMultiplier = GlobalData.Instance.GetUpgradeValue(InUpgradeName);
-		float NextMultiplier = GlobalData.Instance.GetUpgradeValue(InUpgradeNextTierName);
-		return Data.GetUpgradeAmount(InUpgradeName) * CurrentMultiplier + Data.GetUpgradeAmount(InUpgradeNextTierName) * NextMultiplier;
 	}
 	private string GetFormattedUpgradeValue(EPrestigeUpgradeValue InUpgradeValue)
 	{
@@ -228,9 +216,8 @@
 		string Formatted = Value.ToString("0.##");
 		switch (InUpgradeValue)
 		{
-		//	case EUpgradeValue.MoneyAdded: case EUpgradeValue.AlienComboMultiplierBoxReduction: return Formatted;
 		//	case EUpgradeValue.DashCooldown: case EUpgradeValue.DashCooldownReductionPerBox: return $"{Formatted}s";
-		//	case EUpgradeValue.BiggerAlienMoreMoneyMultiplier: case EUpgradeValue.AlienComboMaxMultiplier: return $"{Formatted}x";
+			case EPrestigeUpgradeValue.MovementMaxLimit: case EPrestigeUpgradeValue.BagMaxLimit: return Formatted;
 			default: return $"{Formatted}%";
 		}
 	}
@@ -242,7 +229,7 @@
 	}
 	private PlayerData GetPlayerData()
 	{
-		Data ??= EventManager.TriggerGetPlayerData();
+		Data ??= PlayerSaveManager.Instance.Data;
 		return Data;
 	}
 
@@ -290,7 +277,6 @@
 	private void BuyUpgrade()
 	{
 		if (SelectedUpgradeName == EPrestigeUpgradeName.None || SelectedUpgrade == null || !CanBuyMore(SelectedUpgrade) || !CanAfford(SelectedUpgrade) || !GetIsAvailable(SelectedUpgradeName)) return;
-		//Data.SubtractMoney(GetCurrentCost(SelectedUpgrade));
 		Data.BuyPrestigeUpgrade(SelectedUpgradeName);
 		SoundManager.Instance?.Play2D(ESound.BuyUpgrade);
 		CalculatePurchasableUpgrades();

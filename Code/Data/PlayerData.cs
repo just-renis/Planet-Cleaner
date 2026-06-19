@@ -54,12 +54,20 @@ public sealed class PlayerData
     public int GetCurrentPrestige() { return CurrentPrestige; }
     public int GetPrestigeSkillPoints() { return CurrentPrestige - PrestigeUpgrades.Count; }
     public int GetCurrentTrashAmount() { return CurrentTrashAmount; }
+    public int GetPlayerUpgradeMaxLevel(EPlayerUpgrade InUpgradeName)
+    {
+	    switch (InUpgradeName)
+	    {
+		    case EPlayerUpgrade.BagSize: return CalculatePlayerUpgradeMaxLevel(InUpgradeName, EPrestigeUpgradeName.BagMaxLimit1);
+		    case EPlayerUpgrade.MovementSpeed: return CalculatePlayerUpgradeMaxLevel(InUpgradeName, EPrestigeUpgradeName.MovementMaxLimit1);
+	    }
+	    return 0;
+    }
     public int GetToolStatLevel(ETool InToolName, EToolStat InToolStat)
     {
 	    if (!ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData)) return 0;
 	    return ToolData.Levels?.GetValueOrDefault(InToolStat, 0) ?? 0;
     }
-    public int GetUpgradeAmount(EPrestigeUpgradeName InUpgradeName) { return PrestigeUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
     public int GetPlayerUpgradeLevel(EPlayerUpgrade InUpgradeName) 
     { 
 	    return PlayerUpgrades != null && PlayerUpgrades.TryGetValue(InUpgradeName, out PlayerSaveUpgradesData Data) ? Data.Level : 0; 
@@ -68,19 +76,9 @@ public sealed class PlayerData
     { 
 	    return PlayerUpgrades != null && PlayerUpgrades.TryGetValue(InUpgradeName, out PlayerSaveUpgradesData Data) ? Data.CurrentValue : 0f; 
     }
+    public float GetPrestigeUpgradeValueAmount(EPrestigeUpgradeName InUpgradeName) { return GetPrestigeUpgradesAmount(InUpgradeName) * GlobalData.Instance.GetUpgradeValue(InUpgradeName); }
     public double GetMoney() { return Money; }
     public double GetTotalMoneyEarned() { return TotalMoneyEarned; }
-    public double GetPrestigeCost(int InTargetPrestigeLevel)
-    {
-	    CustomPrestigeRequirements ??= GlobalData.Instance.GetCustomPrestigeRequirements();
-	    if (InTargetPrestigeLevel < CustomPrestigeRequirements.Count)
-	    {
-		    return CustomPrestigeRequirements[InTargetPrestigeLevel];
-	    }
-	    int ScaleFactor = InTargetPrestigeLevel - CustomPrestigeRequirements.Count + 1;
-	    double BaseFormulaCost = 50000 * Math.Pow(1.5, ScaleFactor); 
-	    return Math.Round(BaseFormulaCost);
-    }
     public double GetNextPrestigeRequirement(double InPurchasablePrestigesPrice, int InPurchasablePrestigeLevels)
     {
 	    return InPurchasablePrestigesPrice + GetPrestigeCost(CurrentPrestige + InPurchasablePrestigeLevels);
@@ -109,6 +107,38 @@ public sealed class PlayerData
 	    return PrestigeData;
     }
     public Dictionary<EPrestigeUpgradeName, int> GetOwnedPrestigeUpgrades() { return PrestigeUpgrades; }
+    public static PlayerData Load()
+    {
+	    if (!FileSystem.Data.FileExists("save.dat")) return new PlayerData();
+	    try
+	    {
+		    string Obfuscated = FileSystem.Data.ReadAllText("save.dat");
+		    string Base64 = XorInput(Obfuscated, SECRET_KEY);
+		    string Decrypted = Encoding.UTF8.GetString(Convert.FromBase64String(Base64));
+		    if (!int.TryParse(Decrypted[..2], out int NoiseLength)) throw new Exception("Header Corrupt");
+		    string JsonData = Decrypted[(2 + NoiseLength)..];
+		    Dictionary<string, object> RawDataMap = Json.Deserialize<Dictionary<string, object>>(JsonData);
+		    if (RawDataMap == null || !RawDataMap.TryGetValue("Checksum", out object OutValue)) throw new Exception("Invalid Save Structure");
+		    string StoredChecksum = OutValue?.ToString();
+		    RawDataMap["Checksum"] = "";
+		    string VerificationJson = Json.Serialize(RawDataMap);
+		    string CalculatedHash = CreateMd5(VerificationJson + SECRET_KEY);
+		    if (StoredChecksum != CalculatedHash)
+		    {
+			    Log.Error("CRITICAL: Save file tampered with! Hash mismatch.");
+			    FileSystem.Data.DeleteFile("save.dat");
+			    return new PlayerData();
+		    }
+		    PlayerData ValidData = Json.Deserialize<PlayerData>(JsonData);
+		    Migrate(ValidData);
+		    return ValidData;
+	    }
+	    catch (Exception Exception)
+	    {
+		    Log.Warning($"Save Corrupted: {Exception.Message}");
+		    return new PlayerData();
+	    }
+    }
 
     public void ExecutePrestige()
     {
@@ -117,13 +147,9 @@ public sealed class PlayerData
 	    CurrentPrestige += PrestigeData.LevelsGained;
 	    Money = 0;
 	    CurrentTrashAmount = 0;
-	    PlayerUpgrades.Clear();
 	    ToolUpgrades.Clear();
-	    ToolUpgrades.Add(ETool.Hands, new ToolUpgradesData 
-	    {
-		    IsOwned = true,
-		    Levels = new Dictionary<EToolStat, int>() 
-	    });
+	    PlayerUpgrades.Clear();
+	    ApplyPermanentPrestigeUpgrades();
 	    EquippedTool = ETool.Hands;
 	    ApplySave(this);
 	    EventManager.TriggerOnPrestige();
@@ -198,7 +224,6 @@ public sealed class PlayerData
 	    Save(this);
 	    EventManager.TriggerPrestigeUpgradePurchased(InUpgradeName);
     }
-    public static void Save(PlayerData InData) { InData.IsPendingForSave = true; }
     public static void ApplySave(PlayerData InData)
     {
 	    InData.IsPendingForSave = false;
@@ -219,6 +244,25 @@ public sealed class PlayerData
         EventManager.TriggerAutoSaveFinished();
     }
     
+    private int GetPrestigeUpgradesAmount(EPrestigeUpgradeName InUpgradeName) { return PrestigeUpgrades?.GetValueOrDefault(InUpgradeName, 0) ?? 0; }
+    private int CalculatePlayerUpgradeMaxLevel(EPlayerUpgrade InUpgradeName, EPrestigeUpgradeName InPrestigeUpgradeName)
+    {
+	    int BaseMaxLevel = GlobalData.Instance.GetPlayerUpgradeDefaultMaxLevel(InUpgradeName);
+	    int PrestigeUpgradeLevel = PrestigeUpgrades.GetValueOrDefault(InPrestigeUpgradeName, 0);
+	    float ScaleValue = GlobalData.Instance.GetUpgradeValue(InPrestigeUpgradeName);
+	    return BaseMaxLevel + PrestigeUpgradeLevel * (int)ScaleValue;
+    }
+    private double GetPrestigeCost(int InTargetPrestigeLevel)
+    {
+	    CustomPrestigeRequirements ??= GlobalData.Instance.GetCustomPrestigeRequirements();
+	    if (InTargetPrestigeLevel < CustomPrestigeRequirements.Count)
+	    {
+		    return CustomPrestigeRequirements[InTargetPrestigeLevel];
+	    }
+	    int ScaleFactor = InTargetPrestigeLevel - CustomPrestigeRequirements.Count + 1;
+	    double BaseFormulaCost = 50000 * Math.Pow(1.5, ScaleFactor); 
+	    return Math.Round(BaseFormulaCost);
+    }
     private static string XorInput(string InInput, string InKey)
     {
 	    StringBuilder Output = new();
@@ -232,39 +276,40 @@ public sealed class PlayerData
 	    byte[] HashBytes = Md5.ComputeHash(InputBytes);
 	    return Convert.ToHexString(HashBytes);
     }
-    public static PlayerData Load()
+
+    private void MaximizeUpgrade(EPlayerUpgrade InUpgradeName)
     {
-	    if (!FileSystem.Data.FileExists("save.dat")) return new PlayerData();
-	    try
+	    PlayerUpgrades.Add(InUpgradeName, new PlayerSaveUpgradesData
 	    {
-		    string Obfuscated = FileSystem.Data.ReadAllText("save.dat");
-		    string Base64 = XorInput(Obfuscated, SECRET_KEY);
-		    string Decrypted = Encoding.UTF8.GetString(Convert.FromBase64String(Base64));
-		    if (!int.TryParse(Decrypted[..2], out int NoiseLength)) throw new Exception("Header Corrupt");
-		    string JsonData = Decrypted[(2 + NoiseLength)..];
-		    Dictionary<string, object> RawDataMap = Json.Deserialize<Dictionary<string, object>>(JsonData);
-		    if (RawDataMap == null || !RawDataMap.TryGetValue("Checksum", out object OutValue)) throw new Exception("Invalid Save Structure");
-		    string StoredChecksum = OutValue?.ToString();
-		    RawDataMap["Checksum"] = "";
-		    string VerificationJson = Json.Serialize(RawDataMap);
-		    string CalculatedHash = CreateMd5(VerificationJson + SECRET_KEY);
-		    if (StoredChecksum != CalculatedHash)
-		    {
-			    Log.Error("CRITICAL: Save file tampered with! Hash mismatch.");
-			    FileSystem.Data.DeleteFile("save.dat");
-			    return new PlayerData();
-		    }
-		    PlayerData ValidData = Json.Deserialize<PlayerData>(JsonData);
-		    Migrate(ValidData);
-		    return ValidData;
+		    Level = 3,
+		    CurrentValue = GlobalData.Instance.GetPlayerUpgradeCachedCumulatedValue(InUpgradeName, 3)
+	    });
+	    Log.Info(PlayerUpgrades[InUpgradeName].CurrentValue);
+    }
+    private void ApplyPermanentPrestigeUpgrades()
+    {
+	    if (PrestigeUpgrades.ContainsKey(EPrestigeUpgradeName.MovementBagSavedAfterPrestige1))
+	    {
+		    MaximizeUpgrade(EPlayerUpgrade.MovementSpeed);
+		    MaximizeUpgrade(EPlayerUpgrade.BagSize);
 	    }
-	    catch (Exception Exception)
+	    ToolUpgrades.Add(ETool.Hands, new ToolUpgradesData 
 	    {
-		    Log.Warning($"Save Corrupted: {Exception.Message}");
-		    return new PlayerData();
+		    IsOwned = true,
+		    Levels = PrestigeUpgrades.ContainsKey(EPrestigeUpgradeName.HandsMaxedAfterPrestige)
+			    ? new Dictionary<EToolStat, int> { { EToolStat.Power, 3 }, { EToolStat.Range, 3 }, { EToolStat.Speed, 3 } }
+			    : new Dictionary<EToolStat, int>()
+	    });
+	    if (PrestigeUpgrades.ContainsKey(EPrestigeUpgradeName.GrabberUnlockedAfterPrestige))
+	    {
+		    ToolUpgrades.Add(ETool.Grabber, new ToolUpgradesData 
+		    {
+			    IsOwned = true,
+			    Levels = new Dictionary<EToolStat, int>() 
+		    });
 	    }
     }
-    
+    private static void Save(PlayerData InData) { InData.IsPendingForSave = true; }
     private static void Migrate(PlayerData InData)
     {
 	//    bool NeedsSave = false;

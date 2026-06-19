@@ -316,7 +316,10 @@
             5600,
             10000
           ],
-          "DefaultAttributes": {},
+          "DefaultAttributes": {
+            "MovementSpeedMaxLimit": 5,
+            "BagMaxLimit": 5
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -332,7 +335,9 @@
                 25,
                 40,
                 50,
-                100
+                100,
+                200,
+                300
               ],
               "DisplayName": "BagSize",
               "Icon": null,
@@ -341,8 +346,13 @@
                 2,
                 3,
                 4,
-                5
-              ]
+                5,
+                6,
+                7
+              ],
+              "CachedCumulativeValues": {
+                "3": 80
+              }
             },
             "MovementSpeed": {
               "MaxLevel": 5,
@@ -352,7 +362,9 @@
                 15,
                 15,
                 25,
-                35
+                35,
+                25,
+                45
               ],
               "DisplayName": "MovementSpeed",
               "Icon": null,
@@ -361,8 +373,13 @@
                 2,
                 3,
                 4,
-                5
-              ]
+                5,
+                6,
+                7
+              ],
+              "CachedCumulativeValues": {
+                "3": 35
+              }
             }
           },
           "PrestigeData": {},
@@ -373,7 +390,7 @@
               "DefaultAttribute": "None",
               "MaxAmount": 1,
               "Title": "Tools Specializaition",
-              "Description": "Unlocks special upgrades for tools.",
+              "Description": "Unlocks special prestige-only tool upgrades.",
               "Costs": [
                 1
               ],
@@ -383,12 +400,12 @@
               "Y": 0
             },
             {
-              "Name": "MovementBagAfterPrestige",
+              "Name": "MovementBagSavedAfterPrestige1",
               "Value": "None",
               "DefaultAttribute": "None",
               "MaxAmount": 1,
               "Title": "Movement bag after prestige",
-              "Description": "Movement and bag after prestige doesn't reset.",
+              "Description": "Retain first 3 movement speed and bag capacity upgrades after prestiging.",
               "Costs": [
                 1
               ],
@@ -403,7 +420,7 @@
               "DefaultAttribute": "None",
               "MaxAmount": 1,
               "Title": "Hands maxed after prestige",
-              "Description": "Hands maxed after prestige.",
+              "Description": "Start with maximum hands upgrade levels after prestiging.",
               "Costs": [
                 1
               ],
@@ -411,6 +428,51 @@
               "Icon": null,
               "X": 200,
               "Y": 0
+            },
+            {
+              "Name": "GrabberUnlockedAfterPrestige",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Grabber unlocked after prestige",
+              "Description": "The Grabber stays permanently unlocked across all prestiges.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 0,
+              "Y": 100
+            },
+            {
+              "Name": "MovementMaxLimit1",
+              "Value": "MovementMaxLimit",
+              "DefaultAttribute": "MovementSpeedMaxLimit",
+              "MaxAmount": 1,
+              "Title": "Movement max limit",
+              "Description": "Raises the upgrade maximum level cap for Movement Speed.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 100,
+              "Y": 100
+            },
+            {
+              "Name": "BagMaxLimit1",
+              "Value": "BagMaxLimit",
+              "DefaultAttribute": "BagMaxLimit",
+              "MaxAmount": 1,
+              "Title": "Bag max limit",
+              "Description": "Raises the upgrade maximum level cap for Bag Size.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 200,
+              "Y": 100
             }
           ],
           "ToolsInformation": {
@@ -575,7 +637,22 @@
               ]
             }
           },
-          "UpgradesValues": {}
+          "UpgradesValues": {
+            "MovementMaxLimit1": 2,
+            "BagMaxLimit1": 2
+          }
+        },
+        {
+          "__type": "Sandbox.Managers.PlayerSaveManager",
+          "__guid": "9cd8b4d7-f127-4c5c-982b-39b838d505ad",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ],
       "Children": []
