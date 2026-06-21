@@ -1,6 +1,11 @@
+// THIS FILE IS AUTO-GENERATED
 
 Layer0
 {
-	shader "materials/metal box/metal.shader_c"
+	shader "materials/metal box/metal.shader"
 
+	MaterialParameter0 "materials/metal box/metal-normal.jpg"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
 }

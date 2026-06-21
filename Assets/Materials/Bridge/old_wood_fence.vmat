@@ -4,9 +4,6 @@ Layer0
 {
 	shader "shaders/complex.shader"
 
-	//---- Rendering ----
-	F_PARALLAX_OCCLUSION 1
-
 	//---- Ambient Occlusion ----
 	g_flAmbientOcclusionDirectDiffuse "0.000"
 	TextureAmbientOcclusion "materials/default/default_ao.tga"
@@ -27,13 +24,6 @@ Layer0
 
 	//---- Normal ----
 	TextureNormal "materials/bridge/old_wood_fence_normal.jpg"
-
-	//---- Parallax ----
-	g_flHeightMapScale "0.040"
-	g_nLODThreshold "4"
-	g_nMaxSamples "32"
-	g_nMinSamples "8"
-	TextureHeight "materials/bridge/old_wood_fence_height.jpg"
 
 	//---- Roughness ----
 	g_flRoughnessScaleFactor "1.000"

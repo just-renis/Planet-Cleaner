@@ -21,7 +21,7 @@ Layer0
 	g_vWaveTopColorBlend "[0.000 20.000]"
 
 	//---- Wave Texture Settings ----
-	g_vWaveNormalScale "[14.419 13.699]"
+	g_vWaveNormalScale "[13.000 13.000]"
 	g_vWavePanningSpeed "[0.000 0.108]"
 	WaveNormal "materials/water/water_height.jpg"
 }
