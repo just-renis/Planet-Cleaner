@@ -12,6 +12,8 @@ public sealed class Player : Component
 	[Property] private float CameraHeight { get; set; } = 50f;
 	[Property] private float JumpStrength { get; set; } = 350f;
 	[Property] private Rigidbody PlayerRigidbody { get; set; }
+	[Property] public GameObject ItemToHold { get; set; }
+	[Property] public SkinnedModelRenderer PlayerMesh { get; set; }
 	[Property] private CitizenAnimationHelper AnimationHelper { get; set; }
 	private bool IsGrounded;
 	private float MovementSpeed;
@@ -53,6 +55,12 @@ public sealed class Player : Component
 		EventManager.OnPrestige += OnPrestige;
 		LoadSaveData();
 		ApplyUpgradesOnJoin();
+		PlayerMesh.CreateBoneObjects = true;
+		GameObject HandBoneObject = PlayerMesh.GetBoneObject("hold_R");
+		if (HandBoneObject == null) return;
+		ItemToHold.SetParent(HandBoneObject, false);
+		ItemToHold.LocalPosition = new Vector3(-2f, -2f, 1f);
+		ItemToHold.LocalRotation = Rotation.From(new Angles(20, 0, 90));
 	}
 	protected override void OnDestroy()
 	{

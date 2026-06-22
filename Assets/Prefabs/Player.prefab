@@ -28,12 +28,10 @@
         },
         "CameraDistance": 100,
         "CameraHeight": 50,
-        "DefaultCollectAmount": 1,
-        "DefaultCollectCooldown": 1,
-        "DefaultCollectRadius": 80,
-        "DefaultMoneyMultiplier": 1,
-        "DefaultMovementSpeed": 1500,
-        "DefaultTrashCapacity": 10,
+        "ItemToHold": {
+          "_type": "gameobject",
+          "go": "0b236593-d1c7-4afb-b2ef-11843c6ddfa2"
+        },
         "JumpStrength": 350,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -41,6 +39,12 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
+        "PlayerMesh": {
+          "_type": "component",
+          "component_id": "6e1858a1-ed75-4a12-8eb5-461f506af83d",
+          "go": "73d44199-bf3f-449b-94b5-3d2fba83818e",
+          "component_type": "SkinnedModelRenderer"
+        },
         "PlayerRigidbody": {
           "_type": "component",
           "component_id": "bcc40afd-33ec-4cb4-b2cc-a1c111283988",
@@ -292,7 +296,7 @@
         ],
         "Children": [
           {
-            "__guid": "1f510c03-f31d-4650-ae60-250f8949e8f0",
+            "__guid": "f1516cfd-0673-4e7f-b87c-7ebd6a503b87",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - boxing_gloves",
@@ -309,7 +313,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "06e6087c-7d15-4056-b22a-422fe71dc42d",
+                "__guid": "b1c720cc-0697-40c0-a745-57d0213ee2c0",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -361,7 +365,7 @@
             "Children": []
           },
           {
-            "__guid": "7f800bcc-5e7f-4fe5-a059-8817341d51ae",
+            "__guid": "fd2230eb-6078-49f8-ab54-4ee1e5faafb8",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - baseball_cap_black",
@@ -378,7 +382,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "c8600bcf-60a0-4cf5-835f-7508b9c8ff21",
+                "__guid": "68156105-36b5-4cf1-81fd-77cba7db65cf",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -430,7 +434,7 @@
             "Children": []
           },
           {
-            "__guid": "36b6de00-6176-479a-826a-fd581811c2e7",
+            "__guid": "19b26ad0-7612-4caf-9e06-7fd66eb654fe",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - black_boots",
@@ -447,7 +451,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "a54701c5-a1c9-402c-91b5-972cacd0793c",
+                "__guid": "b3eb7bc9-99e6-408b-ad8e-b69e01280bae",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -499,6 +503,52 @@
             "Children": []
           }
         ]
+      },
+      {
+        "__guid": "0b236593-d1c7-4afb-b2ef-11843c6ddfa2",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "Tool",
+        "Position": "80.4087982,-43.1337585,72.220108",
+        "Rotation": "0,0,0,1",
+        "Scale": "0.100000001,0.100000001,0.100000001",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "c9cfd5d1-a58a-4350-af33-abed383badcf",
+            "__enabled": true,
+            "Flags": 0,
+            "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
+            "Model": "materials/grabber/trash_grabber.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ],
+        "Children": []
       }
     ],
     "__properties": {

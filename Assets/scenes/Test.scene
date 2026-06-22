@@ -680,7 +680,10 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "PlayerPrefab": null,
+          "PlayerPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/player.prefab"
+          },
           "SpawnPoints": [
             {
               "_type": "gameobject",
@@ -754,142 +757,6 @@
           "Viewport": "0,0,1,1",
           "ZFar": 10000,
           "ZNear": 10
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "8ce37314-f4ca-4ef2-bf12-fb3cfa04ae5c",
-      "__version": 2,
-      "Flags": 0,
-      "Name": "GameManager",
-      "Position": "0,0,2000",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 1,
-      "NetworkFlags": 0,
-      "NetworkOrphaned": 1,
-      "NetworkTransmit": true,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Sandbox.Managers.GameManager",
-          "__guid": "4a6bc3b9-561b-456f-802c-ec0da03040a6",
-          "__enabled": true,
-          "Flags": 0,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Sounds": {}
-        },
-        {
-          "__type": "Sandbox.Data.GlobalData",
-          "__guid": "0c6f3046-e56e-46ce-8f17-1c3bc2ce127d",
-          "__enabled": true,
-          "Flags": 0,
-          "CustomPrestigeRequirements": null,
-          "DefaultAttributes": {},
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "PlayerUpgradesInformation": null,
-          "PrestigeData": null,
-          "PrestigeUpgrades": null,
-          "ToolsInformation": {
-            "Grabber": {
-              "UnlockPrice": 0,
-              "ToolName": "Grabber",
-              "Icon": null,
-              "Upgrades": {
-                "Power": {
-                  "MaxLevel": 3,
-                  "Value": 0,
-                  "ToolStat": "Power",
-                  "Description": null,
-                  "Icon": null,
-                  "Prices": [
-                    1,
-                    2,
-                    3
-                  ]
-                },
-                "Range": {
-                  "MaxLevel": 1,
-                  "Value": 0,
-                  "ToolStat": "Power",
-                  "Description": null,
-                  "Icon": null,
-                  "Prices": [
-                    2
-                  ]
-                },
-                "Speed": {
-                  "MaxLevel": 2,
-                  "Value": 0,
-                  "ToolStat": "Power",
-                  "Description": null,
-                  "Icon": null,
-                  "Prices": [
-                    2,
-                    22
-                  ]
-                }
-              },
-              "Power": 0,
-              "Range": 0,
-              "CollectCooldown": 0
-            }
-          },
-          "TrashTypes": null,
-          "UpgradesValues": null
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "7f909600-5fda-4524-a2af-ec1605138673",
-      "__version": 2,
-      "Flags": 0,
-      "Name": "PoolingManager",
-      "Position": "0,0,2000",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 1,
-      "NetworkFlags": 0,
-      "NetworkOrphaned": 1,
-      "NetworkTransmit": true,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "Sandbox.Managers.PoolingManager",
-          "__guid": "814a614a-5801-4095-a8e1-dc90719a0d65",
-          "__enabled": true,
-          "Flags": 0,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "Pool": {
-            "Trash": {
-              "Prefab": null,
-              "MaxAmountActive": 300,
-              "InactiveObjects": [],
-              "ActiveObjects": [],
-              "ActiveCount": 0
-            }
-          }
         }
       ],
       "Children": []
@@ -976,88 +843,6 @@
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "f594d243-2021-42fd-a645-c9afd8521ff2",
-      "__version": 2,
-      "Flags": 0,
-      "Name": "SellZone",
-      "Position": "0,1000,2030",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkFlags": 0,
-      "NetworkOrphaned": 0,
-      "NetworkTransmit": true,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "SellZone",
-          "__guid": "63c9ec3e-bc81-4595-9d2d-ee0fdcab8ae4",
-          "__enabled": true,
-          "Flags": 0,
-          "CapsuleHeight": 100,
-          "CapsuleRadius": 50,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "OnlyTriggerForHost": false,
-          "Shape": "Sphere",
-          "Size": "100,100,100",
-          "SphereRadius": 50,
-          "TriggerByTags": true,
-          "TriggerTags": [
-            "player"
-          ]
-        }
-      ],
-      "Children": []
-    },
-    {
-      "__guid": "d083f9ee-6b04-42b3-84bc-cbf366b5d96d",
-      "__version": 2,
-      "Flags": 0,
-      "Name": "ToolUpgradeZone",
-      "Position": "-308.501343,1000,2030",
-      "Rotation": "0,0,0,1",
-      "Scale": "1,1,1",
-      "Tags": "",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkFlags": 0,
-      "NetworkOrphaned": 0,
-      "NetworkTransmit": true,
-      "OwnerTransfer": 1,
-      "Components": [
-        {
-          "__type": "ToolUpgradeZone",
-          "__guid": "cda69b8b-99f0-477b-8c55-28a890d2b114",
-          "__enabled": true,
-          "Flags": 0,
-          "CapsuleHeight": 100,
-          "CapsuleRadius": 50,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "OnlyTriggerForHost": false,
-          "Shape": "Sphere",
-          "Size": "100,100,100",
-          "SphereRadius": 50,
-          "TriggerByTags": true,
-          "TriggerTags": [
-            "player"
-          ]
         }
       ],
       "Children": []
@@ -21446,6 +21231,613 @@
           "Children": []
         }
       ]
+    },
+    {
+      "__guid": "a9c68cce-07ac-4591-ada6-f6a2296d4ec9",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "GameManager",
+      "Position": "0,0,2000",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 1,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 1,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.Data.DevTools",
+          "__guid": "904f0bde-4c01-42eb-8616-968a6a880b66",
+          "__enabled": true,
+          "Flags": 0,
+          "DebugMoneyAmount": 1000,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        },
+        {
+          "__type": "Sandbox.Managers.GameManager",
+          "__guid": "0c6b890a-8194-4815-a38d-9f9a76f90f4d",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Sounds": {
+            "UpgradeNodeClick": "audio/upgradenodeclick.sound",
+            "BuyUpgrade": "audio/buyupgrade.sound",
+            "OpenCloseUi": "audio/opencloseui.sound",
+            "MainSoundtrack": "audio/mainsoundtrack.sound"
+          }
+        },
+        {
+          "__type": "Sandbox.Data.GlobalData",
+          "__guid": "205e4117-9725-4272-9587-17a471af9c53",
+          "__enabled": true,
+          "Flags": 0,
+          "CustomPrestigeRequirements": [
+            100,
+            1200,
+            3500,
+            5600,
+            10000
+          ],
+          "DefaultAttributes": {
+            "MovementSpeedMaxLimit": 5,
+            "BagMaxLimit": 5
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "PlayerUpgradesInformation": {
+            "BagSize": {
+              "MaxLevel": 5,
+              "DefaultValue": 10,
+              "Values": [
+                15,
+                25,
+                40,
+                50,
+                100,
+                200,
+                300
+              ],
+              "DisplayName": "BagSize",
+              "Icon": null,
+              "Prices": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "CachedCumulativeValues": {
+                "3": 80
+              }
+            },
+            "MovementSpeed": {
+              "MaxLevel": 5,
+              "DefaultValue": 1500,
+              "Values": [
+                5,
+                15,
+                15,
+                25,
+                35,
+                25,
+                45
+              ],
+              "DisplayName": "MovementSpeed",
+              "Icon": null,
+              "Prices": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "CachedCumulativeValues": {
+                "3": 35
+              }
+            }
+          },
+          "PrestigeData": {},
+          "PrestigeUpgrades": [
+            {
+              "Name": "ToolsSpecialization",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Tools Specializaition",
+              "Description": "Unlocks special prestige-only tool upgrades.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 0,
+              "Y": 0
+            },
+            {
+              "Name": "MovementBagSavedAfterPrestige1",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Movement bag after prestige",
+              "Description": "Retain first 3 movement speed and bag capacity upgrades after prestiging.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 100,
+              "Y": 0
+            },
+            {
+              "Name": "HandsMaxedAfterPrestige",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Hands maxed after prestige",
+              "Description": "Start with maximum hands upgrade levels after prestiging.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 200,
+              "Y": 0
+            },
+            {
+              "Name": "GrabberUnlockedAfterPrestige",
+              "Value": "None",
+              "DefaultAttribute": "None",
+              "MaxAmount": 1,
+              "Title": "Grabber unlocked after prestige",
+              "Description": "The Grabber stays permanently unlocked across all prestiges.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 0,
+              "Y": 100
+            },
+            {
+              "Name": "MovementMaxLimit1",
+              "Value": "MovementMaxLimit",
+              "DefaultAttribute": "MovementSpeedMaxLimit",
+              "MaxAmount": 1,
+              "Title": "Movement max limit",
+              "Description": "Raises the upgrade maximum level cap for Movement Speed.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 100,
+              "Y": 100
+            },
+            {
+              "Name": "BagMaxLimit1",
+              "Value": "BagMaxLimit",
+              "DefaultAttribute": "BagMaxLimit",
+              "MaxAmount": 1,
+              "Title": "Bag max limit",
+              "Description": "Raises the upgrade maximum level cap for Bag Size.",
+              "Costs": [
+                1
+              ],
+              "ParentsUpgradeNames": [],
+              "Icon": null,
+              "X": 200,
+              "Y": 100
+            }
+          ],
+          "ToolsInformation": {
+            "Hands": {
+              "UnlockPrice": 3,
+              "ToolName": "Hands",
+              "Icon": null,
+              "Upgrades": {
+                "Power": {
+                  "MaxLevel": 3,
+                  "Value": 1,
+                  "ToolStat": "Power",
+                  "Description": "{0} collected at once.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Range": {
+                  "MaxLevel": 3,
+                  "Value": 20,
+                  "ToolStat": "Range",
+                  "Description": "{0}% increased range.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Speed": {
+                  "MaxLevel": 3,
+                  "Value": 15,
+                  "ToolStat": "Speed",
+                  "Description": "{0}% increased speed.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                }
+              },
+              "Power": 1,
+              "Range": 80,
+              "CollectCooldown": 2
+            },
+            "Grabber": {
+              "UnlockPrice": 300,
+              "ToolName": "Grabber",
+              "Icon": null,
+              "Upgrades": {
+                "Power": {
+                  "MaxLevel": 3,
+                  "Value": 1,
+                  "ToolStat": "Power",
+                  "Description": "{0} collected at once.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Range": {
+                  "MaxLevel": 3,
+                  "Value": 20,
+                  "ToolStat": "Range",
+                  "Description": "{0}% increased range.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Speed": {
+                  "MaxLevel": 3,
+                  "Value": 15,
+                  "ToolStat": "Speed",
+                  "Description": "{0}% increased speed.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                }
+              },
+              "Power": 3,
+              "Range": 125,
+              "CollectCooldown": 1.5
+            },
+            "SuperGrabber": {
+              "UnlockPrice": 2000,
+              "ToolName": "SuperGrabber",
+              "Icon": null,
+              "Upgrades": {
+                "Power": {
+                  "MaxLevel": 3,
+                  "Value": 1,
+                  "ToolStat": "Power",
+                  "Description": "{0} collected at once.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Range": {
+                  "MaxLevel": 3,
+                  "Value": 20,
+                  "ToolStat": "Range",
+                  "Description": "{0}% increased range.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "Speed": {
+                  "MaxLevel": 3,
+                  "Value": 15,
+                  "ToolStat": "Speed",
+                  "Description": "{0}% increased speed.",
+                  "Icon": null,
+                  "Prices": [
+                    1,
+                    2,
+                    3
+                  ]
+                }
+              },
+              "Power": 6,
+              "Range": 250,
+              "CollectCooldown": 1
+            }
+          },
+          "TrashTypes": {
+            "EarthStartingArea": {
+              "Models": [
+                "materials/trash/bottle.vmdl",
+                "materials/trash/can.vmdl",
+                "materials/trash/eggcarton.vmdl",
+                "materials/trash/foodcan1.vmdl",
+                "materials/trash/foodcan2.vmdl",
+                "materials/trash/opencardboardbox.vmdl",
+                "materials/trash/paper1.vmdl",
+                "materials/trash/paper2.vmdl",
+                "materials/trash/paper3.vmdl",
+                "materials/trash/paper4.vmdl",
+                "materials/trash/paper5.vmdl",
+                "materials/trash/paper6.vmdl",
+                "materials/trash/papertrash.vmdl",
+                "materials/trash/plasticbottle.vmdl",
+                "materials/trash/toiletpaper.vmdl",
+                "materials/trash/trashbag.vmdl"
+              ]
+            }
+          },
+          "UpgradesValues": {
+            "MovementMaxLimit1": 2,
+            "BagMaxLimit1": 2
+          }
+        },
+        {
+          "__type": "Sandbox.Managers.PlayerSaveManager",
+          "__guid": "d89c3041-6e28-45a4-b9df-4236f59f12f0",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "0c1d14c6-3dcc-46c2-9880-3915c8c46622",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "PoolingManager",
+      "Position": "0,0,2000",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 1,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 1,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.Managers.PoolingManager",
+          "__guid": "70917bc9-3a5e-4a2c-8bb7-1c95f29ec50b",
+          "__enabled": true,
+          "Flags": 0,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Pool": {
+            "Trash": {
+              "Prefab": {
+                "_type": "gameobject",
+                "prefab": "prefabs/trash.prefab"
+              },
+              "MaxAmountActive": 300,
+              "InactiveObjects": [],
+              "ActiveObjects": [],
+              "ActiveCount": 0
+            }
+          }
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "d083f9ee-6b04-42b3-84bc-cbf366b5d96d",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "ToolUpgradeZone",
+      "Position": "-308.501343,1000,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "ToolUpgradeZone",
+          "__guid": "cda69b8b-99f0-477b-8c55-28a890d2b114",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "f594d243-2021-42fd-a645-c9afd8521ff2",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "SellZone",
+      "Position": "0,1000,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "SellZone",
+          "__guid": "63c9ec3e-bc81-4595-9d2d-ee0fdcab8ae4",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "94179083-49e0-418b-94d2-3e1a93e85075",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "PlayerUpgradeZone",
+      "Position": "-495.170471,1000,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "PlayerUpgradeZone",
+          "__guid": "2eccc379-b702-4ca9-b395-cb3d691d361e",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
+        }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "c2f7742a-5607-4ac2-9c53-cea07a8e7a12",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "PrestigeZone",
+      "Position": "-822.634155,657.097778,2030",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "PrestigeZone",
+          "__guid": "7d8639fa-e668-4763-b113-87faadb8ad63",
+          "__enabled": true,
+          "Flags": 0,
+          "CapsuleHeight": 100,
+          "CapsuleRadius": 50,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnlyTriggerForHost": false,
+          "Shape": "Sphere",
+          "Size": "100,100,100",
+          "SphereRadius": 50,
+          "TriggerByTags": true,
+          "TriggerTags": [
+            "player"
+          ]
+        }
+      ],
+      "Children": []
     }
   ],
   "SceneProperties": {
