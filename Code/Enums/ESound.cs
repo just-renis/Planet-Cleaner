@@ -5,5 +5,9 @@ public enum ESound
 	UpgradeNodeClick,
 	BuyUpgrade,
 	OpenCloseUi,
-	MainSoundtrack
+	MainSoundtrack,
+	SellTrash,
+	CollectTrash,
+	EquipTool,
+	ToolSwipe
 }

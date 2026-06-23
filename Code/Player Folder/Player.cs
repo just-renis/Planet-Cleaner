@@ -7,14 +7,22 @@ using Sandbox.Managers;
 
 public sealed class Player : Component
 {
+	private struct ToolPrefabData
+	{
+		[Property] public Vector3 LocalOffset { get; set; }
+		[Property] public Angles LocalRotation { get; set; }
+		[Property] public GameObject Prefab { get; set; }
+	}
+	
+	
 	[Property] private float Sensitivity { get; set; } = 0.2f;
 	[Property] private float CameraDistance { get; set; } = 200f;
 	[Property] private float CameraHeight { get; set; } = 50f;
 	[Property] private float JumpStrength { get; set; } = 350f;
 	[Property] private Rigidbody PlayerRigidbody { get; set; }
-	[Property] public GameObject ItemToHold { get; set; }
 	[Property] public SkinnedModelRenderer PlayerMesh { get; set; }
 	[Property] private CitizenAnimationHelper AnimationHelper { get; set; }
+	[Property] private Dictionary<ETool, ToolPrefabData> ToolObjects { get; set; }
 	private bool IsGrounded;
 	private float MovementSpeed;
 	private float CollectRadius;
@@ -26,6 +34,8 @@ public sealed class Player : Component
 	private CameraComponent Camera;
 	private PlayerData Data;
 	private GlobalData GlobalInstance;
+	private GameObject RightHandBone;
+	private GameObject Tool;
 	
 	public int GetTrashCollected() { return Data.GetCurrentTrashAmount(); }
 	public int GetTrashCapacity() { return TrashCapacity; }
@@ -42,6 +52,8 @@ public sealed class Player : Component
 	protected override void OnStart()
 	{
 		if (IsProxy) return;
+		PlayerMesh.CreateBoneObjects = true;
+		RightHandBone = PlayerMesh.GetBoneObject("hold_R");
 		GlobalInstance = GlobalData.Instance;
 		SoundManager.Instance.Play2D(ESound.MainSoundtrack);
 		Camera = Scene.GetComponentInChildren<CameraComponent>();
@@ -55,12 +67,6 @@ public sealed class Player : Component
 		EventManager.OnPrestige += OnPrestige;
 		LoadSaveData();
 		ApplyUpgradesOnJoin();
-		PlayerMesh.CreateBoneObjects = true;
-		GameObject HandBoneObject = PlayerMesh.GetBoneObject("hold_R");
-		if (HandBoneObject == null) return;
-		ItemToHold.SetParent(HandBoneObject, false);
-		ItemToHold.LocalPosition = new Vector3(-2f, -2f, 1f);
-		ItemToHold.LocalRotation = Rotation.From(new Angles(20, 0, 90));
 	}
 	protected override void OnDestroy()
 	{
@@ -179,17 +185,7 @@ public sealed class Player : Component
 	{
 		switch (InPrestigeUpgradeName)
 		{
-			case EPrestigeUpgradeName.MovementBagSavedAfterPrestige1:
-			case EPrestigeUpgradeName.ToolsSpecialization:
-				break;
-			case EPrestigeUpgradeName.HandsMaxedAfterPrestige:
-				break;
-			case EPrestigeUpgradeName.GrabberUnlockedAfterPrestige:
-				break;
-			case EPrestigeUpgradeName.MovementMaxLimit1:
-				break;
-			case EPrestigeUpgradeName.BagMaxLimit1:
-				break;
+			case EPrestigeUpgradeName.ToolsSpecialization: break;
 		}
 	}
 	private void BaseUpgradePurchased(EPlayerUpgrade InPlayerUpgrade)
@@ -231,6 +227,25 @@ public sealed class Player : Component
 		CollectRadius = EquippedToolData.Range;
 		CollectCooldown = EquippedToolData.CollectCooldown;
 		foreach (EToolStat StatKey in EquippedToolData.Upgrades.Keys) ToolUpgradePurchased(StatKey);
+		switch (EquippedTool)
+		{
+			case ETool.Hands:
+				if (Tool.IsValid()) Tool.Destroy();
+				Tool = null;
+				break;
+			case ETool.Grabber:
+				if (ToolObjects.TryGetValue(EquippedTool, out ToolPrefabData ToolPrefab) && ToolPrefab.Prefab != null)
+				{
+					Tool = ToolPrefab.Prefab.Clone();
+					Tool.SetParent(RightHandBone, false);
+					Tool.LocalPosition = ToolPrefab.LocalOffset;
+					Tool.LocalRotation = Rotation.From(ToolPrefab.LocalRotation);
+				}
+				break;
+			case ETool.SuperGrabber:
+				
+				break;
+		}
 	}
 	private void OnPrestige()
 	{

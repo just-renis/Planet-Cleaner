@@ -148,6 +148,7 @@
 	private void PurchaseUpgrade(EPlayerUpgrade InPlayerUpgradeName, int InPrice, float InAddedValue)
 	{
 		if (Data.GetMoney() < InPrice) return;
+		SoundManager.Instance.Play2D(ESound.BuyUpgrade);
 		Data.SubtractMoney(InPrice);
 		Data.IncrementPlayerUpgradeLevel(InPlayerUpgradeName, InAddedValue);
 	}

@@ -301,7 +301,11 @@
             "UpgradeNodeClick": "audio/upgradenodeclick.sound",
             "BuyUpgrade": "audio/buyupgrade.sound",
             "OpenCloseUi": "audio/opencloseui.sound",
-            "MainSoundtrack": "audio/mainsoundtrack.sound"
+            "MainSoundtrack": "audio/mainsoundtrack.sound",
+            "SellTrash": "audio/selltrash.sound",
+            "CollectTrash": "audio/collecttrash.sound",
+            "EquipTool": "audio/equiptool.sound",
+            "ToolSwipe": "audio/toolswipe.sound"
           }
         },
         {

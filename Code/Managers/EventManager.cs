@@ -6,7 +6,6 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 {
 	public static event Action OnAutoSaveFinished;
 	public static event Action OnTrashSold;
-	public static event Action OnPlayerDataLoaded;
 	public static event Action OnToolChanged;
 	public static event Action OnPrestige;
 	public static event Action<int> OnUpgradesAvailableToBePurchased;
@@ -24,10 +23,6 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	public static void TriggerTrashSold()
 	{
 		OnTrashSold?.Invoke();
-	}
-	public static void TriggerPlayerDataLoaded()
-	{
-		OnPlayerDataLoaded?.Invoke();
 	}
 	public static void TriggerToolChange()
 	{
@@ -69,7 +64,6 @@ public sealed class EventManager(Scene Scene) : GameObjectSystem(Scene)
 	{
 		OnAutoSaveFinished = null;
 		OnTrashSold = null;
-		OnPlayerDataLoaded = null;
 		OnToolChanged = null;
 		OnPrestige = null;
 		OnUpgradesAvailableToBePurchased = null;

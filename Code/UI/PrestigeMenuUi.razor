@@ -5,7 +5,7 @@
 @using Sandbox.Managers
 
 <root class="@(IsOpen ? "" : "hidden")">
-	@if (IsOpen && Data != null)
+	@if (IsOpen && GetPlayerData() != null)
 	{
 		BulkPrestigeData PrestigeBulkData = Data.GetBulkPrestigeCalculation();
 		float PrestigeEarningBonus = GlobalData.Instance.GetPrestigeEarningsBonus();
@@ -73,7 +73,7 @@
 
     protected override int BuildHash()
     {
-	    if (GetPlayerData() == null) return -1;
+	    if (Data == null) return -1;
 	    return HashCode.Combine(Data.GetMoney(), IsOpen);
     }
 

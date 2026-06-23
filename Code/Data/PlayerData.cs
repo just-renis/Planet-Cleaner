@@ -23,19 +23,23 @@ public sealed class PlayerData
     private static readonly string SECRET_KEY = "CRAZY_SECRET_KEY69";
     private List<double> CustomPrestigeRequirements;
     
-    public PlayerData()
+    public PlayerData() { }
+    public static PlayerData CreateNewSave()
     {
-	    CurrentVersion = LiveVersion;
-	    EquippedTool = ETool.Hands;
-	    PrestigeUpgrades = new Dictionary<EPrestigeUpgradeName, int>();
-	    PlayerUpgrades = new Dictionary<EPlayerUpgrade, PlayerSaveUpgradesData>();
-	    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>
+	    return new PlayerData
 	    {
+		    CurrentVersion = LiveVersion,
+		    EquippedTool = ETool.Hands,
+		    PrestigeUpgrades = new Dictionary<EPrestigeUpgradeName, int>(),
+		    PlayerUpgrades = new Dictionary<EPlayerUpgrade, PlayerSaveUpgradesData>(),
+		    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>
 		    {
-			    ETool.Hands, new ToolUpgradesData 
 			    {
-				    IsOwned = true,
-				    Levels = new Dictionary<EToolStat, int>() 
+				    ETool.Hands, new ToolUpgradesData 
+				    {
+					    IsOwned = true,
+					    Levels = new Dictionary<EToolStat, int>() 
+				    }
 			    }
 		    }
 	    };
@@ -109,7 +113,7 @@ public sealed class PlayerData
     public Dictionary<EPrestigeUpgradeName, int> GetOwnedPrestigeUpgrades() { return PrestigeUpgrades; }
     public static PlayerData Load()
     {
-	    if (!FileSystem.Data.FileExists("save.dat")) return new PlayerData();
+	    if (!FileSystem.Data.FileExists("save.dat")) return CreateNewSave();
 	    try
 	    {
 		    string Obfuscated = FileSystem.Data.ReadAllText("save.dat");
@@ -127,7 +131,7 @@ public sealed class PlayerData
 		    {
 			    Log.Error("CRITICAL: Save file tampered with! Hash mismatch.");
 			    FileSystem.Data.DeleteFile("save.dat");
-			    return new PlayerData();
+			    return CreateNewSave();
 		    }
 		    PlayerData ValidData = Json.Deserialize<PlayerData>(JsonData);
 		    Migrate(ValidData);
@@ -136,7 +140,7 @@ public sealed class PlayerData
 	    catch (Exception Exception)
 	    {
 		    Log.Warning($"Save Corrupted: {Exception.Message}");
-		    return new PlayerData();
+		    return CreateNewSave();
 	    }
     }
 
@@ -156,6 +160,7 @@ public sealed class PlayerData
     }
     public void EquipTool(ETool InToolName)
     {
+	    SoundManager.Instance.Play2D(ESound.EquipTool);
 	    EquippedTool = InToolName;
 	    Save(this);
 	    EventManager.TriggerToolChange();
@@ -210,6 +215,7 @@ public sealed class PlayerData
     }
     public void AddTrash(int InAmount)
     {
+	    SoundManager.Instance.Play2D(ESound.CollectTrash);
 	    CurrentTrashAmount += InAmount;
 	    Save(this);
     }
@@ -284,7 +290,6 @@ public sealed class PlayerData
 		    Level = 3,
 		    CurrentValue = GlobalData.Instance.GetPlayerUpgradeCachedCumulatedValue(InUpgradeName, 3)
 	    });
-	    Log.Info(PlayerUpgrades[InUpgradeName].CurrentValue);
     }
     private void ApplyPermanentPrestigeUpgrades()
     {

@@ -25,7 +25,6 @@ public sealed class PlayerSaveManager : Component
 	private void LoadSaveData()
 	{
 		Data = PlayerData.Load(); 
-		EventManager.TriggerPlayerDataLoaded();
 	}
 }
 

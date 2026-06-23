@@ -165,7 +165,7 @@
     }
     protected override int BuildHash()
     {
-	    if (GetPlayerData()?.GetOwnedPrestigeUpgrades() == null) return -1;
+	    if (Data?.GetOwnedPrestigeUpgrades() == null) return -1;
 	    return HashCode.Combine(Data.GetPrestigeSkillPoints(), SelectedUpgradeName, Scale, CanvasX, CanvasY, Data.GetOwnedPrestigeUpgrades().Count, IsDragging, IsOpen);
     }
     protected override void OnUpdate()

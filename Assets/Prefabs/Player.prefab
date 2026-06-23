@@ -28,10 +28,6 @@
         },
         "CameraDistance": 100,
         "CameraHeight": 50,
-        "ItemToHold": {
-          "_type": "gameobject",
-          "go": "0b236593-d1c7-4afb-b2ef-11843c6ddfa2"
-        },
         "JumpStrength": 350,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -51,7 +47,17 @@
           "go": "4ee26e52-67f7-41fc-891f-c8b4fb461a17",
           "component_type": "Rigidbody"
         },
-        "Sensitivity": 0.2
+        "Sensitivity": 0.2,
+        "ToolObjects": {
+          "Grabber": {
+            "LocalOffset": "-2,-2,1",
+            "LocalRotation": "20,0,90",
+            "Prefab": {
+              "_type": "gameobject",
+              "prefab": "prefabs/grabbertool.prefab"
+            }
+          }
+        }
       },
       {
         "__type": "Sandbox.Voice",
@@ -296,7 +302,7 @@
         ],
         "Children": [
           {
-            "__guid": "f1516cfd-0673-4e7f-b87c-7ebd6a503b87",
+            "__guid": "d7967229-1f13-41b3-b970-dc9109bbaa06",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - boxing_gloves",
@@ -313,7 +319,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "b1c720cc-0697-40c0-a745-57d0213ee2c0",
+                "__guid": "ffdac8de-99ae-4e80-93b0-b3cb346ae03d",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -365,7 +371,7 @@
             "Children": []
           },
           {
-            "__guid": "fd2230eb-6078-49f8-ab54-4ee1e5faafb8",
+            "__guid": "bb3370c8-3ccb-4712-ae30-dbe713881ccc",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - baseball_cap_black",
@@ -382,7 +388,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "68156105-36b5-4cf1-81fd-77cba7db65cf",
+                "__guid": "2552bbb1-37e9-4cc0-bfd6-958e11ae957c",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -434,7 +440,7 @@
             "Children": []
           },
           {
-            "__guid": "19b26ad0-7612-4caf-9e06-7fd66eb654fe",
+            "__guid": "ee8b3edf-baf4-45c3-9236-59ea4782e5af",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - black_boots",
@@ -451,7 +457,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "b3eb7bc9-99e6-408b-ad8e-b69e01280bae",
+                "__guid": "2c5eeed5-7c73-4857-b17e-aadb1648a3cf",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -503,52 +509,6 @@
             "Children": []
           }
         ]
-      },
-      {
-        "__guid": "0b236593-d1c7-4afb-b2ef-11843c6ddfa2",
-        "__version": 2,
-        "Flags": 0,
-        "Name": "Tool",
-        "Position": "80.4087982,-43.1337585,72.220108",
-        "Rotation": "0,0,0,1",
-        "Scale": "0.100000001,0.100000001,0.100000001",
-        "Tags": "",
-        "Enabled": true,
-        "NetworkMode": 2,
-        "NetworkFlags": 0,
-        "NetworkOrphaned": 0,
-        "NetworkTransmit": true,
-        "OwnerTransfer": 1,
-        "Components": [
-          {
-            "__type": "Sandbox.ModelRenderer",
-            "__guid": "c9cfd5d1-a58a-4350-af33-abed383badcf",
-            "__enabled": true,
-            "Flags": 0,
-            "BodyGroups": 18446744073709551615,
-            "CreateAttachments": false,
-            "LodOverride": null,
-            "MaterialGroup": null,
-            "MaterialOverride": null,
-            "Materials": null,
-            "Model": "materials/grabber/trash_grabber.vmdl",
-            "OnComponentDestroy": null,
-            "OnComponentDisabled": null,
-            "OnComponentEnabled": null,
-            "OnComponentFixedUpdate": null,
-            "OnComponentStart": null,
-            "OnComponentUpdate": null,
-            "RenderOptions": {
-              "GameLayer": true,
-              "OverlayLayer": false,
-              "BloomLayer": false,
-              "AfterUILayer": false
-            },
-            "RenderType": "On",
-            "Tint": "1,1,1,1"
-          }
-        ],
-        "Children": []
       }
     ],
     "__properties": {

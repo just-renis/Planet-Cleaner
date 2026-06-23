@@ -5,7 +5,7 @@
 @using System;
 
 <root class="@(IsOpen ? "" : "hidden")">
-    @if (IsOpen && Data != null && ToolsData != null)
+    @if (IsOpen && GetPlayerData() != null)
     {
 	    <div class="shop-container">
 		    <div class="shop-header">
@@ -133,7 +133,7 @@
 {
     private bool IsOpen;
     private PlayerData Data;
-    private ETool SelectedTool = ETool.Hands;
+    private ETool SelectedTool;
     private Dictionary<ETool, ToolData> ToolsData;
 
     protected override int BuildHash()
@@ -145,16 +145,15 @@
     protected override void OnAwake()
     {
         EventManager.OnUiStateChanged += UiStateChanged;
-        EventManager.OnPlayerDataLoaded += PlayerDataLoaded;
     }
     protected override void OnStart()
     {
 	    ToolsData = GlobalData.Instance.GetToolsInformation();
+	    SelectedTool = GetPlayerData()?.EquippedTool ?? ETool.Hands;
     }
     protected override void OnDestroy()
     {
         EventManager.OnUiStateChanged -= UiStateChanged;
-        EventManager.OnPlayerDataLoaded -= PlayerDataLoaded;
     }
 
     private string GetToolName(ETool InTool)
@@ -221,11 +220,7 @@
         Data ??= PlayerSaveManager.Instance.Data;
         return Data;
     }
-
-    private void PlayerDataLoaded()
-    {
-	    SelectedTool = GetPlayerData().GetEquippedTool();
-    }
+    
     private void SelectTool(ETool InTool, bool IsUnlocked)
     {
 	    SelectedTool = InTool;
@@ -240,7 +235,8 @@
     }
     private void PurchaseUpgrade(EToolStat InStat, int InPrice)
     {
-        if (Data.GetMoney() < InPrice) return;
+	    if (Data.GetMoney() < InPrice) return;
+        SoundManager.Instance.Play2D(ESound.BuyUpgrade);
         Data.SubtractMoney(InPrice);
 		Data.IncrementToolStatLevel(SelectedTool, InStat);
     }
