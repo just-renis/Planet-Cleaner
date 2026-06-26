@@ -302,7 +302,7 @@
         ],
         "Children": [
           {
-            "__guid": "d7967229-1f13-41b3-b970-dc9109bbaa06",
+            "__guid": "4d7e61b1-412d-488c-b412-eaaeb4e9749a",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - boxing_gloves",
@@ -319,7 +319,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "ffdac8de-99ae-4e80-93b0-b3cb346ae03d",
+                "__guid": "82fe1336-1644-4d42-a2cc-293630624f77",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -371,7 +371,7 @@
             "Children": []
           },
           {
-            "__guid": "bb3370c8-3ccb-4712-ae30-dbe713881ccc",
+            "__guid": "7442ee20-80d8-42b5-a070-50e707309c9a",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - baseball_cap_black",
@@ -388,7 +388,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "2552bbb1-37e9-4cc0-bfd6-958e11ae957c",
+                "__guid": "44a1e688-29e3-4753-8c86-36106fbe5290",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -440,7 +440,7 @@
             "Children": []
           },
           {
-            "__guid": "ee8b3edf-baf4-45c3-9236-59ea4782e5af",
+            "__guid": "4dd5cf8f-bf5c-457c-b326-3219aecb1a6e",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - black_boots",
@@ -457,7 +457,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "2c5eeed5-7c73-4857-b17e-aadb1648a3cf",
+                "__guid": "3751431e-ced9-46d4-a9b8-94e5413407a1",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,

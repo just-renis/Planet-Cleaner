@@ -46,6 +46,7 @@ public sealed class PlayerData
     }
 
     public bool CanPrestige() { return Money >= GetPrestigeCost(CurrentPrestige); }
+    public bool IsPrestigeUpgradeUnlocked(EPrestigeUpgradeName InUpgradeName) { return PrestigeUpgrades.ContainsKey(InUpgradeName); }
     public bool HasAtLeastOneToolUpgrade(ETool InToolName)
     {
 	    return ToolUpgrades.TryGetValue(InToolName, out ToolUpgradesData ToolData) && ToolData.Levels != null && ToolData.Levels.Values.Any(Level => Level > 0);
@@ -293,7 +294,7 @@ public sealed class PlayerData
     }
     private void ApplyPermanentPrestigeUpgrades()
     {
-	    if (PrestigeUpgrades.ContainsKey(EPrestigeUpgradeName.MovementBagSavedAfterPrestige1))
+	    if (IsPrestigeUpgradeUnlocked(EPrestigeUpgradeName.MovementBagSavedAfterPrestige1))
 	    {
 		    MaximizeUpgrade(EPlayerUpgrade.MovementSpeed);
 		    MaximizeUpgrade(EPlayerUpgrade.BagSize);
@@ -301,11 +302,11 @@ public sealed class PlayerData
 	    ToolUpgrades.Add(ETool.Hands, new ToolUpgradesData 
 	    {
 		    IsOwned = true,
-		    Levels = PrestigeUpgrades.ContainsKey(EPrestigeUpgradeName.HandsMaxedAfterPrestige)
+		    Levels = IsPrestigeUpgradeUnlocked(EPrestigeUpgradeName.HandsMaxedAfterPrestige)
 			    ? new Dictionary<EToolStat, int> { { EToolStat.Power, 3 }, { EToolStat.Range, 3 }, { EToolStat.Speed, 3 } }
 			    : new Dictionary<EToolStat, int>()
 	    });
-	    if (PrestigeUpgrades.ContainsKey(EPrestigeUpgradeName.GrabberUnlockedAfterPrestige))
+	    if (IsPrestigeUpgradeUnlocked(EPrestigeUpgradeName.GrabberUnlockedAfterPrestige))
 	    {
 		    ToolUpgrades.Add(ETool.Grabber, new ToolUpgradesData 
 		    {

@@ -11,6 +11,18 @@
 			<div class="corner bottom-left"></div>
 			<div class="corner bottom-right"></div>
 		</div>
+		<div class="hotbar-container">
+			@for (int Index = 0; Index < 10; Index++)
+			{
+				int DisplayNum = (Index + 1) % 10;
+				<div class="hotbar-slot @(Index == ActiveSlotIndex ? "active" : "")">
+					<span class="slot-number">@DisplayNum</span>
+					<div class="slot-content">
+						@if (Index == 0) { <i class="slot-icon">handyman</i> }
+					</div>
+				</div>
+			}
+		</div>
 		@*<div class="quests-container">
 			@{
 				int DisplayedCount = 0; 
@@ -62,7 +74,7 @@
 		{
 			<div class="upgrade-indicator">
 				<div class="glow-dot animate-pulse"></div>
-				<span class="upgrade-text">UPGRADE AVAILABLE: @PurchasableAmountUpgrades</span>
+				<span class="upgrade-text">PRESTIGE UPGRADES AVAILABLE: @PurchasableAmountUpgrades</span>
 			</div>
 		}
 		<div class="TrashCounter">
@@ -90,6 +102,7 @@
 	private int AutoSavePopupHideHandle;
 	private int PurchasableAmountUpgrades;
 	private int QuestStateVersion;
+	private int ActiveSlotIndex;
 	private Player PlayerRef;
 	
 	protected override int BuildHash()
@@ -103,6 +116,7 @@
 		Hc.Add(IsAutoSaveActive);
 		Hc.Add(PlayerRef.GetTrashCollected());
 		Hc.Add(PlayerRef.GetTrashCapacity());
+		Hc.Add(ActiveSlotIndex);
 		return Hc.ToHashCode();
 	}
 	

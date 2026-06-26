@@ -24,8 +24,7 @@
 
 	protected override int BuildHash()
 	{
-		PlayerData CurrentData = GetPlayerData();
-		if (CurrentData == null) return -1;
+		if (GetPlayerData() == null) return -1;
 		return System.HashCode.Combine(IsOpen);
 	}
 	protected override void OnAwake()

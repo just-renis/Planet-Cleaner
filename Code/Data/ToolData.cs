@@ -7,7 +7,7 @@ public sealed class ToolData
 	[Property] public ETool ToolName { get; set; }
 	[Property, ImageAssetPath] public string Icon { get; set; }
 	[Property] public Dictionary<EToolStat, ToolUpgradeData> Upgrades { get; set; }
-
+	
 	[Property] public int Power { get; set; }
 	[Property] public float Range { get; set; }
 	[Property] public float CollectCooldown { get; set; }

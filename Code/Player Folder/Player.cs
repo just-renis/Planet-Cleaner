@@ -14,7 +14,6 @@ public sealed class Player : Component
 		[Property] public GameObject Prefab { get; set; }
 	}
 	
-	
 	[Property] private float Sensitivity { get; set; } = 0.2f;
 	[Property] private float CameraDistance { get; set; } = 200f;
 	[Property] private float CameraHeight { get; set; } = 50f;
@@ -30,6 +29,7 @@ public sealed class Player : Component
 	private float CollectCooldown;
 	private int MaximumCollectAmount;
 	private int TrashCapacity;
+	private int HandsBoostCollectAmount;
 	private Angles CurrentCameraRotation;
 	private CameraComponent Camera;
 	private PlayerData Data;
@@ -93,6 +93,7 @@ public sealed class Player : Component
 	private void SellTrash()
 	{
 		if (Data.GetCurrentTrashAmount() <= 0) return;
+		SoundManager.Instance.Play2D(ESound.SellTrash);
 		Data.AddMoney((1f + Data.GetCurrentPrestige() * GlobalInstance.GetPrestigeEarningsBonus()) * Data.GetCurrentTrashAmount());
 		Data.ResetTrash();
 	}
@@ -154,9 +155,11 @@ public sealed class Player : Component
 	{
 		int CurrentTrash = Data.GetCurrentTrashAmount();
 		if (CurrentTrash >= TrashCapacity) return;
-		int MaxBatchSize = Math.Min(MaximumCollectAmount, TrashCapacity - CurrentTrash);
+		int CurrentMaximumCollectAmount = MaximumCollectAmount;
+		bool IsHandsEquippedAndToolSpecUnlocked = Data.GetEquippedTool() == ETool.Hands && Data.IsPrestigeUpgradeUnlocked(EPrestigeUpgradeName.ToolsSpecialization);
+		if (IsHandsEquippedAndToolSpecUnlocked) CurrentMaximumCollectAmount += HandsBoostCollectAmount++;
+		int MaxBatchSize = Math.Min(CurrentMaximumCollectAmount, TrashCapacity - CurrentTrash);
 		int ProcessedTrashCount = 0;
-		DebugOverlay.Sphere(new Sphere(WorldPosition, CollectRadius), Color.Red, 5);
 		IEnumerable<GameObject> Targets = Scene.FindInPhysics(new Sphere(WorldPosition, CollectRadius));
 		foreach (GameObject Target in Targets)
 		{
@@ -166,6 +169,7 @@ public sealed class Player : Component
 			Collectable.Collect();
 			ProcessedTrashCount++;
 		}
+		if (IsHandsEquippedAndToolSpecUnlocked && ProcessedTrashCount < MaxBatchSize) HandsBoostCollectAmount = 0;
 		if (ProcessedTrashCount > 0) Data.AddTrash(ProcessedTrashCount);
 	}
 	private void ApplyUpgradesOnJoin()
@@ -227,25 +231,17 @@ public sealed class Player : Component
 		CollectRadius = EquippedToolData.Range;
 		CollectCooldown = EquippedToolData.CollectCooldown;
 		foreach (EToolStat StatKey in EquippedToolData.Upgrades.Keys) ToolUpgradePurchased(StatKey);
-		switch (EquippedTool)
-		{
-			case ETool.Hands:
-				if (Tool.IsValid()) Tool.Destroy();
-				Tool = null;
-				break;
-			case ETool.Grabber:
-				if (ToolObjects.TryGetValue(EquippedTool, out ToolPrefabData ToolPrefab) && ToolPrefab.Prefab != null)
-				{
-					Tool = ToolPrefab.Prefab.Clone();
-					Tool.SetParent(RightHandBone, false);
-					Tool.LocalPosition = ToolPrefab.LocalOffset;
-					Tool.LocalRotation = Rotation.From(ToolPrefab.LocalRotation);
-				}
-				break;
-			case ETool.SuperGrabber:
-				
-				break;
-		}
+		EquipToolPrefab(EquippedTool);
+	}
+	private void EquipToolPrefab(ETool InEquippedTool)
+	{
+		if (Tool.IsValid()) Tool.Destroy();
+		Tool = null;
+		if (!ToolObjects.TryGetValue(InEquippedTool, out ToolPrefabData ToolPrefab) || ToolPrefab.Prefab == null) return;
+		Tool = ToolPrefab.Prefab.Clone();
+		Tool.SetParent(RightHandBone, false);
+		Tool.LocalPosition = ToolPrefab.LocalOffset;
+		Tool.LocalRotation = Rotation.From(ToolPrefab.LocalRotation);
 	}
 	private void OnPrestige()
 	{

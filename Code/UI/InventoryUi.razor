@@ -1,0 +1,46 @@
+@inherits PanelComponent
+@using System
+@using Sandbox.Data
+@using Sandbox.Enums
+@using Sandbox.Managers
+
+<root class="@(IsOpen ? "" : "hidden")">
+	@if (IsOpen && GetPlayerData() != null)
+	{
+		
+	}
+</root>
+
+@code
+{
+	private bool IsOpen;
+	private PlayerData Data;
+	
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(IsOpen);
+	}
+	
+	protected override void OnAwake()
+	{
+		EventManager.OnUiStateChanged += UiStateChanged;
+	}
+	protected override void OnDestroy()
+	{
+		EventManager.OnUiStateChanged -= UiStateChanged;
+	}
+	
+	private PlayerData GetPlayerData()
+	{
+		Data ??= PlayerSaveManager.Instance.Data;
+		return Data;
+	}
+	
+	private void CloseMenu() { UiManager.ChangeUiState(EUi.Inventory); }
+	private void UiStateChanged(EUi InUi, bool RenderState)
+	{
+		if (InUi != EUi.Inventory) return;
+		IsOpen = RenderState;
+		Panel?.Style.PointerEvents = IsOpen ? PointerEvents.All : PointerEvents.None;
+	}
+}

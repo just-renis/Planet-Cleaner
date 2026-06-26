@@ -41,6 +41,22 @@
         },
         "RenderType": "On",
         "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "GrabberSpecialization",
+        "__guid": "585993fd-48b5-4f6d-914e-3fb5c4d83c52",
+        "__enabled": true,
+        "Flags": 0,
+        "DefaultCap": 20,
+        "DefaultCooldown": 10,
+        "DefaultRadius": 1000,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "TrashJumpHeight": 100
       }
     ],
     "Children": [],

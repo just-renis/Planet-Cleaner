@@ -73,11 +73,11 @@
 
     protected override int BuildHash()
     {
-	    if (Data == null) return -1;
+	    if (GetPlayerData() == null) return -1;
 	    return HashCode.Combine(Data.GetMoney(), IsOpen);
     }
 
-	protected override void OnAwake()
+    protected override void OnAwake()
     {
 	    EventManager.OnUiStateChanged += UiStateChanged;
     }
