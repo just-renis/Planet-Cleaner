@@ -111,12 +111,11 @@ public sealed class Player : Component
 	private void ProcessKeyboardInput()
 	{
 		if (Input.Pressed("Score")) UiManager.ChangeUiState(EUi.PrestigeUpgrades);
+		if (Input.Pressed("Inventory")) UiManager.ChangeUiState(EUi.Inventory);
 		if (Input.EscapePressed) ProcessEscape();
 		if (UiManager.IsAnyUiOpen()) return;
 		ProcessMovementInput();
 		ProcessCameraLook();
-	//	if (Input.Pressed("Dash") && Data?.GetUpgradeAmount(EUpgradeName.UnlockDashAbility) == 1) Dash();
-	//	if (Input.Pressed("Interact")) EventManager.TriggerPlayerInteractClicked();
 	}
 	private void ProcessCameraLook()
 	{

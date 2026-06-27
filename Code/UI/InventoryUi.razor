@@ -7,18 +7,80 @@
 <root class="@(IsOpen ? "" : "hidden")">
 	@if (IsOpen && GetPlayerData() != null)
 	{
-		
+		<div class="inventory-window">
+			<div class="tabs-header">
+				<div class="tab-button @(ActiveTab == 0 ? "active" : "")" onclick="@(() => SetActiveTab(0))">TOOLS</div>
+				<div class="close-btn" @onclick=@CloseMenu>X</div>
+			</div>
+			<div class="main-split-container">
+				<div class="items-grid-panel @(Slots > 24 ? "can-scroll" : "")">
+					@for (int Index = 0; Index < 24; Index++)
+					{
+						int SlotIndex = Index;
+						<div class="grid-slot @(Index == SelectedItemIndex ? "selected" : "")" onclick="@(() => SelectItem(SlotIndex))">
+							<div class="slot-content">
+								@if (Index == 0) { <i class="item-icon">handyman</i> }
+							</div>
+						</div>
+					}
+				</div>
+				@if (ActiveTab == 0)
+				{
+					<div class="details-inspector-panel">
+						<div class="inspector-header">
+							<span class="item-title">CHOSEN ITEM</span>
+						</div>
+						<div class="slot-selector-wrapper">
+							<label class="dropdown-label">CHOOSE EQUIP SLOT:</label>
+							<div class="custom-dropdown-header" onclick="@ToggleDropdown">
+								<span>@SelectedEquipSlot</span>
+								<div class="arrow">▼</div>
+							</div>
+							@if (IsDropdownOpen)
+							{
+								<div class="custom-dropdown-list">
+									@for (int Index = 0; Index < 10; Index++)
+									{
+										int CurrentIndex = Index;
+										<div class="custom-option @(SelectedEquipSlot == CurrentIndex ? "active" : "")" onclick="@(() => SelectSlot(CurrentIndex))">@CurrentIndex</div>
+									}
+								</div>
+							}
+						</div>
+						<div class="equip-btn" onclick="@CloseMenu">EQUIP</div>
+					</div>
+				}
+			</div>
+		</div>
 	}
 </root>
 
 @code
 {
 	private bool IsOpen;
+	private int ActiveTab;
+	private int SelectedItemIndex;
+	private int SelectedEquipSlot;
+	private int Slots = 24;
 	private PlayerData Data;
+	private bool IsDropdownOpen;
+
+	private void ToggleDropdown() => IsDropdownOpen = !IsDropdownOpen;
+
+	private void SelectSlot(int index)
+	{
+		SelectedEquipSlot = index;
+		IsDropdownOpen = false;
+	}
+
+	private void EquipItemToSlot(int InSlotIndex)
+	{
+		SelectedEquipSlot = InSlotIndex;
+	}
 	
 	protected override int BuildHash()
 	{
-		return HashCode.Combine(IsOpen);
+		return HashCode.Combine(IsOpen, ActiveTab, SelectedItemIndex);
 	}
 	
 	protected override void OnAwake()
@@ -36,6 +98,8 @@
 		return Data;
 	}
 	
+	private void SetActiveTab(int InTabId) { ActiveTab = InTabId; }
+	private void SelectItem(int InSlotId) { SelectedItemIndex = InSlotId; }
 	private void CloseMenu() { UiManager.ChangeUiState(EUi.Inventory); }
 	private void UiStateChanged(EUi InUi, bool RenderState)
 	{

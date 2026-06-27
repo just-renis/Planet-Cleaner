@@ -5,8 +5,227 @@ InventoryUi
   height: 100%;
   align-items: center;
   justify-content: center;
-  background-color: rgba(10, 14, 12, 0.6);
-  backdrop-filter: blur(10px);
-  font-family: 'Roboto', 'Poppins', sans-serif;
+  background-color: rgba(6, 9, 13, 0.75);
+  backdrop-filter: blur(12px);
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  z-index: 500;
   &.hidden { display: none; }
+  .inventory-window
+  {
+    flex-direction: column;
+    width: 1500px;
+    height: 800px;
+    gap: 16px;
+  }
+  /* -------------------------------------------------------------------------------------- TABS ------------------------------------------------------------------------------------------------------------- */
+  .tabs-header
+  {
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background-color: rgba(10, 14, 18, 0.85);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 14px;
+    padding: 12px 16px;
+    .tab-button
+    {
+      padding: 12px 28px;
+      background-image: linear-gradient(to bottom, rgba(25, 32, 41, 0.9), rgba(13, 17, 22, 0.95));
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: -10px;
+      font-size: 20px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 1px;
+      cursor: pointer;
+      &:hover
+      {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      &.active
+      {
+        color: #00e5ff;
+        background-image: linear-gradient(to bottom, rgba(0, 229, 255, 0.15), rgba(13, 17, 22, 0.95));
+      }
+    }
+    .close-btn
+    {
+      position: absolute;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 35px;
+      font-weight: 800;
+      color: #a0aec0;
+      z-index: 100;
+      &:hover { color: #ffffff; }
+    }
+  }
+  // ------------------------------------------------------------------------------- INVENTORY GRID --------------------------------------------------------------------------------------------------------
+  .main-split-container
+  {
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    .items-grid-panel
+    {
+      width: 68%;
+      height: 100%;
+      background-color: rgba(10, 14, 18, 0.85);
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 14px;
+      padding: 16px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+      overflow: hidden;
+      &.can-scroll { overflow-y: scroll; }
+      .grid-slot
+      {
+        width: 150px;
+        height: 150px;
+        background-image: linear-gradient(to bottom, rgba(28, 36, 46, 0.95), rgba(15, 20, 26, 0.98));
+        border: 5px solid rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        &:hover
+        {
+          border-color: rgba(255, 255, 255, 0.5);
+          transform: scale(1.03);
+        }
+        &.selected
+        {
+          border-color: #00e5ff;
+          background-image: linear-gradient(to bottom, rgba(0, 229, 255, 0.2), rgba(15, 20, 26, 0.98));
+        }
+        .slot-content .item-icon
+        {
+          font-family: 'Material Icons';
+          font-size: 38px;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  // ------------------------------------------------------------------------------------------- SIDE PANEL -----------------------------------------------------------------------------------------------
+  .details-inspector-panel
+  {
+    flex: 1;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(14, 20, 26, 0.95), rgba(8, 11, 15, 0.98));
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 14px;
+    padding: 24px;
+    flex-direction: column;
+    .inspector-header
+    {
+      flex-direction: column;
+      gap: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      .item-title
+      {
+        font-size: 30px;
+        font-weight: 900;
+        color: #ffffff;
+        text-transform: uppercase;
+      }
+    }
+    .inspector-body
+    {
+      flex: 1;
+      .item-description
+      {
+        font-size: 25px;
+        color: #a3b8cc;
+        line-height: 1.6;
+      }
+    }
+    .slot-selector-wrapper
+    {
+      position: relative;
+      flex-direction: column;
+      width: 100%;
+      gap: 6px;
+      .custom-dropdown-header
+      {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 12px 16px;
+        background-color: rgba(10, 14, 18, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        &:hover { border-color: #00e5ff; }
+        .arrow { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+      }
+      .custom-dropdown-list
+      {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        margin-top: 4px;
+        flex-direction: column;
+        background-color: rgb(15, 21, 28);
+        border: 2px solid #00e5ff;
+        border-radius: 8px;
+        z-index: 999;
+        max-height: 200px;
+        overflow-y: scroll;
+        .custom-option
+        {
+          flex-direction: column;
+          justify-content: center;
+          height: 40px;
+          flex-shrink: 0;
+          padding: 0 16px;
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.7);
+          cursor: pointer;
+          &:hover
+          {
+            background-color: rgba(0, 229, 255, 0.1);
+            color: #ffffff;
+          }
+          &.active
+          {
+            color: #00e5ff;
+            background-color: rgba(0, 229, 255, 0.15);
+          }
+        }
+      }
+    }
+    .equip-btn
+    {
+      margin-top: auto;
+      justify-content: center;
+      width: 100%;
+      padding: 14px;
+      background-color: #ff3333;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 14px;
+      color: white;
+      letter-spacing: 1px;
+      cursor: pointer;
+      &:hover { background-color: #ff5858; }
+    }
+  }
 }
