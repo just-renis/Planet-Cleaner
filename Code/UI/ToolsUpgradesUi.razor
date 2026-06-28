@@ -25,7 +25,7 @@
 						    <div class="tool-item @(IsSelected ? "selected" : "")" onclick="@(() => SelectTool(Tool.Key, IsToolUnlocked))">
 							    <img class="tool-icon" alt="" src="@Tool.Value.Icon"/>
 							    <div class="tool-meta">
-								    <span class="tool-name">@(IsToolUnlocked ? GetToolName(Tool.Value.ToolName) : "???")</span>
+								    <span class="tool-name">@(IsToolUnlocked ? Tool.Value.ToolName.GetDisplayName() : "???")</span>
 							    </div>
 							    @if (!IsToolUnlocked)
 							    {
@@ -42,7 +42,7 @@
 					    bool IsToolUnlocked = Data.IsToolUnlocked(SelectedTool);
 					    <div class="tool-showcase-header">
 						    <img class="showcase-icon" alt="" src="@CurrentTool.Icon"/>
-						    <span class="showcase-name">@(IsToolUnlocked ? GetToolName(CurrentTool.ToolName) : "???")</span>
+						    <span class="showcase-name">@(IsToolUnlocked ? CurrentTool.ToolName.GetDisplayName() : "???")</span>
 					    </div>
 					    <div class="upgrades-list @(IsToolUnlocked ? "" : "blurred-lock")">
 						    @foreach (KeyValuePair<EToolStat, ToolUpgradeData> Upgrade in CurrentTool.Upgrades)
@@ -53,7 +53,7 @@
 								    <div class="upgrade-info">
 									    <div class="upgrade-row-header">
 										    <img class="stat-icon" src="@Upgrade.Value.Icon" alt=""/>
-										    <span class="stat-name">@GetToolStatDisplayName(Upgrade.Value.ToolStat)</span>
+										    <span class="stat-name">@Upgrade.Value.ToolStat.GetDisplayName()</span>
 										    <span class="stat-desc-previous">@GetCurrentDescription(CurrentStatLevel, Upgrade.Value)</span>
 										    @if (!IsMaxed)
 										    {
@@ -92,7 +92,7 @@
 			    {
 				    <div class="info-showcase-panel">
 					    <div class="showcase-title-area">
-						    <span class="meta-tool-name">@(Data.IsToolUnlocked(SelectedTool) ? GetToolName(CurrentToolData.ToolName) : "???")</span>
+						    <span class="meta-tool-name">@(Data.IsToolUnlocked(SelectedTool) ? CurrentToolData.ToolName.GetDisplayName() : "???")</span>
 					    </div>
 					    <div class="stats-overview-box">
 						    <span class="overview-header">Default Tool Stats</span>
@@ -116,7 +116,7 @@
 							    @foreach (KeyValuePair<EToolStat, ToolUpgradeData> Upgrade in CurrentToolData.Upgrades)
 							    {
 								    <div class="meta-stat-row">
-									    <span class="meta-stat-label">@GetToolStatDisplayName(Upgrade.Value.ToolStat)</span>
+									    <span class="meta-stat-label">@Upgrade.Value.ToolStat.GetDisplayName()</span>
 									    <span class="meta-stat-value">@GetUpgradedToolValue(Upgrade.Key)</span>
 								    </div>
 							    }
@@ -132,8 +132,8 @@
 @code
 {
     private bool IsOpen;
-    private PlayerData Data;
     private ETool SelectedTool;
+    private PlayerData Data;
     private Dictionary<ETool, ToolData> ToolsData;
 
     protected override int BuildHash()
@@ -156,26 +156,6 @@
         EventManager.OnUiStateChanged -= UiStateChanged;
     }
 
-    private string GetToolName(ETool InTool)
-    {
-	    switch (InTool)
-	    {
-		    case ETool.Hands: return "Hands";
-		    case ETool.Grabber: return "Grabber";
-		    case ETool.SuperGrabber: return "Super Grabber";
-		    default: return "";
-	    }
-    }
-    private string GetToolStatDisplayName(EToolStat InToolStat)
-    {
-	    switch (InToolStat)
-	    {
-		    case EToolStat.Power: return "POWER";
-		    case EToolStat.Range: return "RANGE";
-		    case EToolStat.Speed: return "SPEED";
-		    default: return "";
-	    }
-    }
 	private string GetUpgradedToolValue(EToolStat InToolStat)
 	{
 		ETool EquippedTool = Data.GetEquippedTool();

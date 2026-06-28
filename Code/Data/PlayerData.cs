@@ -10,6 +10,7 @@ public sealed class PlayerData
 	public int CurrentVersion { get; set; }
 	public int CurrentTrashAmount { get; set; }
 	public int CurrentPrestige { get; set; }
+	public int CurrentHotbarSlot { get; set; }
 	public double Money { get; set; }
 	public double TotalMoneyEarned { get; set; }
 	public string Checksum { get; set; }
@@ -17,6 +18,7 @@ public sealed class PlayerData
 	public Dictionary<EPrestigeUpgradeName, int> PrestigeUpgrades { get; set; }
 	public Dictionary<EPlayerUpgrade, PlayerSaveUpgradesData> PlayerUpgrades { get; set; }
 	public Dictionary<ETool, ToolUpgradesData> ToolUpgrades { get; set; }
+	public Dictionary<ETool, int> HotbarData { get; set; }
 
 	private bool IsPendingForSave;
 	private const int LiveVersion = 1;
@@ -29,17 +31,24 @@ public sealed class PlayerData
 	    return new PlayerData
 	    {
 		    CurrentVersion = LiveVersion,
+		    CurrentHotbarSlot = 1,
 		    EquippedTool = ETool.Hands,
 		    PrestigeUpgrades = new Dictionary<EPrestigeUpgradeName, int>(),
 		    PlayerUpgrades = new Dictionary<EPlayerUpgrade, PlayerSaveUpgradesData>(),
 		    ToolUpgrades = new Dictionary<ETool, ToolUpgradesData>
 		    {
 			    {
-				    ETool.Hands, new ToolUpgradesData 
+				    ETool.Hands, new ToolUpgradesData
 				    {
 					    IsOwned = true,
 					    Levels = new Dictionary<EToolStat, int>() 
 				    }
+			    }
+		    },
+		    HotbarData = new Dictionary<ETool, int>
+		    {
+			    {
+				    ETool.Hands, 1
 			    }
 		    }
 	    };
@@ -59,6 +68,7 @@ public sealed class PlayerData
     public int GetCurrentPrestige() { return CurrentPrestige; }
     public int GetPrestigeSkillPoints() { return CurrentPrestige - PrestigeUpgrades.Count; }
     public int GetCurrentTrashAmount() { return CurrentTrashAmount; }
+    public int GetCurrentHotbarSlot() { return CurrentHotbarSlot; }
     public int GetPlayerUpgradeMaxLevel(EPlayerUpgrade InUpgradeName)
     {
 	    switch (InUpgradeName)
@@ -77,6 +87,7 @@ public sealed class PlayerData
     { 
 	    return PlayerUpgrades != null && PlayerUpgrades.TryGetValue(InUpgradeName, out PlayerSaveUpgradesData Data) ? Data.Level : 0; 
     }
+    public int GetToolSlot(ETool InToolName) { return HotbarData.GetValueOrDefault(InToolName, -1); }
     public float GetPlayerUpgradeValue(EPlayerUpgrade InUpgradeName) 
     { 
 	    return PlayerUpgrades != null && PlayerUpgrades.TryGetValue(InUpgradeName, out PlayerSaveUpgradesData Data) ? Data.CurrentValue : 0f; 
@@ -158,6 +169,22 @@ public sealed class PlayerData
 	    EquippedTool = ETool.Hands;
 	    ApplySave(this);
 	    EventManager.TriggerOnPrestige();
+    }
+    public void SetCurrentHotbarSlot(int InSlot)
+    {
+	    CurrentHotbarSlot = InSlot;
+	    Save(this);
+    }
+    public void SetToolHotbarSlot(ETool InTool, int InSlot)
+    {
+	    foreach (KeyValuePair<ETool, int> HotbarSlot in HotbarData)
+	    {
+		    if (HotbarSlot.Value != InSlot) continue;
+		    HotbarData[HotbarSlot.Key] = -1;
+		    break;
+	    }
+	    HotbarData[InTool] = InSlot;
+	    Save(this);
     }
     public void EquipTool(ETool InToolName)
     {

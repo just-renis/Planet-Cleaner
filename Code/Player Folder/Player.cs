@@ -39,6 +39,7 @@ public sealed class Player : Component
 	
 	public int GetTrashCollected() { return Data.GetCurrentTrashAmount(); }
 	public int GetTrashCapacity() { return TrashCapacity; }
+	public int GetCurrentHotbarSlot() { return Data.GetCurrentHotbarSlot(); }
 	public double GetMoney() { return Data.GetMoney(); }
 	
 	protected override void OnUpdate()
@@ -112,6 +113,12 @@ public sealed class Player : Component
 	{
 		if (Input.Pressed("Score")) UiManager.ChangeUiState(EUi.PrestigeUpgrades);
 		if (Input.Pressed("Inventory")) UiManager.ChangeUiState(EUi.Inventory);
+		for (int Index = 0; Index <= 9; Index++)
+		{
+			if (!Input.Pressed(Index.ToString())) continue;
+			Data.SetCurrentHotbarSlot(Index);
+			break;
+		}
 		if (Input.EscapePressed) ProcessEscape();
 		if (UiManager.IsAnyUiOpen()) return;
 		ProcessMovementInput();

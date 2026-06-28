@@ -13,27 +13,26 @@
 				<div class="close-btn" @onclick=@CloseMenu>X</div>
 			</div>
 			<div class="main-split-container">
-				<div class="items-grid-panel @(Slots > 24 ? "can-scroll" : "")">
-					@for (int Index = 0; Index < 24; Index++)
-					{
-						int SlotIndex = Index;
-						<div class="grid-slot @(Index == SelectedItemIndex ? "selected" : "")" onclick="@(() => SelectItem(SlotIndex))">
-							<div class="slot-content">
-								@if (Index == 0) { <i class="item-icon">handyman</i> }
-							</div>
-						</div>
-					}
-				</div>
 				@if (ActiveTab == 0)
 				{
+					<div class="items-grid-panel @(ToolData.Count > 24 ? "can-scroll" : "")">
+						@foreach (KeyValuePair<ETool, ToolData> Tool in ToolData)
+						{
+							<div class="grid-slot @(Tool.Key == SelectedTool ? "selected" : "")" onclick="@(() => SelectItem(Tool.Key))">
+								<div class="slot-content">
+									<i class="item-icon">handyman</i>
+								</div>
+							</div>
+						}
+					</div>
 					<div class="details-inspector-panel">
 						<div class="inspector-header">
-							<span class="item-title">CHOSEN ITEM</span>
+							<span class="item-title">@SelectedTool.GetDisplayName()</span>
 						</div>
 						<div class="slot-selector-wrapper">
-							<label class="dropdown-label">CHOOSE EQUIP SLOT:</label>
+							<label class="dropdown-label">CHOOSE HOTBAR SLOT:</label>
 							<div class="custom-dropdown-header" onclick="@ToggleDropdown">
-								<span>@SelectedEquipSlot</span>
+								<span>@Data.GetToolSlot(SelectedTool)</span>
 								<div class="arrow">▼</div>
 							</div>
 							@if (IsDropdownOpen)
@@ -47,7 +46,7 @@
 								</div>
 							}
 						</div>
-						<div class="equip-btn" onclick="@CloseMenu">EQUIP</div>
+						<div class="equip-btn" onclick="@EquipTool">EQUIP</div>
 					</div>
 				}
 			</div>
@@ -58,33 +57,21 @@
 @code
 {
 	private bool IsOpen;
-	private int ActiveTab;
-	private int SelectedItemIndex;
-	private int SelectedEquipSlot;
-	private int Slots = 24;
-	private PlayerData Data;
 	private bool IsDropdownOpen;
-
-	private void ToggleDropdown() => IsDropdownOpen = !IsDropdownOpen;
-
-	private void SelectSlot(int index)
-	{
-		SelectedEquipSlot = index;
-		IsDropdownOpen = false;
-	}
-
-	private void EquipItemToSlot(int InSlotIndex)
-	{
-		SelectedEquipSlot = InSlotIndex;
-	}
+	private int ActiveTab;
+	private int SelectedEquipSlot;
+	private ETool SelectedTool;
+	private PlayerData Data;
+	private Dictionary<ETool, ToolData> ToolData;
 	
 	protected override int BuildHash()
 	{
-		return HashCode.Combine(IsOpen, ActiveTab, SelectedItemIndex);
+		return HashCode.Combine(IsOpen, ActiveTab, SelectedTool);
 	}
 	
 	protected override void OnAwake()
 	{
+		ToolData = GlobalData.Instance.GetToolsInformation();
 		EventManager.OnUiStateChanged += UiStateChanged;
 	}
 	protected override void OnDestroy()
@@ -98,8 +85,19 @@
 		return Data;
 	}
 	
+	private void ToggleDropdown() { IsDropdownOpen = !IsDropdownOpen; }
 	private void SetActiveTab(int InTabId) { ActiveTab = InTabId; }
-	private void SelectItem(int InSlotId) { SelectedItemIndex = InSlotId; }
+	private void SelectItem(ETool InTool) { SelectedTool = InTool; }
+	private void SelectSlot(int InIndex)
+	{
+		SelectedEquipSlot = InIndex;
+		IsDropdownOpen = false;
+		Data.SetToolHotbarSlot(SelectedTool, InIndex);
+	}
+	private void EquipTool()
+	{
+		
+	}
 	private void CloseMenu() { UiManager.ChangeUiState(EUi.Inventory); }
 	private void UiStateChanged(EUi InUi, bool RenderState)
 	{

@@ -31,7 +31,7 @@
 					           <div class="row-top-section">
 						           <div class="upgrade-info">
 							           <div class="upgrade-row-header">
-								           <span class="stat-name">@GetDisplayName(Upgrade.Value.DisplayName)</span>
+								           <span class="stat-name">@Upgrade.Value.DisplayName.GetDisplayName()</span>
 								           <span class="stat-desc-previous">
 									           @if (CurrentStatLevel > 0) { @GetValueDescription(Upgrade.Value.DisplayName, CurrentStatValue) }
 									           else { <span>None</span> }
@@ -121,15 +121,6 @@
 		EventManager.OnUiStateChanged -= UiStateChanged;
 	}
 
-	private string GetDisplayName(EPlayerUpgrade InPlayerUpgradeName)
-	{
-		switch (InPlayerUpgradeName)
-		{
-			case EPlayerUpgrade.BagSize: return "Bag Size";
-			case EPlayerUpgrade.MovementSpeed: return "Movement Speed";
-			default: return "";
-		}
-	}
 	private string GetValueDescription(EPlayerUpgrade InPlayerUpgradeName, float InCurrentUpgradeValue)
 	{
 		switch (InPlayerUpgradeName)

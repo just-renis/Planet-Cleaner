@@ -158,6 +158,7 @@ InventoryUi
       flex-direction: column;
       width: 100%;
       gap: 6px;
+      .dropdown-label { color: white; }
       .custom-dropdown-header
       {
         flex-direction: row;
